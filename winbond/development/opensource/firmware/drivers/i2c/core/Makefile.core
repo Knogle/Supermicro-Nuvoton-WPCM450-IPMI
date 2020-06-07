@@ -1,0 +1,38 @@
+# Note: This makefile is a slightly modified version compared 
+#       to the other ractrends drivers as this makefile builds
+#       multiple modules in a single make (which is required as 
+#       the i2c modules are highly interrelated and refers each 
+#       others symbols)
+TARGET := $(TARGET) core/i2c-core.ko core/i2c-dev.ko 
+OBJS := $(OBJS) core/i2c-core.o core/i2c-dev.o 
+
+EXTRA_CFLAGS += -I$(PWD)/../include -I$(PWD)/../../../../common/include/global
+EXTRA_CFLAGS += -I$(PWD)/../../../../common/include/i2c 
+EXTRA_CFLAGS += -I$(PWD)/include -I$(PWD)/arch
+EXTRA_CFLAGS += -Wall -Werror
+EXTRA_CFLAGS +=  -DI2C_EXTENDED_CMDS
+
+#---------------- Do not modify any thing below this line ------------------------
+
+# Include projdef.h (Note : Here TOPDIR points to linux directory)
+EXTRA_CFLAGS += -include $(TOPDIR)/../projdef.h
+
+ifeq ($(DEBUG),y)
+  DEBFLAGS = -O -g -DDEBUG # "-O" is needed to expand inlines
+else
+  DEBFLAGS = -O2
+endif
+EXTRA_CFLAGS += $(DEBFLAGS)
+
+MODULE := $(TARGET)
+#MODULE := $(TARGET).ko
+ifneq ($(KERNELRELEASE),)
+obj-m := $(OBJS)
+#obj-m	:= $(TARGET).o
+#$(TARGET)-objs := $(OBJS)
+endif
+
+ifndef TOPDIR
+TOPDIR  := $(shell cd ../../../../..; pwd)
+endif
+-include $(TOPDIR)/development/rules/Rules.make.drivers

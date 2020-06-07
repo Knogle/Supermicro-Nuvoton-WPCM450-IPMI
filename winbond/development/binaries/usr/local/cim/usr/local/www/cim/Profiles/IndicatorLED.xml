@@ -1,0 +1,44 @@
+<profile name="IndicatorLEDProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+      </class>
+      <class name="CIM_ManagedSystemElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_PhysicalElement" profile="PhysicalAssetProfilet">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_IndicatorLEDCapabilities" profile="IndicatorLEDProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_AssociatedIndicatorLED" profile="IndicatorLEDProfile">
+            <class name="CIM_ManagedSystemElement" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+            </class>
+      </association>
+      <association classname="CIM_Realizes" profile="PhysicalAssetProfilet">
+            <class name="CIM_PhysicalElement" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="IndicatorLEDProfile">
+            <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+            </class>
+            <class name="CIM_IndicatorLEDCapabilities" profile="IndicatorLEDProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemDevice" profile="IndicatorLEDProfile">
+            <class name="CIM_IndicatorLED" profile="IndicatorLEDProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+</profile>

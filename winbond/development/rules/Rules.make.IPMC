@@ -1,0 +1,76 @@
+#----------------------------------------------------------------------
+# 			Rules.make for IPMC stack
+# 		   Copyright (c) 2007 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif 
+
+#----------------------------------------------------------------------
+#			Include IPMI Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.make.IPMI
+
+#------------------------------------------------------------------------
+# IPMC Root directory is where Rules.make is
+#------------------------------------------------------------------------
+IPMC_ROOT := $(TOPDIR)/development/proprietary/firmware/IPMC
+IPMC_OEM_ROOT := $(TOPDIR)/development/oem/firmware/IPMC/
+include $(IPMC_OEM_ROOT)Configs.make.IPMC
+
+
+#------------------------------------------------------------------------
+# Other build flags
+#------------------------------------------------------------------------
+CFLAGS += -I$(TOPDIR)/development/common/include/ipmc_inc
+
+#------------------------------------------------------------------------
+# Include directories for IPMC
+#------------------------------------------------------------------------
+#IPMCINCDIRS += $(IPMIINCDIRS)
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/$(PDK_PLATFORM_DIR)
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/common
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/common/inc
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/common/cmds
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)
+IPMCINCDIRS += -I$(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)/cfg
+
+#------------------------------------------------------------------------
+# IPMC internal libraries
+#------------------------------------------------------------------------
+IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMC/core/PDK/libPDKAPI.so
+IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMC/core/STACKLib/libSTACKCommon.a
+IPMC_INTERNAL_LIB += $(IPMC_OEM_ROOT)/oem/$(PDK_DIR)/libPDK.so
+#IPMI_INTERNAL_LIB += $(TOPDIR)/development/oem/firmware/IPMC/oem/$(PDK_DIR)/common/cmds/libPDKCmd.so
+IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMC/core/PDK/libPDKAPI.so
+IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/HAL/api/libipmihalapi.so
+IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/HAL/hw/libipmihalhw.so
+#IPMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/SoftProc/libSoftProc.so
+
+#------------------------------------------------------------------------
+# Linking flags
+#------------------------------------------------------------------------
+
+
+#--------------------------------------------------------------------------------
+
+#IPMC_DEBUG_FLAGS += $(IPMI_DEBUG_FLAGS)
+
+CFLAGS += $(IPMCINCDIRS) $(IPMC_CFLAGS) $(IPMC_DEBUG_FLAGS)
+LIBS =  $(IPMILIBS) $(IPMCLIBS) $(IPMC_INTERNAL_LIB) 
+# -Wl,--start-group $(IPMC_INTERNAL_LIB) --end-group
+
+#CFLAGS += -I$(TOPDIR)/development/oem/common/include/ipmi_inc_oem
+#CFLAGS += -I$(TOPDIR)/development/oem/common/include/ipmc_inc
+
+#.c.o:
+#	@echo "Compiling   $< ..."
+#	@$(CC) -c $(CFLAGS) -o $@ $<
+
+
+#------------------------------------ End of Rules.Make ---------------------------

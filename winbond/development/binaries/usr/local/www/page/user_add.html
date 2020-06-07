@@ -1,0 +1,67 @@
+<html>
+ <head>
+ 	<link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <script src="../lib/bitset.js"></script>
+      <script language="javascript" src="../lib/eVal.js"></script>
+ 	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/user_add_str.js\"><\/script>");
+	</script>
+	<script src="../impl/user_add_imp.js"></script>
+
+  	
+  	
+ 	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("user_add", "STR_USER_ADD_PAGE_TITLE");
+		var elmt = document.getElementById("_addBtn");
+		elmt.setAttribute("value", eLang.getString("user_add", "STR_USER_ADD_ADDBTN"));
+		var elmt = document.getElementById("_cancelBtn");
+		elmt.setAttribute("value", eLang.getString("user_add", "STR_USER_ADD_CANCELBTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+ <body>
+ <h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_PAGE_TITLE"));</script>
+</h3>
+ 
+ <p>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_PAGE_DESC"));</script>
+</p>
+ 
+ <form id="_addFrm" action="javascript://">
+ <table cellspacing="0" cellpadding="5" border="0" width="500">
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_USERNAME"));</script>
+</strong></td>
+ <td><input type="text" name="username" id="_userName" class="classicTxtBox" /></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_PASSWORD"));</script>
+</strong></td>
+ <td><input type="password" name="password" id="_passWord" class="classicTxtBox" /></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_CONF_PWD"));</script>
+</strong></td>
+ <td><input type="password" name="password" id="_cpassWord" class="classicTxtBox" /></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("user_add", "STR_USER_ADD_NWPRIV"));</script>
+</strong></td>
+ <td><select name="nwPriv" id="_nwPriv"></select></td></tr>
+ </table>
+ 
+ <div class="btnTray" style="width: 380px;">
+ <input type="button" class="classicBtn" id="_addBtn" />
+ <input type="button" class="classicBtn" id="_cancelBtn" />
+ </div>
+ </form>
+ 
+ </body>
+</html>

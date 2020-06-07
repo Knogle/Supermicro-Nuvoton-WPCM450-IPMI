@@ -1,0 +1,56 @@
+# *****************************************************************************
+# Generic Linux Files (Modified for Ractrends) 
+# These files are located in target.new directory
+# *****************************************************************************
+./etc/default/rcS
+./etc/fstab
+./etc/localtime
+
+./etc/ld.so.conf
+./etc/init.d/bootmisc.sh
+./etc/init.d/hostname.sh
+./etc/init.d/devpts.sh
+./etc/init.d/devshm.sh
+./etc/init.d/rcS
+./etc/init.d/umountfs
+./etc/init.d/module-init-tools
+#./etc/init.d/ntpdate
+#./etc/init.d/ntp
+./etc/logrotate.conf
+
+#./etc/init.d/nmbd.sh
+#./etc/logrotate.d/samba
+#./etc/samba/smb.conf
+
+#./etc/pam.d/ssh
+./etc/pam.d/sshd
+./etc/sshd_config
+
+./etc/security/access.conf
+./etc/security/group.conf
+./etc/security/limits.conf
+./etc/security/pam_env.conf
+./etc/security/time.conf
+./etc/syslog.conf
+
+./usr/share/udhcpc/default.script
+./etc/nsupdate_basic.sh
+./etc/network/if-pre-up.d/pre-up-script-eth0
+./etc/network/if-up.d/up-script-eth0
+./etc/network/if-down.d/down-script-eth0
+./etc/network/if-post-down.d/post-down-script-eth0
+
+# *****************************************************************************
+# Ractrends Common New Files 
+# *****************************************************************************
+#./etc/init.d/snmpd
+#./usr/local/bin/snmpd
+#./usr/local/lib/libsnmp-0.4.2.3.so
+#./usr/local/lib/libucdagent-0.4.2.3.so
+#./usr/local/lib/libucdmibs-0.4.2.3.so
+
+
+# *****************************************************************************
+# Project Specific Files  
+# *****************************************************************************
+

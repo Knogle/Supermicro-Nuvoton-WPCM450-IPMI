@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>DomAPI Debugger</title>
+  <link rel="stylesheet" type="text/css" href="debugger.css" />
+  <script type="text/javascript">
+    onload = function(){
+      divConsoleOuter  = document.getElementById("consoleOuter");
+      divExplorerOuter = document.getElementById("explorerOuter");
+      divConsoleInner  = document.getElementById("consoleInner");
+      divExplorerInner = document.getElementById("explorerInner");
+      divConsoleExpression  = document.getElementById('txtConsoleExpression');
+      divExplorerExpression = document.getElementById('txtExplorerExpression');
+      //divConsoleExpression.style.width  = "10px";
+      //divExplorerExpression.style.width = "10px";
+      divConsoleExpression.onkeypress   = doKeyPress;
+      divExplorerExpression.onkeypress  = doKeyPress;
+      domapi = opener.domapi;
+      D = domapi.debug;
+      D._consoleMain  = divConsoleInner;
+      D._explorerMain = divExplorerInner;
+      onresize();
+      D._onload();
+    };
+    onresize = function(){
+      var _w, _h;
+      var w = parseInt(document.all?document.body.clientWidth :window.innerWidth);
+      var h = parseInt(document.all?document.body.clientHeight:window.innerHeight);
+      
+      _h = h - divConsoleOuter.offsetTop   -  2;if(_h > 10)divConsoleOuter.style.height  = _h + "px";
+      _h = h - divExplorerOuter.offsetTop  -  2;if(_h > 10)divExplorerOuter.style.height = _h + "px";
+      
+      if(divExplorerOuter.style.display == "none"){
+        h-=10;
+      }
+      _h = h - divConsoleInner.offsetTop   - 25;if(_h > 10)divConsoleInner.style.height  = _h + "px";
+      _w = w - divConsoleInner.offsetLeft  - 10;if(_w > 10)divConsoleInner.style.width   = _w + "px";
+      
+      if(divConsoleOuter.style.display == "none"){
+        h-=10;
+      }
+      _h = h - divExplorerInner.offsetTop  - 25;if(_h > 10)divExplorerInner.style.height = _h + "px";
+      _w = w - divExplorerInner.offsetLeft - 10;if(_w > 10)divExplorerInner.style.width  = _w + "px";      
+
+    };
+    function doTabClick(i){
+      var e = document.getElementById("tabSet");
+      e = e.getElementsByTagName("SPAN");
+      switch(i){
+        case 0:
+          e[0].className = "tabDown";
+          e[1].className = "tab";
+          divConsoleOuter.style.display  = "";
+          divExplorerOuter.style.display = "none";
+          break;
+        case 1:
+          e[0].className = "tab";
+          e[1].className = "tabDown";
+          divConsoleOuter.style.display  = "none";
+          divExplorerOuter.style.display = "";
+          break;
+      }
+      onresize();
+    };
+    function doKeyPress(E){
+      var e = document.all?event.srcElement:E.target;
+      var k = document.all?event.keyCode:E.which;
+      if(k == 13){
+        if(e == divConsoleExpression )document.getElementById("btnEval").onclick();
+        if(e == divExplorerExpression)document.getElementById("btnExplore").onclick();
+        e.select();
+      }
+    };
+    function _toggleDisplay(e){e.style.display = (e.style.display == "none")?"":"none"};
+  </script>
+</head>
+<body>
+  <div id="tabSet">
+    <span class="tabDown" onclick="doTabClick(0)">Console</span><span class="tab" onclick="doTabClick(1)">Explorer</span>
+  </div>
+  <div class="sep" style="background:white"></div>
+  <div class="sep" style="background:navy"></div>
+
+  <div id="consoleOuter">
+    <div id="consoleToolbar">
+      <span class="tab" onclick="D.clearConsole()">clear</span>
+      <span class="tab" onclick="D.sniffy()">info</span>
+      <span class="tab" onclick="D.showLibs()">libs</span>
+      <span class="tab" onclick="D.dumpSource()">source</span>
+      <input type="text" value="domapi.version" id="txtConsoleExpression" style="margin-left:20px" />
+      <span class="tab" onclick="domapi.debug.dumpVar(eval(divConsoleExpression.value),true)" id="btnEval">eval</span>
+    </div>
+    <div class="sep" style="background:navy"></div>
+    <div id="consoleInner"></div>
+  </div>
+
+  <div id="explorerOuter" style="display:none">
+    <div id="explorerToolbar">
+      <span class="tab" onclick="D.dumpProps(self)">top</span>
+      <span class="tab" onclick="D.dumpProps(D._prevdebugstack)">back</span>
+      <input type="text" value="document.body" id="txtExplorerExpression" style="margin-left:20px" />
+      <span class="tab" onclick="domapi.debug.dumpProps(eval(divExplorerExpression.value),true)" id="btnExplore">explore</span>
+      <br />
+      <div class="sep" style="background:navy;margin-top:5px;margin-bottom:5px"></div>
+      Filters:
+      <input type="Checkbox" id="divs" onclick="domapi.debug._viewBase()">
+      <label for="divs" class="isDiv">HTMLElement</label>
+      <input type="Checkbox" id="elms" onclick="domapi.debug._viewBase()">
+      <label for="elms" class="isElm">Elm</label>
+      <input type="Checkbox" id="comp" onclick="domapi.debug._viewBase()">
+      <label for="comp" class="isComp">Component Base</label>
+
+    </div>
+    <div class="sep" style="background:navy"></div>
+    <div id="explorerInner"></div>
+  </div>
+</body>
+</html>

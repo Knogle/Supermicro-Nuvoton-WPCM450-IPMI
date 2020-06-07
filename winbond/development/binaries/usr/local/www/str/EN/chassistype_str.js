@@ -1,0 +1,26 @@
+eLang.chassistype_strings={};
+/* Chassis Type strings */
+eLang.chassistype_strings[0] = "Unknown";
+eLang.chassistype_strings[1] = "Other";
+eLang.chassistype_strings[2] = "Unknown";
+eLang.chassistype_strings[3] = "Desktop";
+eLang.chassistype_strings[4] = "Low Profile Desktop";
+eLang.chassistype_strings[5] = "Pizza Box";
+eLang.chassistype_strings[6] = "Mini Tower";
+eLang.chassistype_strings[7] = "Tower";
+eLang.chassistype_strings[8] = "Portable";
+eLang.chassistype_strings[9] = "LapTop";
+eLang.chassistype_strings[10] = "Notebook";
+eLang.chassistype_strings[11] = "Hand Held";
+eLang.chassistype_strings[12] = "Docking Station";
+eLang.chassistype_strings[13] = "All in One";
+eLang.chassistype_strings[14] = "Sub Notebook";
+eLang.chassistype_strings[15] = "Space-saving";
+eLang.chassistype_strings[16] = "Lunch Box";
+eLang.chassistype_strings[17] = "Main Server Chassis";
+eLang.chassistype_strings[18] = "Expansion Chassis";
+eLang.chassistype_strings[19] = "SubChassis";
+eLang.chassistype_strings[20] = "Bus Expansion Chassis";
+eLang.chassistype_strings[21] = "Peripheral Chassis";
+eLang.chassistype_strings[22] = "RAID Chassis";
+eLang.chassistype_strings[23] = "Rack Mount Chassis";

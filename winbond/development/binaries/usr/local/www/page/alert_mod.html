@@ -1,0 +1,70 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/bitset.js"></script>
+  <script language="javascript" src="../lib/eVal.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/alert_mod_str.js\"><\/script>");
+	</script>
+	<script src="../impl/alert_mod_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("alert_mod", "STR_ALERT_MOD_TITLE");
+		var elmt = document.getElementById("_saveBtn");
+		elmt.setAttribute("value", eLang.getString("alert_mod", "STR_ALERT_MOD_SAVE"));
+		var elmt = document.getElementById("_cancelBtn");
+		elmt.setAttribute("value", eLang.getString("alert_mod", "STR_ALERT_MOD_CANCEL"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_DSEC"));</script>
+</p>
+
+ <form id="_modFrm" action="javascript://">
+ <table cellspacing="0" cellpadding="5" border="0" width="500">
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_ALRTTYPE"));</script>
+</strong></td>
+ <td><select id="_alertType" name="alertType"></select></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_EVENTSEV"));</script>
+</strong></td>
+ <td><select id="_eventSeverity" name="eventSeverity"></select></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_DESTIP"));</script>
+</strong></td>
+ <td><input type="text" name="destIP" id="_destIP" class="classicTxtBox" /></td></tr>
+ <tr><td><strong>
+<script>document.writeln(eLang.getString("alert_mod", "STR_ALERT_MOD_EMAILADD"));</script>
+</strong></td>
+ <td><input type="text" name="emailAdd" id="_emailAdd" class="classicTxtBox" /></td></tr>
+  <tr><td><br></td>
+ <td><input type="hidden" name="subject" id="_subject" maxlength="32" class="classicTxtBox" /></td></tr>
+  <tr><td></td>
+ <td><input type="hidden" name="message" id="_message" maxlength="64" class="classicTxtBox" /></td></tr>
+ </table>
+ 
+ <div class="btnTray" style="width:350px;">
+ <input type="button" class="classicBtn" id="_saveBtn" />
+ <input type="button" class="classicBtn" id="_cancelBtn" />
+ </div>
+ </form>
+ 
+</body>
+</html>

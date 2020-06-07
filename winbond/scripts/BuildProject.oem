@@ -1,0 +1,329 @@
+#!/bin/sh
+
+#
+#--------------- OEM VERSION OF BUILDPROJECT ----------------------
+#
+# This is a strip down version of BuildProject to run as standalone
+# All access to Source control is removed and functions which  wipe 
+# entire source trees are removed.
+#------------------------------------------------------------------
+
+
+# Uncomment for Script debugging 
+#set -e
+
+########################################################################
+# Build script Version:
+#
+# Whenever th script changes, Major.Minor is incremented
+# by .1 and subminor is reset to 0
+# Subminor is incremented when any of the configuration values
+# changes and the script is not modified.
+#
+# BuildImage script's VERSION numbering is as follows:
+# x.y.z:
+#   x - Major change
+#   y - Script change
+#   z - Devkit change
+#
+#########################################################################
+#
+SCRIPT_DATE="10/25/2007"	# Build Script Modification Date 
+SCRIPT_VERS="2.4.0"            	# Build Script Version
+#
+#
+
+#********************** Display the Usage  ***************************
+#
+DisplayUsage()
+{
+	echo "Usage: $0 <ProjectName> <BuildType> <ProjectDirectory> "
+	echo "<BuildType> can be REBUILD/BUILD/CLEAN or"
+	echo "REBUILDDEV/BUILDDEV/CLEANDEV or IMAGE or"
+	echo "MKPDK or MKOPEN or OPENTAR (create open source tarball after full build)"
+	echo "<ProjectDirecory> is optional in commandline"
+}
+
+#********** Set variables according to the project *************
+#
+setvars()
+{
+	# Make file option far parallel MAKE
+#	export MAKEFLAGS="-j"
+
+	# Split Project:Subproject 
+	echo $1 | grep ":" > /dev/null
+	if [ $? != 0 ]
+	then
+		# Only Project specified. Use default subproject
+		export RACTRENDS_PROJECT=$1
+	else
+	read RACTRENDS_PROJECT SUBPROJECT << HERE
+		 $(echo $1 | awk -F: '{ print $1,$2 }')
+HERE
+		export RACTRENDS_PROJECT
+		export SUBPROJECT
+		echo "Building $RACTRENDS_PROJECT with $SUBPROJECT option"
+	fi
+
+	# Defines values based on SUBPROJECT Present or not
+	if [ "$SUBPROJECT" == "" ]
+	then
+		CONF_DIR=configs
+		BUILD_DIR=Build
+	else
+		CONF_DIR=configs.$SUBPROJECT
+		BUILD_DIR=Build.$SUBPROJECT
+	fi
+	DEF_FILE=$CONF_DIR/Project.Def
+	export DEF_FILE
+	export CONF_DIR
+	export BUILD_DIR
+	
+
+	export TOPDIR=$3
+
+	CLEAN_DEV=0
+	BUILD_DEV=0
+	WIPE_BUILD=0
+
+	CLEAN_CORE=0
+	BUILD_CORE=0
+	BUILD_IMAGE=0
+	RM_SRC=0
+	RM_OEM=0
+
+    case "$2" in
+	"MKPDK")
+		BUILD_CORE=1
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		RM_SRC=1
+		;;
+
+	"MKOPEN")
+		BUILD_CORE=1
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		RM_SRC=1
+		RM_OEM=1
+		;;
+
+	 "OPENTAR")
+       		RM_SRC=1
+		RM_OEM=1
+		;;
+	"CLEAN")
+		CLEAN_CORE=1
+		CLEAN_DEV=1
+		;;
+	"WIPE") 
+		WIPE_BUILD=1
+		;;
+	"REBUILD")
+		CLEAN_CORE=1
+		CLEAN_DEV=1
+		BUILD_CORE=1
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		;;
+	"BUILD")
+		BUILD_CORE=1
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		;;
+	"IMAGE")
+		BUILD_IMAGE=1
+		;;
+	"CLEANDEV")
+		CLEAN_DEV=1
+		;;
+	"REBUILDDEV")
+		CLEAN_DEV=1
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		;;
+	"BUILDDEV")
+		BUILD_DEV=1
+		BUILD_IMAGE=1
+		;;
+    *)
+		DisplayUsage
+		exit 1
+        ;;
+    esac
+}       
+#
+#***********************************************************************
+#**************************Script Starts here **************************
+#***********************************************************************
+#
+
+# Print some banner
+echo
+echo "----------------------------------------------------------"
+echo "******* Building Image : Build Script Version : $SCRIPT_VERS ******"      
+echo "----------------------------------------------------------"
+echo
+
+# Set variables according to the project 
+setvars $1 $2 $3 
+
+
+# Ask where the project files are present or where to install
+if [ "$TOPDIR" == "" ]
+then
+	echo -n "Enter Project Directory.: "
+	read TOPDIR
+fi
+
+
+# Convert to absolute path
+if ! [ -d $TOPDIR ]; then
+	echo "Unable to find the project directory ($TOPDIR). Aborting..."
+	exit 1
+fi
+
+TOPDIR=`cd $TOPDIR;pwd`
+
+TOPDIR=$TOPDIR/$RACTRENDS_PROJECT
+export TOPDIR
+PROJDIR=$TOPDIR
+export PROJDIR 
+
+
+# Check if we have to remove Build Directory 
+if [ $WIPE_BUILD == 1 ] 
+then
+    if [ -d $TOPDIR/$BUILD_DIR ]
+    then
+		echo -n "Removing $BUILD_DIR Directory contents ..."
+		rm -r -f $TOPDIR/$BUILD_DIR
+		if [ $? == 0 ]
+		then
+			echo "Done"
+		else
+			echo "Failed"
+			exit 1
+		fi
+    fi
+fi
+
+
+#Note: Dev should be clean before Core
+if [ $CLEAN_DEV == 1 ]
+then
+	sh $TOPDIR/scripts/CleanDev 1
+	if [ $? != 0 ]
+	then
+	   exit 1
+	fi
+fi
+
+if [ $CLEAN_CORE == 1 ]
+then
+	sh $TOPDIR/scripts/CleanCore
+	if [ $? != 0 ]
+	then
+	   exit 1
+	fi
+fi
+INSTALLDIR=$TOPDIR/$BUILD_DIR/target
+export INSTALLDIR
+TARGETDIR=$TOPDIR/$BUILD_DIR/target
+export TARGETDIR
+
+#Note: Core should be built before Dev
+if [ $BUILD_CORE == 1 ]
+then
+	sh $TOPDIR/scripts/BuildCore
+	if [ $? != 0 ]
+	then
+	   exit 1
+	fi
+fi
+
+if [ $BUILD_DEV == 1 ]
+then
+	sh $TOPDIR/scripts/BuildDev
+	if [ $? != 0 ]
+	then
+	   exit 1
+	fi
+fi
+
+if [ $BUILD_IMAGE == 1 ]
+then
+	sh $TOPDIR/scripts/BuildImage
+	if [ $? != 0 ]
+	then
+	   exit 1
+	fi
+fi
+
+
+if [ $RM_SRC == 1 ]
+then
+	sh $TOPDIR/scripts/CleanDev 0
+	echo -n "Creating PDK Source Tree ..."
+	cd $TOPDIR/development
+	rm -r -f proprietary
+	if [ $? != 0 ]
+	then
+	   echo "Failed. Unable to remove proprietary source!!!"
+	   exit 1
+	fi
+	cd $TOPDIR
+	rm -r -f $BUILD_DIR
+	if [ $? != 0 ]
+	then
+	   echo "Failed. Unable to remove Build directory!!!"
+	   exit 1
+	fi
+	echo "Done"
+fi
+
+if [ $RM_OEM == 1 ]
+then
+	echo -n "Creating Open Source Tree ..."
+	cd $TOPDIR/development
+	rm -r -f oem 
+	if [ $? != 0 ]
+	then
+	   echo "Failed. Unable to remove Oem source!!!"
+	   exit 1
+	fi
+	rm -r -f oemprop
+	if [ $? != 0 ]
+	then
+	   echo "Failed. Unable to remove Oemprop source!!!"
+	   exit 1
+	fi
+	echo "Done"
+fi
+
+# We are creating PDK or OEM Tree
+#if ! [ -d $TOPDIR/development/proprietary ]
+if [ $RM_OEM == 1 ] ||  [ $RM_SRC == 1 ]
+then
+	if [ $RM_OEM == 1 ]
+	then
+		TAROUT=$TOPDIR/../open.tgz
+		echo -n "Creating OPEN Source Tarball ..."
+	else
+		TAROUT=$TOPDIR/../pdk.tgz
+		echo -n "Creating PDK Source Tarball ..."
+	fi
+	cd $TOPDIR/..
+	tar czf $TAROUT $RACTRENDS_PROJECT
+	if [ $? != 0 ]
+	then
+	   echo "Failed. Unable to Create $TAROUT!!!"
+	   exit 1
+	fi
+	echo "Done"
+	exit 0
+fi
+exit 0
+
+#************************* End of Script ****************************

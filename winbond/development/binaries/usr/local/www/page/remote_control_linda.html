@@ -1,0 +1,82 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/remote_control_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/launch_redirection_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/config_misc_str.js\"><\/script>");
+	</script>
+	<script src="../impl/remote_control_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			document.title = eLang.getString("remote_control", "STR_RMCTRL_PWR_TITLE");
+
+			var elmt = document.getElementById("_launchJava");
+			elmt.setAttribute("value", eLang.getString("launch_redirection", "STR_LNCH_REDIR_BTN"));
+
+			var elmt = document.getElementById("_launchSOL");
+			elmt.setAttribute("value", eLang.getString("config_misc", "STR_MISC_LANUCH_SOL"));
+
+			doInit();
+		}
+	}
+
+function mOvr(src)
+{
+    src.style.cursor = 'hand';
+    src.style.color="#000000";
+    src.style.background="#FFFFE1";
+}
+
+function mOut(src)
+{ 
+    src.style.background="#E9E9DC";
+}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("remote_control", "STR_RMCTRL_OPT"));</script>
+</h3>
+
+<table cellspacing="0" cellpadding="5" border="0" width="100%">
+	<tr>
+		<td bgcolor="#B8B89D" align="center">
+			<input type="button" class="inputButton3X" id="_launchJava" style="font-weight:bold; font-size:12px; font-family:Arial;" onmouseover="mOvr(this)" onmouseout="mOut(this)"/>
+		</td>
+		<td> 
+<script>document.writeln(eLang.getString("remote_control", "STR_RMCTRL_CNSL_RDIR_DESC"));</script>
+ </td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#B8B89D" align="center">
+			<input type="button" class="inputButton3X" id="_launchSOL" style="font-weight:bold; font-size:12px; font-family:Arial;" onmouseover="mOvr(this)" onmouseout="mOut(this)"/>
+		</td>
+		<td> 
+<script>document.writeln(eLang.getString("config_misc", "STR_MISC_LANUCH_SOL_DESC"));</script>
+ </td>
+	</tr>
+
+	<tr>
+		<td bgcolor="#B8B89D" align="center">
+			<a href="server_power_control.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("remote_control", "STR_RMCTRL_PWR_CTRL"));</script>
+</a>
+		</td>
+		<td> 
+<script>document.writeln(eLang.getString("remote_control", "STR_RMCTRL_PWR_CTRL_DESC"));</script>
+ </td>
+	</tr>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_mouse_mode_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_mouse_mode_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_TITLE");
+		var elmt = document.getElementById("_applyBtn");
+		elmt.setAttribute("value", eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_DESCRIPTION"));</script>
+</p>
+
+ <div class="subSection">
+ 	<h4 id="_mInfo">
+<script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_CURMODE"));</script>
+</h4>
+ 	<p>
+ 		<input type="radio" id="_absMod" value="abs" /> 
+<script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_SETABS"));</script>
+<b><script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_WINDOWS"));</script></b>
+<br>
+ 		<input type="radio" id="_relMod" value="rel" /> 
+<script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_SETREL"));</script>
+<b><script>document.writeln(eLang.getString("configure_mouse_mode", "STR_MOUSE_MODE_LINUX"));</script></b>
+ </p>
+ </div>
+ 
+ <div class="btnTray" style="width: 360px;">
+ <input type="button" class="classicBtn" id="_applyBtn" />
+ </div>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+echo -n "Extracting busybox $BUSYBOX_VER ..."
+tar xzf $TOPDIR/pristine/busybox/busybox-$BUSYBOX_VER.tar.gz
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+echo -n "Renaming busybox-$BUSYBOX_VER to busybox ..."
+mv busybox-$BUSYBOX_VER busybox
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+CUR_USER=`whoami`
+echo -n "Changing Ownership of busybox to current user ..."
+chown $CUR_USER:$CUR_USER $TOPDIR/$BUILD_DIR/busybox -R
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+cd busybox
+echo -n "Applying busybox Patches ..."
+for i in  $TOPDIR/patches/busybox/PATCH*/*
+do
+	if ! [ -e $i ]
+	then 
+		continue
+	fi
+	patch -p1 < $i > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "Failed to patch $i"
+		exit 1
+	fi
+done
+echo "Done"
+
+#echo -n "Setting Write Permissions on busybox directory ..."
+#chmod o+w $TOPDIR/$BUILD_DIR/busybox -R
+#if [ $? == 0 ]
+#then	
+#	echo "Done"
+#else
+#	echo "Failed"
+#	exit 1
+#fi
+
+exit 0

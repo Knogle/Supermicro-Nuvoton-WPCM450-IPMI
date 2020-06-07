@@ -1,0 +1,92 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Check if we want to install SFCB 
+if [ "$INSTALL_SFCB" != "YES" ]
+then
+	exit 0
+fi
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR/sblim-sfcb
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+# These are needed during cross-compiling SFCB (rpl_malloc & rpl_realloc)
+export ac_cv_func_realloc_0_nonnull=yes
+export ac_cv_func_malloc_0_nonnull=yes
+
+#Need this. otherwise config failes
+if [ -e Makefile ]
+then
+	echo -n "Cleaning for Fresh SFCB Build ..."
+	make clean >/dev/null
+	echo "Done"
+fi
+
+
+echo "Configuring SFCB ..."
+./configure LDFLAGS="-Wl,-L$TOPDIR/$BUILD_DIR/target/usr/lib -Wl,-L$TOPDIR/$BUILD_DIR/target/usr/local/lib" CFLAGS=" -I$TOPDIR/$BUILD_DIR/target/usr/include -I. -I./mofc" --target=$ARCH-linux --build=i686-linux --host=$ARCH-linux --sysconfdir=$CIM_ROOT_DIR/usr/local/etc --disable-default-properties
+if [ $? != 0 ]
+then
+	echo "SFCB Configure failed. Aborting"
+	exit 1
+fi
+echo "SFCB Configured Successfully"
+
+echo "Building SFCB ..."
+make CC=$CROSS_COMPILE"gcc" AR=$CROSS_COMPILE"ar" AS=$CROSS_COMPILE"as" LD=$CROSS_COMPILE"ld" NM=$CROSS_COMPILE"nm" RANLIB=$CROSS_COMPILE"ranlib" SIZE=$CROSS_COMPILE"size" STRIP=$CROSS_COMPILE"strip" OBJCOPY=$CROSS_COMPILE"objcopy" CXX=$CROSS_COMPILE"c++" CPP=$CROSS_COMPILE"gcc"
+if [ $? != 0 ]
+then
+	echo "SFCB Build failed. Aborting"
+	exit 1
+fi
+echo "SFCB Build Successfully"
+
+echo "Installing SFCB ..."
+make install DESTDIR=$TOPDIR/$BUILD_DIR/target/$CIM_ROOT_DIR
+if [ $? != 0 ]
+then
+	echo "SFCB Install failed. Aborting"
+	exit 1
+fi
+echo "SFCB Install Successfully"
+
+if ! [ -d $TOPDIR/$BUILD_DIR/target/usr/local/includ/cmpi ] 
+then
+	echo -n "Creating $TOPDIR/$BUILD_DIR/target/usr/local/include/cmpi ..."
+	mkdir -p $TOPDIR/$BUILD_DIR/target/usr/local/include/cmpi
+	if [ $? != 0 ]
+	then
+		echo "Failed. Aborting"
+		exit 1
+	fi
+	echo "Done"
+fi
+
+echo -n "Copying SFCB Header files...."
+cp *.h $TOPDIR/$BUILD_DIR/target/usr/local/include/cmpi -f
+if [ $? != 0 ]
+then
+	echo "Failed. Aborting"
+	exit 1
+fi
+cp mofc/*.h $TOPDIR/$BUILD_DIR/target/usr/local/include/cmpi -f
+if [ $? != 0 ]
+then
+	echo "Failed. Aborting"
+	exit 1
+fi
+echo "Done"
+
+exit 0
+	
+
+

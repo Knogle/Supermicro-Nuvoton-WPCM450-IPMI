@@ -1,0 +1,6 @@
+#%PAM-1.0
+auth	   required     /usr/local/lib/libpamipmi.so.1.0
+#auth       required     /usr/local/lib/pam_abl.so.1.0 config=/conf/pam_abl.conf
+account	   required     /usr/local/lib/libpamipmi.so.1.0
+session	   required     /usr/local/lib/libpamipmi.so.1.0
+password	   required     /usr/local/lib/libpamipmi.so.1.0

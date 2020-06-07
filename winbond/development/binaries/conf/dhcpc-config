@@ -1,0 +1,28 @@
+#!/bin/sh
+# Config file for dhcpcd.
+
+getdnsvars()
+{
+eval $(echo "$INTERFACE" | awk '{for(i=1;i<=NF;i++) printf "IF%s=%s\n",i,$i}' FS=.)
+IFACE=$IF1
+
+case ${IFACE} in
+eth0) 
+
+# Uncomment this to allow dhcpcd to set the DNS servers in /etc/resolv.conf
+SET_DNS='yes'
+
+# Uncomment this to allow dhcpcd to set domainname of the host to the
+# domainname option supplied by DHCP server.
+SET_DOMAIN='yes'
+
+#DO_DDNS='yes'
+;;
+
+# Add other interfaces here
+*)
+;;
+
+esac
+}
+

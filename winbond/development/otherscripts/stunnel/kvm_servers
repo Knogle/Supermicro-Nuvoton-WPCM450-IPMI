@@ -1,0 +1,67 @@
+#!/bin/sh
+# /etc/init.d/adviserd: start Adviserd
+#
+# chkconfig: 2345 10 90
+#
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+PATHFUL_ADVISER=/usr/local/bin/adviserd
+PATH_STUNNEL=/usr/sbin/stunnel4
+STUNNEL_KVM_NAME=stunnel4
+
+test -f /usr/local/bin/adviserd || exit 0
+test -f /usr/sbin/stunnel4 || exit 0
+
+
+# Options for start/restart the daemons
+#
+
+
+#
+
+
+case "$1" in
+  start)
+    echo -n "Starting Adviser :Adviserd"
+    start-stop-daemon --start --quiet --exec $PATHFUL_ADVISER
+    echo "."
+    ;;
+  stop)
+    echo -n "Stopping Adviser :Adviserd"
+    start-stop-daemon --stop --quiet --exec $PATHFUL_ADVISER
+    sleep 5
+    start-stop-daemon --stop --quiet --exec $PATH_STUNNEL -n $STUNNEL_KVM_NAME
+    start-stop-daemon --stop --quiet --exec $PATHFUL_ADVISER --signal KILL
+    start-stop-daemon --stop --quiet --exec $PATH_STUNNEL --signal KILL -n $STUNNEL_KVM_NAME
+    echo "."
+    ;;
+    reload)
+	echo -n "Reloading Adviser :Adviserd"
+    	start-stop-daemon --stop --quiet --exec $PATHFUL_ADVISER
+	sleep 5
+	start-stop-daemon --stop --quiet --exec $PATHFUL_ADVISER --signal KILL
+	#start-stop-daemon --stop --quiet --exec $PATHFUL_ADVISER --signal 1
+    	start-stop-daemon --start --quiet --exec $PATHFUL_ADVISER
+	echo "."
+	;;
+    force-reload)
+	$0 reload
+	;;
+    restart)
+	echo -n "Restarting Adviser :Adviserd"
+    	start-stop-daemon --stop --quiet --oknodo --exec $PATHFUL_ADVISER
+	sleep 5
+	start-stop-daemon --stop --quiet --exec $PATH_STUNNEL -n $STUNNEL_KVM_NAME
+	start-stop-daemon --stop --quiet --oknodo --exec $PATHFUL_ADVISER --signal KILL
+	start-stop-daemon --stop --quiet --exec $PATH_STUNNEL --signal KILL -n STUNNEL_KVM_NAME
+	
+	# Now start again
+	start-stop-daemon --start --quiet --exec $PATHFUL_ADVISER
+	echo "."
+	;;
+   *)
+    echo "Usage: /etc/init.d/cdserver {start|stop|reload|restart|force-reload}"
+    exit 1
+esac
+
+exit 0

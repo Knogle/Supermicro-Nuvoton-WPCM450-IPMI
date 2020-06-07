@@ -1,0 +1,66 @@
+<profile name="SoftwareInventoryProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+      </class>
+      <class name="CIM_SoftwareIdentityResource" profile="SoftwareInventoryProfile">
+      </class>
+      <class name="CIM_SystemSpecificCollection" profile="SoftwareInventoryProfile">
+      </class>
+      <class name="CIM_ManagedElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_System" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedAccessPoint" profile="SoftwareInventoryProfile">
+            <class name="CIM_SoftwareIdentityResource" profile="SoftwareInventoryProfile">
+            </class>
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="SoftwareInventoryProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">   
+            </class>
+      </association>
+      <association classname="CIM_HostedCollection" profile="SoftwareInventoryProfile">
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_SystemSpecificCollection" profile="SoftwareInventoryProfile">
+            </class>
+      </association>
+      <association classname="CIM_InstalledSoftwareIdentity" profile="SoftwareInventoryProfile">
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">   
+            </class>
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="SoftwareInventoryProfile">
+            <class name="CIM_SystemSpecificCollection" profile="SoftwareInventoryProfile">
+            </class>
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">   
+            </class>
+      </association>
+      <association classname="CIM_SAPAvailableForElement" profile="SoftwareInventoryProfile">
+            <class name="CIM_SoftwareIdentityResource" profile="SoftwareInventoryProfile">
+            </class>
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">   
+            </class>
+      </association>
+      <association classname="CIM_ElementSoftwareIdentity" profile="SoftwareIdentityProfile">
+            <class name="CIM_SoftwareIdentity" profile="SoftwareIdentityProfile">
+            </class>
+            <class name="CIM_ManagedElement" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_OrderedDependency" profile="SoftwareInventoryProfile">
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+            </class>
+      </association>
+      <association classname="CIM_OrderedComponent" profile="SoftwareIdentityProfile">
+            <class name="CIM_SoftwareIdentity" profile="SoftwareIdentityProfile">
+            </class>
+      </association>
+</profile>

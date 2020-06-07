@@ -1,0 +1,11 @@
+Important Note:
+	Mounting a non-jffs2 or corrupted-jffs2 mtd partition changes 
+    the contents of the flash to make it mountable (make it jffs2). 
+	
+	mtd0 maps the whole flash region. To avoid accidently mounting
+    mtdblock0 and corrupting the flash, mtdblock0 is not created.
+
+    To avoid accidently creating a mtdblock0, this read-only file 
+    is provided here
+
+

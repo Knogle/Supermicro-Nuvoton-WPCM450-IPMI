@@ -1,0 +1,68 @@
+#!/bin/sh
+
+echo "INTERFACE is $IFACE"
+
+if [ $IFACE != "eth0" ]; then
+    exit 0;
+fi
+
+echo "Interface eth0 is up"
+
+##we kill webgo so that it comes up properly with the new ip as needed
+#killall webgo
+
+#we restart webgo so that it comes up properly with the new ip as needed
+/etc/init.d/webgo restart
+
+#we have to include the dhcpc-conf file in order to know if we have to register on DNS or not
+. /conf/dhcpc-config
+
+INTERFACE=$IFACE
+#call getdns vars to get stuff
+getdnsvars
+
+
+if [ -z "$DO_DDNS" ]; then
+    echo "skipping DDNS Update. Option is not present"
+    exit 0
+else
+#check if variable is set to yes
+    if [ "$DO_DDNS" == 'yes' ]; then
+    	echo "Will perform DDNS registration"
+    else
+    	echo "DO_DDNS is off. Will skip DDNS update"
+	exit 0
+    fi
+fi
+
+#The tasks to do on up are as follows
+#do an nsupdate
+
+NSUPDATE_SCRIPT=/etc/nsupdate_basic.sh
+
+#when we do nsupdate here we just want to take the new IP
+#the hostname , the dns domain name conactenate
+# and do a register there
+# resolve.conf etc should be right becuase nw config takes care of that
+
+IP=`/sbin/ifconfig eth0 |  grep "inet addr:" | cut -d: -f2 | awk '{ print $1}'`
+
+echo "IP is $IP"
+
+
+HOST_NAME=`hostname`
+echo $HOST_NAME
+DOMAIN_NAME=`cat /etc/resolv.conf | grep "search" | awk '{ print $2}'`
+echo $DOMAIN_NAME
+REGISTER_NAME=$HOST_NAME.$DOMAIN_NAME
+
+echo -n "name to register is "
+echo -n $REGISTER_NAME
+
+$NSUPDATE_SCRIPT register $REGISTER_NAME $IP 
+
+
+
+
+
+

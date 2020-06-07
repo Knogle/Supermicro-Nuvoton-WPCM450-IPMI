@@ -1,0 +1,104 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+GetFullTarget()
+{ 
+echo -n "Extracting Target Root for $ARCH (This will take few minutes) ..."
+tar xzf $TOPDIR/target/target.full.tgz	
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+echo -n "Renaming target.$ARCH to target ..."
+mv target.$ARCH target
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+cd target
+echo -n "Applying target Patches (if any) ..."
+for i in  $TOPDIR/patches/target/PATCH*/*
+do
+	if ! [ -e $i ]
+	then 
+		continue
+	fi
+	patch -p1 < $i > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "Failed to patch $i"
+		exit 1
+	fi
+done
+echo "Done"
+
+echo -n "Setting Permissions for target ..."
+cd $TARGETDIR
+chmod -R g+w *
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+}
+
+
+GetNewTarget()
+{
+if ! [ -d $TOPDIR/$BUILD_DIR/target.new ]
+then
+	echo -n "Creating $TOPDIR/$BUILD_DIR/target.new ..."
+	mkdir -p $TOPDIR/$BUILD_DIR/target.new
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+	echo "Done"
+else
+	echo -n "Cleaning $TOPDIR/$BUILD_DIR/target.new ..."
+	rm -r -f $TOPDIR/$BUILD_DIR/target.new/*
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+	echo "Done"
+fi
+
+
+echo -n "Copying files to $TOPDIR/$BUILD_DIR/target.new ..."
+cp -r $TOPDIR/target.new/* $TOPDIR/$BUILD_DIR/target.new
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+}
+
+GetFullTarget
+GetNewTarget
+exit 0

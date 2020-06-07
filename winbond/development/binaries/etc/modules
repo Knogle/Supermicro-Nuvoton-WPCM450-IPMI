@@ -1,0 +1,13 @@
+helper
+gpio
+kcs
+videocap
+i2c-core
+i2c-dev
+i2c-algo-hermon
+i2c-hermon
+adc
+usbe
+ncsi
+smcdrv
+wdt

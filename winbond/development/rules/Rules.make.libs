@@ -1,0 +1,58 @@
+#----------------------------------------------------------------------
+# 			Rules.make for Libraries
+# 		   Copyright (c) 2003 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif
+
+#----------------------------------------------------------------------
+#			Include Global Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.global
+
+
+INCLUDEDIR = .
+#-----------------------------------------------------------------------
+#			General purpose library building
+#-----------------------------------------------------------------------
+#this stuff is mostly used within makefiles inside the libs directory
+# this simplifies concepts such as linker name,shared object name etc
+TARGET = $(LIBRARY_NAME).a
+
+# Name of the library shared object
+LIB_COMMON_LIBNAME = $(LIBRARY_NAME).so
+
+# These are unix (linux) standards for naming shared libraries.
+# Stick to these conventions for naming.
+# Linux HOWTO http://www.tldp.org/HOWTO/Program-Library-HOWTO/introduction.html
+# for details
+LIB_LINKERNAME = $(LIB_COMMON_LIBNAME)
+LIB_SONAME = $(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR)
+LIB_REALNAME = $(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR).$(LIB_VER_MINOR)
+LIB_ARCHIVE_NAME = $(LIBRARY_NAME).a
+
+##this is only used by libami creators typically.
+##the archive created is converted to a .so that others can link to
+LIBAMI_ARCHIVE_NAME = libami.a
+LIBAMI_ARCHIVE_FULLPATH = $(AMIAPPS_COMMON_LIBDIR)/$(LIBAMI_ARCHIVE_NAME)
+
+
+install: $(LIB_LINKERNAME) extrainstall
+	install -d $(target_libdir)
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(LIB_REALNAME) $(target_libdir)
+	cd $(target_libdir);ln -sf $(LIB_REALNAME) $(LIB_SONAME)
+	cd $(target_libdir);ln -sf $(LIB_REALNAME) $(LIB_LINKERNAME)
+	install -d $(BINARYDIR)/usr/local/lib
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(LIB_REALNAME) $(BINARYDIR)/usr/local/lib
+	cd $(BINARYDIR)/usr/local/lib;ln -sf $(LIB_REALNAME) $(LIB_SONAME)
+	cd $(BINARYDIR)/usr/local/lib;ln -sf $(LIB_REALNAME) $(LIB_LINKERNAME)
+
+
+#------------------------- End of Rules.Make ---------------------------
+

@@ -1,0 +1,13 @@
+--- cimXmlGen.c	2007-06-22 09:23:13.000000000 +0000
++++ cimXmlGen.c.new	2007-08-01 23:38:13.000000000 +0000
+@@ -45,6 +45,10 @@
+ #define SFCB_ASM(x)
+ #endif
+ 
++#ifndef HOST_NAME_MAX
++#define HOST_NAME_MAX 256
++#endif
++
+ extern const char *instGetClassName(CMPIInstance * ci);
+ extern CMPIData opGetKeyCharsAt(CMPIObjectPath * cop, unsigned int index,
+                                 const char **name, CMPIStatus * rc);

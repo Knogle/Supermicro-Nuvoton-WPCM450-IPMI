@@ -1,0 +1,10 @@
+killall -9 adviserd cdserver fdserver ntpd sshd IPMB
+rmmod peci
+rmmod usbe
+rmmod i2c-pilot-ii
+rmmod i2c-dev
+rmmod videocap
+rmmod gpio
+rmmod pwmtach
+rmmod adc
+rmmod wdt

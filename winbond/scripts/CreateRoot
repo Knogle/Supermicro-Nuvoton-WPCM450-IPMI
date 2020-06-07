@@ -1,0 +1,691 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+# -----------------------------------------------------------
+# This function will tell us if files.* files have a comment 
+# or blank line and need to be skipped
+#
+# $1 is the line in the file
+# Return code of 1  indicates the file should be skipped 
+#-----------------------------------------------------------
+ShouldBeSkipped()
+{
+    echo $i | grep "^#" > /dev/null
+    if [ $? == 0 ]
+    then
+        return 1
+    fi
+    if [ "$i" == "" ]
+    then
+    	return 1
+    fi
+
+    return 0
+}
+
+VERSION=1.5
+echo "----------------------------------------------------------"
+echo "********** Creating Root File System Tree: $VERSION  **********"	   	
+echo "----------------------------------------------------------"
+
+# 
+# Required Directories 
+# 
+PROJDIR=$TOPDIR/development						# PROJECT Directory
+FILESDIR=$TOPDIR/$CONF_DIR/config.Root			# File Listings Directory
+NEWDIR=$TOPDIR/$BUILD_DIR/target.new			# Modified Files Directory
+BINARYDIR=$TOPDIR/development/binaries			# Binaries location
+FILES_CIM_DIR=$TOPDIR/development/oem/cim		# CIM Provider files Directory
+
+ValidateRootNo()
+{
+	if [ "$EXTRAROOT" == "" ]
+	then 
+	    ROOTNO=
+	    return
+	fi
+	if [ $EXTRAROOT -eq 0 ]
+	then
+	   ROOTNO=
+	   return 
+	fi
+	return
+
+	if [ "$ROOTNO" == "" ]
+	then 
+	    ROOTNO=
+	    return
+	fi
+	if [ $ROOTNO -gt $LOOP ]
+	then
+	   ROOTNO=
+	   return 
+	fi
+	return
+}
+
+
+#On Input $1 hss the string to be stiped and on output will have stipped string
+StripPrefixDir( )
+{
+	# If nothing to strip return
+	if [ "$ROOTNO"  == "" ]
+	then
+	   return
+	fi
+	if [ "$STRIP"  == "" ]
+	then
+	   return
+	fi
+
+	# Remove the prefix P
+	STRIP=`echo $STRIP | sed "s/P//g"`
+	STRIP=`expr $STRIP + 1`			# For leading .
+	INDEX=0
+
+ 	for i in `echo $ARG1 | sed "s/\// /g"`
+	do  
+		INDEX=`expr $INDEX + 1`
+		if [ $INDEX -eq 1 ]
+		then 
+			OUTSTR=$i		# For leading .	
+		fi
+		if [ $INDEX -gt $STRIP ]
+		then 
+			OUTSTR=$OUTSTR/$i
+		fi
+	 done
+	 ARG1=$OUTSTR
+
+}
+
+
+
+
+
+#
+# Creating TARGET Directory 
+#
+if [ -d $ROOTDIR ]; then
+	echo -n "Removing Old Root Directory ..."
+	rm -r -f $ROOTDIR
+	if [ $? != 0 ]; then
+		echo " Failed"
+		exit 1	
+	fi 
+	echo " Done"
+fi
+
+
+echo -n "Creating Root Directory..."
+mkdir -p $ROOTDIR
+if [ $? != 0 ]; then
+	echo " Failed"
+	exit 1	
+fi 
+echo " Done"
+
+if [ "$EXTRAROOT" != "" ]
+then 
+	LOOP=0
+	while [ $LOOP != $EXTRAROOT ]
+	do
+		LOOP=`expr $LOOP + 1`
+		if [ -d $ROOTDIR$LOOP ]; then
+			echo -n "Removing Old Root.$LOOP Directory ..."
+			rm -r -f $ROOTDIR$LOOP
+			if [ $? != 0 ]; then
+				echo " Failed"
+				exit 1	
+			fi 
+			echo " Done"
+		fi
+		echo -n "Creating Root.$LOOP Directory..."
+		mkdir -p $ROOTDIR$LOOP
+		if [ $? != 0 ]; then
+			echo " Failed"
+			exit 1	
+		fi 
+		echo " Done"
+	done
+fi
+
+
+echo -n "Creating Params Directory..."
+mkdir -p $PARAMSDIR
+if [ $? != 0 ]; then
+	echo " Failed"
+	exit 1	
+fi 
+echo " Done"
+
+#
+# Presence of necessary files - Error Checking
+#
+echo -n "Checking existance of necessary files and directories..."
+
+if ! [ -e $FILESDIR/files.dir ]; then
+	echo " Failed"
+	echo $FILESDIR/files.dir not found. Cannot build root file system
+	exit 1
+fi
+
+if ! [ -e $FILESDIR/files.cp ]; then
+	echo " Failed"
+	echo $FILESDIR/files.cp not found. Cannot build root file system
+	exit 1
+fi
+
+if ! [ -e $FILESDIR/files.ln ]; then
+	echo " Failed"
+	echo $FILESDIR/files.ln not found. Cannot build root file system
+	exit 1
+fi
+
+if ! [ -e $FILESDIR/files.dev ]; then
+	echo " Failed"
+	echo $FILESDIR/files.dev not found. Cannot build root file system
+	exit 1
+fi
+
+if ! [ -e $FILESDIR/files.new ]; then
+	echo " Failed"
+	echo $FILESDIR/files.new not found. Cannot build root file system
+	exit 1
+fi
+
+if ! [ -e $FILESDIR/files.conf ]; then
+	echo " Failed"
+	echo $FILESDIR/files.conf not found. Cannot build root file system
+	exit 1
+fi
+
+echo " Done"
+
+
+#
+# Create all the directories
+#
+echo -n "Creating Directory Tree..."
+while read i
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line separates $i into variables
+    read DIR ROOTNO STRIP << HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ARG1=$DIR
+	StripPrefixDir 
+	DIR=$ARG1
+	mkdir -p $ROOTDIR$ROOTNO/$DIR
+	if [ $? != 0 ]; then
+		echo " Failed"
+		echo Unable to create $ROOTDIR$ROOTNO/$DIR. Aborting...
+		exit 1
+	fi
+done < $FILESDIR/files.dir
+if [ $? != 0 ]
+then
+	echo "Failed. Could not create Directory Tree"
+	exit 1
+else
+	echo " Done"
+fi
+
+#
+# Copy All the Files 
+#
+echo -n "Copying files from the Build System..."
+while read i 
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line separates $i into variables
+    read FILE ROOTNO STRIP << HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ORGFILE=$FILE
+	ARG1=$FILE
+	StripPrefixDir 
+	FILE=$ARG1
+	if [ -e $BINARYDIR/$ORGFILE ]
+	then
+		#echo "Copying $BINARYDIR/$ORGFILE to $ROOTDIR$ROOTNO/$FILE "
+		cp $BINARYDIR/$ORGFILE $ROOTDIR$ROOTNO/$FILE
+	else
+		if [ -e $TARGETDIR/$ORGFILE ]
+		then
+			#echo "Copying  $TARGETDIR/$ORGFILE to $ROOTDIR$ROOTNO/$FILE "
+			cp $TARGETDIR/$ORGFILE $ROOTDIR$ROOTNO/$FILE
+		else
+			echo " Failed"
+			echo Unable to copy $ORGFILE to $ROOTDIR$ROOTNO/$FILE. Aborting...
+			
+			exit 1
+		fi
+	fi
+	if [ $? != 0 ]; then
+		echo " Failed"
+		echo Unable to copy $ORGFILE to $ROOTDIR$ROOTNO/$FILE. Aborting...
+		exit 1
+	fi
+done < $FILESDIR/files.cp
+if [ $? != 0 ]
+then
+	echo "Failed. Could not copy required files"
+	exit 1
+else
+	echo " Done"
+fi
+
+#Copying CIM Providers and related files 
+if [ "$USE_CIM" == "YES" ]; then
+if [ -e $FILES_CIM_DIR/files.cp.cimproviders ]; 
+then
+sort $FILES_CIM_DIR/files.cp.cimproviders | uniq > /tmp/files.cp.cimproviders
+cat /tmp/files.cp.cimproviders >  $FILES_CIM_DIR/files.cp.cimproviders
+
+echo -n "Copying CIM Provider files from the Build System..."
+while read i 
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line separates $i into variables
+    read FILE ROOTNO STRIP << HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ORGFILE=$FILE
+	ARG1=$FILE
+	StripPrefixDir 
+	FILE=$ARG1
+	if [ -e $BINARYDIR/$ORGFILE ]
+	then
+		#echo "Copying $BINARYDIR/$ORGFILE to $ROOTDIR$ROOTNO/$FILE "
+		cp $BINARYDIR/$ORGFILE $ROOTDIR$ROOTNO/$FILE
+	else
+		if [ -e $TARGETDIR/$ORGFILE ]
+		then
+			#echo "Copying  $TARGETDIR/$ORGFILE to $ROOTDIR$ROOTNO/$FILE "
+			cp $TARGETDIR/$ORGFILE $ROOTDIR$ROOTNO/$FILE
+		else
+			echo " Failed"
+			echo Unable to copy $ORGFILE to $ROOTDIR$ROOTNO/$FILE. Aborting...
+			
+			exit 1
+		fi
+	fi
+	if [ $? != 0 ]; then
+		echo " Failed"
+		echo Unable to copy $ORGFILE to $ROOTDIR$ROOTNO/$FILE. Aborting...
+		exit 1
+	fi
+done < $FILES_CIM_DIR/files.cp.cimproviders
+if [ $? != 0 ]
+then
+	echo "Failed. Could not copy required files"
+	exit 1
+else
+	echo " Done"
+fi
+fi #end of check for files.cp.cimproviders
+fi #end of USE_CIM
+
+#
+# Copy modified and new  Files 
+#
+echo -n "Copying new files ..."
+while read i
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line separates $i into variables
+    read FILE ROOTNO STRIP<< HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ARG1=$FILE
+	StripPrefixDir 
+	FILE=$ARG1
+	cp $NEWDIR/$FILE $ROOTDIR$ROOTNO/$FILE
+	if [ $? != 0 ]; then
+		echo " Failed"
+		echo Unable to copy $ROOTDIR$ROOTNO/$FILE. Aborting...
+		exit 1
+	fi
+done < $FILESDIR/files.new
+if [ $? != 0 ]
+then
+	echo "Failed. Could not copy required new files"
+	exit 1
+else
+	echo " Done"
+fi
+
+#
+# Create all the necessary devices
+#
+echo -n "Creating device nodes..."
+while read i
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line separates $i into variables
+    read TYPE MAJOR MINOR NAME << HERE
+        $(echo $i)
+HERE
+    if [ "$TYPE" == "p" ]
+    then 
+    	mknod $ROOTDIR/$NAME $TYPE 
+    else
+    	mknod $ROOTDIR/$NAME $TYPE $MAJOR $MINOR
+    fi
+    if [ $? != 0 ]; then
+	echo " Failed"
+	echo Unable to create device $ROOTDIR/$NAME. Aborting...
+    	exit 1
+    fi
+done < $FILESDIR/files.dev
+if [ $? != 0 ]
+then
+	echo "Failed. Could not create necessary device nodes"
+	exit 1
+else
+	echo " Done"
+fi
+
+#	
+# Creating Symbolic links for the necessary files
+#
+echo -n "Creating Symbolic links..."
+while read i
+do
+	ShouldBeSkipped $i
+	if [ $? == 1 ]
+	then 
+	    continue
+	fi
+#this piece of line separates $i into variables
+    read DEST LNSEP SRC ROOTNO STRIP << HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ARG1=$DEST
+	StripPrefixDir 
+	DEST=$ARG1
+	ln -s $SRC $ROOTDIR$ROOTNO/$DEST
+	if [ $? != 0 ]; then 
+		echo " Failed"
+		echo Unable to link $SRC to $ROOTDIR$ROOTNO/$DEST
+		exit 1
+	fi
+done < $FILESDIR/files.ln 
+if [ $? != 0 ]
+then
+	echo "Failed. Could not create necessary symbolic links"
+	exit 1
+else
+	echo " Done"
+fi
+
+#Create links for CIM Providers and related files
+if [ "$USE_CIM" == "YES" ]; then
+if [ -e $FILES_CIM_DIR/files.ln.cimproviders ]; then
+
+sort $FILES_CIM_DIR/files.ln.cimproviders | uniq > /tmp/files.ln.cimproviders
+cat /tmp/files.ln.cimproviders > $FILES_CIM_DIR/files.ln.cimproviders
+
+echo -n "Creating Symbolic links for CIM Providers..."
+while read i
+do
+	ShouldBeSkipped $i
+	if [ $? == 1 ]
+	then 
+	    continue
+	fi
+#this piece of line separates $i into variables
+    read DEST LNSEP SRC ROOTNO STRIP << HERE
+        $(echo $i)
+HERE
+	ValidateRootNo
+	ARG1=$DEST
+	StripPrefixDir 
+	DEST=$ARG1
+	ln -s $SRC $ROOTDIR$ROOTNO/$DEST
+	if [ $? != 0 ]; then 
+		echo " Failed"
+		echo Unable to link $SRC to $ROOTDIR$ROOTNO/$DEST
+		exit 1
+	fi
+done < $FILES_CIM_DIR/files.ln.cimproviders 
+if [ $? != 0 ]
+then
+	echo "Failed. Could not create necessary symbolic links"
+	exit 1
+else
+	echo " Done"
+fi
+fi #end of check for files.ln.cimproviders
+fi #end of USE_CIM
+
+##############CONFIGURATION FILES##############################
+# Since our move to a separate config partition,
+# Config section will have the default configuration files that
+# keep getting modified often
+# So I see a move of all files that are updated by us and need  
+# to be preserved across reboots moved to this place
+# This will mean that the original location are just a link to
+# the conf location
+###############################################################
+#	
+# Creating Configuration Files Directory
+#
+echo -n "Creating Configuration Files..."
+while read i
+do
+	ShouldBeSkipped $i
+	if [ $? == 1 ]
+	then 
+	    continue
+	fi
+#this piece of line separates $i into variables
+   	read SRC TYPE << HERE
+        $(echo $i)
+HERE
+	if [ "$TYPE" = "n" ]
+    	then
+        	#we have to copy from target.new
+		cp $NEWDIR/$SRC $PARAMSDIR
+	else
+		if [ -e $BINARYDIR/$i ]
+		then
+			cp $BINARYDIR/$i $PARAMSDIR
+		else
+			if [ -e $TARGETDIR/$i ]
+			then
+				cp $TARGETDIR/$i $PARAMSDIR
+			else
+				echo " Failed"
+				echo Unable to find $BINARYDIR/$SRC or $TARGETDIR/$SRC. Aborting...
+				exit 1
+			fi
+		fi
+	fi
+	if [ $? != 0 ]; then 
+		echo " Failed"
+		if [ "$TYPE" = "n" ]
+		then
+			echo Unable to copy to $PARAMDIR/$SRC Aborting ...
+		else
+			echo Unable to copy to $PARAMDIR/$i Aborting ...
+		fi
+		
+		exit 1
+	fi
+done < $FILESDIR/files.conf 
+if [ $? != 0 ]
+then
+	echo "Failed . Unable to copy necessary files to params dir"
+	exit 1
+else
+	echo "Done."
+fi
+
+#Creating files in /conf for CIM providers
+if [ "$USE_CIM" == "YES" ]; then
+if [ -e $FILES_CIM_DIR/files.conf.cimproviders ]; then
+
+sort $FILES_CIM_DIR/files.conf.cimproviders | uniq > /tmp/files.conf.cimproviders
+cat /tmp/files.conf.cimproviders > $FILES_CIM_DIR/files.conf.cimproviders
+
+echo -n "Creating Configuration Files for CIM Providers..."
+while read i
+do
+	ShouldBeSkipped $i
+	if [ $? == 1 ]
+	then 
+	    continue
+	fi
+#this piece of line separates $i into variables
+   	read SRC TYPE << HERE
+        $(echo $i)
+HERE
+	if [ "$TYPE" = "n" ]
+    	then
+        	#we have to copy from target.new
+		cp $NEWDIR/$SRC $PARAMSDIR
+	else
+		if [ -e $BINARYDIR/$i ]
+		then
+			cp $BINARYDIR/$i $PARAMSDIR
+		else
+			if [ -e $TARGETDIR/$i ]
+			then
+				cp $TARGETDIR/$i $PARAMSDIR
+			else
+				echo " Failed"
+				echo Unable to find $BINARYDIR/$SRC or $TARGETDIR/$SRC. Aborting...
+				exit 1
+			fi
+		fi
+	fi
+	if [ $? != 0 ]; then 
+		echo " Failed"
+		if [ "$TYPE" = "n" ]
+		then
+			echo Unable to copy to $PARAMDIR/$SRC Aborting ...
+		else
+			echo Unable to copy to $PARAMDIR/$i Aborting ...
+		fi
+		
+		exit 1
+	fi
+done < $FILES_CIM_DIR/files.conf.cimproviders
+if [ $? != 0 ]
+then
+	echo "Failed . Unable to copy necessary files to params dir"
+	exit 1
+else
+	echo "Done."
+fi
+fi #end of check for files.conf.cimproviders
+fi #end of USE_CIM
+
+
+echo -n "Copying all conf files to defconfig copy in root ..."
+mkdir -p $ROOTDIR/etc/defconfig
+if [ $? != 0 ]
+then
+	echo "Failed. Unable to create $ROOTDIR/etc/defconfig"
+	exit 1
+else
+	echo "Done."
+fi
+
+cp -R $PARAMSDIR/* $ROOTDIR/etc/defconfig
+if [ $? != 0 ]
+then
+	echo "Failed."
+	exit 1
+else
+	echo "Done."
+fi
+
+
+#
+# Striping Sumbols from ELF files to reduce the size 
+#
+echo -n "Striping Symbols ..."
+for i in `find $ROOTDIR`
+do
+	file $i | grep ELF > /dev/null				 # Check if it is a ELF 
+	if [ $? == 0 ]; then 
+		file $i | grep "relocatable" > /dev/null
+		if [ $? != 0 ]
+		then
+			$CROSS_COMPILE"strip" $i
+			if [ $? != 0 ]; then 
+				echo " Failed"
+				echo Unable to strip symbols form  $i
+				exit 1
+			fi
+		else
+			$CROSS_COMPILE"strip"  --strip-unneeded $i	# For kernel modules 
+			if [ $? != 0 ]; then 
+				echo " Failed"
+				echo Unable to strip symbols form  $i
+				exit 1
+			fi
+		fi
+	fi
+done
+echo " Done"
+
+# Now we have to install the busybox into this directory for the remaining files
+
+cd $TOPDIR/$BUILD_DIR/busybox
+if [ $? != 0 ]; then 
+	echo "Unable to find busybox. Root Directory creation Failed"
+	exit 1
+fi
+echo -n "Installing busybox into the root directory ..."
+make install PREFIX=$ROOTDIR
+if [ $? != 0 ]; then
+	echo " Failed"
+	exit 1	
+fi 
+echo " Done"
+
+
+echo "----------------------------------------------------------"
+echo "***** Successfully created Root Directory !! *******"
+echo "----------------------------------------------------------"
+exit 0
+

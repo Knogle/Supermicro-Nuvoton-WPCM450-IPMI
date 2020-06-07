@@ -1,0 +1,66 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+echo -n "Extracting Linux $LINUX_VER ..."
+tar xjf $TOPDIR/pristine/linux/linux-$LINUX_VER.tar.bz2
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+CUR_USER=`whoami`
+echo -n "Changing Ownership of linux to current user ..."
+chown $CUR_USER:$CUR_USER linux-$LINUX_VER -R
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+echo -n "Renaming linux-$LINUX_VER to linux ..."
+mv linux-$LINUX_VER linux
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+cd $TOPDIR/$BUILD_DIR/linux
+echo -n "Applying linux Patches ..."
+for i in  $TOPDIR/patches/linux/PATCH*/*
+do
+	if ! [ -e $i ]
+	then 
+		continue
+	fi
+	patch -p1 < $i > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "Failed to patch $i"
+		exit 1
+	fi
+done
+echo "Done"
+
+
+
+exit 0

@@ -1,0 +1,59 @@
+#!/bin/sh -e
+
+# Silently exit if the kernel does not support modules or needs modutils.
+[ -f /proc/modules ] || exit 0
+[ ! -f /proc/ksyms ] || exit 0
+#[ -x /sbin/depmod  ] || exit 0
+
+PATH="/sbin:/bin"
+
+KVER=$(uname -r)
+KMAJ=${KVER%${KVER#*.*[^.]}}
+KMAJ=${KMAJ%.}
+
+if [ -w /lib/modules/$KVER/ ]; then
+  if [ -x /sbin/depmod  ] 
+  then
+  	echo -n "Calculating module dependencies... "
+  	depmod -n > /var/modules.dep
+  	echo "done."
+  fi
+else
+  echo "Not running depmod because /lib/modules/$KVER/ is not writeable."
+fi
+
+#if [ -e /etc/modules-$KVER ]; then
+#  MODULES_FILE=/etc/modules-$KVER
+#elif [ -e /etc/modules-$KMAJ ]; then
+#  MODULES_FILE=/etc/modules-$KMAJ
+#else
+  MODULES_FILE=/etc/modules
+#fi
+
+# Loop over every line in /etc/modules.
+echo 'Loading modules...'
+grep '^[^#]' $MODULES_FILE | \
+while read module args; do
+  [ "$module" ] || continue
+  echo "Loading Module $module ..."
+#  modprobe $module $args || true
+  insmod $module $args || true
+done
+echo "All modules loaded."
+
+# Just in case a sysadmin prefers generic symbolic links in
+# /lib/modules/boot for boot time modules we will load these modules.
+#boot="$(modprobe --list --type boot)"
+#for d in $boot; do
+#    mod="${d##*/}"
+#    mod="${mod%.ko}"
+#    modprobe "$mod"
+#done
+
+if [ -r /etc/modprobe.conf ] \
+	&& ! grep -q '^include.*modprobe.d' /etc/modprobe.conf; then
+   echo 'WARNING: /etc/modprobe.conf exists but does not include /etc/modprobe.d/!'
+fi
+
+exit 0
+

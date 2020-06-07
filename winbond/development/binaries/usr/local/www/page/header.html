@@ -1,0 +1,102 @@
+<html>
+<head>
+	<link href="../style/header_style.css" rel="stylesheet" type="text/css" />
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/header_str.js\"><\/script>");
+	</script>
+	<script src="../impl/header_imp.js"></script>
+
+	<script language="javascript" src="../navobj.js"></script>
+	<script language="javascript" src="../lib/bitset.js"></script>
+	<script>
+	document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/navobj_str.js\"><\/script>");
+	</script>
+	
+	
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			doInit();
+		}
+	}
+	</script>
+</head>
+
+<!--  =====================================================================    -->
+
+<body style="margin:0;padding:0;" bgcolor="#DEDED3">
+
+<div style="overflow-x:auto; width=100%;">
+<!--  Banner Background   -->
+	<table style="margin:0px;padding:0px" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td id="_headerleft" align="left"><img id="_bannerleftimg" src="../res/banner_left.png" height="63px" alt="" border="0"></td>
+
+<!--  Linda added   -->
+<td id="_headermiddle" class="hMiddle">
+<fieldset style = "border-color:black; width:300px; height:48px;"><legend><font color=black size="-1">Host Identification</font></legend>
+
+<table border=0 cellspacing=0 cellpadding=0 align="center" height=35px>
+
+<tr style="text-align: center; font-weight: bold; font-size: 12px">
+<td style="font-size: 12px;"><b>Server:&nbsp</b></td>
+<td id="_header_hostname" style="font-size: 12px;"></td><td>&nbsp(&nbsp</td><td id="_header_serverip" style="font-size: 12px;"></td><td>&nbsp)</td>
+</tr>
+
+<tr style="text-align: center; font-weight: bold; font-size: 12px">
+<td style="font-size: 12px;"><b>User:&nbsp</b></td>
+<td id="_header_username" style="font-size: 12px;"></td><td>&nbsp(&nbsp</td><td id="_header_userlevel" style="font-size: 12px;"></td><td>&nbsp)</td>
+</tr>
+
+</table>
+
+</fieldset>
+</td>
+
+
+			<td id="_headerright" align="right"><img id="_bannerrightimg" src="../res/banner_right.png" height="63px" alt=""></td>
+		</tr>
+		<tr>
+			<td id="_navbar" class="nBar" colspan="3" align="right" valign="middle">
+			<span id="_navbarhelplink" class="navbarhelplink">
+				<img id="_navbarhelpimg" src="../res/help.gif">&nbsp;
+				<span id="_navbarhelptxt" style="position:relative;top:-5px">HELP</span>
+			</span>
+			</td>
+		</tr>
+	</table>
+
+
+
+<!--  Icon, main title and main description cells   -->
+<!--    <table border="0px" cellpadding="0px" cellspacing="0" width="100%" height="72px" style="margin:0;border-bottom:3px solid rgb(190,190,180)" bgcolor="">   -->
+  <table border="0px" cellpadding="0px" cellspacing="0" width="99%" height="72px" style="margin:0;" bgcolor="">
+	 <tr>
+		<td bgcolor="" align="middle" width="160px" height="60px" rowspan="2"><img id="_sidebaricon" class="sidebaricon"></td>
+		<td id="_titlecell" class="titlecell" bgcolor="" align="left" height="28px"></td>
+		<td id="_username" bgcolor="" align="right" height="24px" width="20%"></td>
+	 </tr>
+	 <tr>
+		<td id="_descriptioncell" class="descriptioncell" bgcolor="" align="left" height="26px"></td>
+		<td id="_servernameip" bgcolor="" align="right" style="vertical-align:top"></td>
+	 </tr>
+  </table>
+</div>
+
+<!--  Container used to determine rendered width of buttons   -->
+<!--  [BrandonB] 5/17/2005   -->
+<div style="position:absolute;visibility:hidden;" id="_fntwcanvas"></div>
+<div style="position:absolute;visibility:hidden;" id="_menudiv"></div>
+
+</body>
+
+<!--  =====================================================================    -->
+
+
+</html>
+

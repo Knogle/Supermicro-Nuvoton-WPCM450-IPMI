@@ -1,0 +1,72 @@
+<profile name="TelnetServiceProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_TelnetProtocolEndpoint" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_TCPProtocolEndpoint" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_TelnetSettingData" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_TelnetCapabilities" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedService" profile="TelnetServiceProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedAccessPoint" profile="TelnetServiceProfile">
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_TCPProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_TelnetProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_BindsTo" profile="TelnetServiceProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_TCPProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_TelnetProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="TelnetServiceProfile">
+            <class name="CIM_TelnetCapabilities" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="TelnetServiceProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="TelnetServiceProfile">
+            <class name="CIM_TelnetSettingData" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_TelnetProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>       
+      </association>
+      <association classname="CIM_ServiceAccessBySAP" profile="TelnetServiceProfile">
+            <class name="CIM_TCPProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>       
+      </association>
+      <association classname="CIM_ProvidesEndpoint" profile="TelnetServiceProfile">
+            <class name="CIM_TelnetProtocolEndpoint" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>       
+      </association>
+</profile>

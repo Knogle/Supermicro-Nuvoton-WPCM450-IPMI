@@ -1,0 +1,59 @@
+#! /bin/sh
+# /etc/init.d/hidserver: start HID Server
+#
+# chkconfig: 2345 10 90
+#
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+PATHFUL_HIDSERVER=/usr/local/bin/hidserver
+USB_DRIVERNAME=usbe
+
+
+test -f /usr/local/bin/hidserver || exit 0
+
+
+# Options for start/restart the daemons
+#
+
+
+#
+
+
+case "$1" in
+  start)
+	lsmod | grep $USB_DRIVERNAME >/dev/null
+	if [ $? == 1 ]
+    then
+  	  echo -n "Loading USB driver... "
+	  insmod $USB_DRIVERNAME
+	  echo "Done"
+	fi
+    echo -n "Starting HID Redirection Server: hidserver"
+    start-stop-daemon --start --quiet --exec $PATHFUL_HIDSERVER
+    echo "."
+    ;;
+  stop)
+    echo -n "Stopping HID Redirection Server: hidserver"
+    start-stop-daemon --stop --quiet --exec $PATHFUL_HIDSERVER
+    echo "."
+    ;;
+    reload)
+	echo -n "Reloading HID Redirection Server: hidserver"
+	start-stop-daemon --stop --quiet --exec $PATHFUL_HIDSERVER --signal 1
+	echo "."
+	;;
+    force-reload)
+	$0 reload
+	;;
+    restart)
+	echo -n "Restarting HID Redirection Server: hidserver"
+	start-stop-daemon --stop --quiet --oknodo --exec $PATHFUL_HIDSERVER
+	start-stop-daemon --start --quiet --exec $PATHFUL_HIDSERVER
+	echo "."
+	;;
+   *)
+    echo "Usage: /etc/init.d/hidserver {start|stop|reload|restart|force-reload}"
+    exit 1
+esac
+
+exit 0

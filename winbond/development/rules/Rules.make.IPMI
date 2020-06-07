@@ -1,0 +1,119 @@
+#----------------------------------------------------------------------
+# 			Rules.make for IPMI stack
+# 		   Copyright (c) 2003 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif 
+
+#----------------------------------------------------------------------
+#			Include Global Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.global
+
+INCLUDEDIR = .
+#------------------------------------------------------------------------
+# IPMI Root directory is where Rules.make is
+#------------------------------------------------------------------------
+IPMI_ROOT := $(TOPDIR)/development/proprietary/firmware/IPMI
+IPMI_OEM_ROOT := $(TOPDIR)/development/oem/firmware/IPMI/
+include $(IPMI_OEM_ROOT)Configs.make.IPMI
+
+
+#------------------------------------------------------------------------
+# Soft Processor flags
+#------------------------------------------------------------------------
+SOFTPROC_FLAGS = -DLINUX -DUSE16 -DHOST_LITTLE_ENDIAN -DALERT_AS_PRINTF=1
+
+#------------------------------------------------------------------------
+# Other build flags
+#------------------------------------------------------------------------
+IPMI_CFLAGS += $(FW_CONFIG_FLAGS)
+IPMI_CFLAGS += $(SOFTPROC_FLAGS)
+
+#------------------------------------------------------------------------
+# Include directories for IPMI
+#------------------------------------------------------------------------
+IPMIINCDIRS  = -I$(TARGETDIR)/usr/include/
+IPMIINCDIRS += -I$(TOPDIR)/development/common/include/crypto
+IPMIINCDIRS += -I$(IPMI_ROOT)/core/SoftProc
+IPMIINCDIRS += -I$(IPMI_ROOT)/core/PDK/API
+IPMIINCDIRS += -I$(IPMI_ROOT)/core/HAL/api
+IPMIINCDIRS += -I$(IPMI_ROOT)/core/HAL/hw
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/$(PDK_PLATFORM_DIR)
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/common
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/common/inc
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/common/cmds
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)
+IPMIINCDIRS += -I$(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)/cfg
+
+
+#------------------------------------------------------------------------
+# IPMI internal libraries
+#------------------------------------------------------------------------
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/PDK/libPDKAPI.so
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/STACKLib/libSTACKCommon.a
+IPMI_INTERNAL_LIB += $(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/libPDK.so
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/oem/firmware/IPMI/oem/$(PDK_DIR)/common/cmds/libPDKCmd.so
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/PDK/libPDKAPI.so
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/HAL/api/libipmihalapi.so
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/HAL/hw/libipmihalhw.so
+IPMI_INTERNAL_LIB += $(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/Hooks/libPDKFlash.so 
+
+ifeq ($(USE_SOFTPROC),1)
+IPMI_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/IPMI/core/SoftProc/libSoftProc.so
+endif
+
+#------------------------------------------------------------------------
+# Linking flags
+#------------------------------------------------------------------------
+#IPMILIBS = $(IPMI_INTERNAL_LIB)
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libi2c/libi2c.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libgpio/libgpio.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libsmtp/libsmtp.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libsnoop/libsnoop.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libpwmtach/libpwmtach.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libadc/libadc.so
+IPMILIBS += $(TOPDIR)/development/proprietary/firmware/libs/libpeci/libpeci.so
+IPMILIBS +=  -lpthread -ldl 
+IPMILIBS += $(TARGETDIR)/usr/lib/libcrypto.so
+
+
+#--------------------------------------------------------------------------------
+
+IPMI_DEBUG_FLAGS = -D_DEBUG_ #-DSP_DEBUG -DSP_SERIAL_DEBUG
+
+CFLAGS += $(IPMIINCDIRS) $(IPMI_CFLAGS) $(IPMI_DEBUG_FLAGS)
+LIBS +=  $(IPMILIBS) $(IPMI_INTERNAL_LIB) 
+# -Wl,--start-group $(IPMI_INTERNAL_LIB) --end-group
+
+CFLAGS += -I$(TOPDIR)/development/common/include/i2c
+CFLAGS += -I$(TOPDIR)/development/common/include/network
+CFLAGS += -I$(TOPDIR)/development/common/include/fmh
+CFLAGS += -I$(TOPDIR)/development/common/include/webifc
+CFLAGS += -I$(TOPDIR)/development/common/include/gpio
+CFLAGS += -I$(TOPDIR)/development/common/include/smtp
+CFLAGS += -I$(TOPDIR)/development/common/include/soc
+CFLAGS += -I$(TOPDIR)/development/common/include/flash
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/ipmi_inc_oem
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/pwmtach
+CFLAGS += -I$(TOPDIR)/development/common/include/libipmi_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/pwmtach
+CFLAGS += -I$(TOPDIR)/development/common/include/adc
+CFLAGS += -I$(TOPDIR)/development/common/include/peci
+CFLAGS += -I$(TOPDIR)/development/common/include/ssl
+CFLAGS += -I$(TOPDIR)/development/common/include/LPC
+CFLAGS += -I$(TOPDIR)/development/common/include/userm
+CFLAGS += -I$(TOPDIR)/development/common/include/adviser
+
+#.c.o:
+#	@echo "Compiling   $< ..."
+#	@$(CC) -c $(CFLAGS) -o $@ $<
+
+
+#------------------------------------ End of Rules.Make ---------------------------

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile name="Record Log Profile">
+	<class name="CIM_RecordLog" profile="Record Log Profile">    </class>
+	<class name="CIM_EnabledLogicalElementCapabilities" profile="Record Log Profile"></class>
+	<class name="CIM_LogRecord" profile="Record Log Profile"></class>
+	<class name="CIM_ManagedSystemElement" profile="Referencing Profile"></class>
+	<class name="CIM_RegisteredProfile" profile="Profile Registration Profile"></class>
+	<association classname="CIM_LogManagesRecord" profile="Record Log Profile">
+		<class name="CIM_LogRecord" profile="Record Log Profile"></class>
+		<class name="CIM_RecordLog" profile="Record Log Profile"></class>
+	</association>
+	<association classname="CIM_ElementCapabilities" profile="Record Log Profile">
+			<class name="CIM_EnabledLogicalElementCapabilities" profile="Record Log Profile"></class>
+			<class name="CIM_RecordLog" profile="Record Log Profile"></class>
+	</association>			
+	<association classname="CIM_ElementConformsToProfile" profile="Profile Registration Profile">
+			<class name="CIM_RecordLog" profile="Record Log Profile"></class>
+			<class name="CIM_RegisteredProfile" profile="Profile Registration Profile"></class>
+	</association>
+	<association classname="CIM_UseOfLog" profile="Record Log Profile">
+		<class name="CIM_RecordLog" profile="Record Log Profile"></class>
+		<class name="CIM_ManagedSystemElement" profile="Referencing Profile"></class>
+	</association>
+</profile>

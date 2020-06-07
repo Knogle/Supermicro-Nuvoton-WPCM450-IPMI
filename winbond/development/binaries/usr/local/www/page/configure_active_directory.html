@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/listgrid.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../lib/listgrid.js"></script>
+  <script type="text/javascript" src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_active_directory_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_active_directory_imp.js"></script>
+
+  
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_active_directory", "STR_CONF_AD_TITLE");
+		var elmt = document.getElementById("_addBtn");
+		elmt.setAttribute("value", eLang.getString("configure_active_directory", "STR_CONF_AD_ADDBTN"));
+		var elmt = document.getElementById("_modBtn");
+		elmt.setAttribute("value", eLang.getString("configure_active_directory", "STR_CONF_AD_MODBTN"));
+		var elmt = document.getElementById("_delBtn");
+		elmt.setAttribute("value", eLang.getString("configure_active_directory", "STR_CONF_AD_DELBTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_active_directory", "STR_CONF_AD_HEADING"));</script>
+</h3>
+<div class="subSection" style="padding-top:0px" align="right">
+<a href="configure_active_dir_advanced.html" class="Adv_Btn" onclick="" />
+<script>document.writeln(eLang.getString("configure_active_directory", "STR_CONF_AD_ADVANCED"));</script>
+</a>
+</div>
+<label id="_adDesc"></label><br>
+<p>
+<script>document.writeln(eLang.getString("configure_active_directory", "STR_CONF_AD_ROLE_GROUP_DESC"));</script>
+</p>
+<div align="right">
+<label id="_lblHeader" class="lblHeader"></label>
+</div>
+<br style="clear:both" />
+
+<div id="_roleGroupListHolder"></div>
+<br>
+
+<div class="btnTray">
+	<input type="button" class="classicBtn" id="_addBtn" />
+	<input type="button" class="classicBtn" id="_modBtn" />
+	<input type="button" class="classicBtn" id="_delBtn" />
+</div>
+</body>
+</html>

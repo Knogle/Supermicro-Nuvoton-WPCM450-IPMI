@@ -1,0 +1,128 @@
+# *****************************************************************************
+# Generic Linux Directories
+# *****************************************************************************
+./initrd
+./conf
+./bin
+./boot
+./dev
+./dev/pts
+./dev/shm
+./etc
+./etc/samba
+./etc/init.d
+./etc/rc3.d
+./etc/rcS.d
+./etc/rc6.d
+./etc/rc1.d
+./etc/rc7.d
+./etc/default
+./etc/ssh
+./etc/dropbear
+./etc/network
+./etc/network/if-down.d
+./etc/network/if-up.d
+./etc/network/if-pre-up.d
+./etc/network/if-post-down.d
+./etc/pam.d
+./etc/security
+./etc/logrotate.d
+./etc/cron.d
+./lib
+./lib/iptables
+./lib/modules
+./lib/modules/2.6.24-ami
+./lib/modules/2.6.24-ami/kernel
+./lib/modules/2.6.24-ami/misc
+./lib/modules/2.6.24-ami/pcmcia
+./lib/security
+./mnt
+./home
+./proc
+./root
+./sbin
+./var
+./var/run
+./var/run/sshd
+./usr
+./usr/bin
+./usr/sbin
+./usr/lib
+./usr/local
+./usr/local/bin
+./usr/local/lib
+./usr/local/etc
+./usr/local/share
+
+./usr/local/cim
+./usr/local/cim/etc
+./usr/local/cim/etc/webWSMAN						
+./usr/local/cim/etc/webWSMAN/Res						
+./usr/local/cim/etc/Providers							
+./usr/local/cim/usr/local/lib
+./usr/local/cim/usr/local/bin
+./usr/local/cim/usr/local/sbin
+./usr/local/cim/usr/local/etc/sfcb
+./usr/local/cim/usr/local/var/lib						
+./usr/local/cim/usr/local/var/lib/sfcb						
+./usr/local/cim/usr/local/var/lib/sfcb/registration					
+./usr/local/cim/usr/local/var/lib/sfcb/registration/repository		
+./usr/local/cim/usr/local/var/lib/sfcb/registration/repository/root		
+./usr/local/cim/usr/local/var/lib/sfcb/registration/repository/root/interop	
+./usr/local/cim/usr/local/var/lib/sfcb/registration/repository/root/cimv2		
+./usr/local/cim/usr/local/www
+./usr/local/cim/usr/local/www/cim
+./usr/local/cim/usr/local/www/cim/images
+./usr/local/cim/usr/local/www/cim/styles
+./usr/local/cim/usr/local/www/cim/wsman
+./usr/local/cim/usr/local/www/cim/Profiles
+# *****************************************************************************
+# Ractrends specfic Common Directories
+# *****************************************************************************
+./etc/ucd-snmp
+./usr/local/www
+./usr/local/pdk
+./usr/local/etc/snmp
+./usr/local/share/snmp
+./usr/local/lib/intf
+
+./usr/share/udhcpc
+
+# *****************************************************************************
+# Project specific Directories 
+# *****************************************************************************
+# *****************************************************************************
+# OLD WSMAN pecific Directories  -Deprecated
+# *****************************************************************************
+#./etc/Catalog
+
+# *****************************************************************************
+# CIM Based  SMASH/WSMAN
+# *****************************************************************************
+./usr/local/lib							1							
+./usr/local/bin							1							
+./etc/init.d							1
+./etc/rcS.d							1
+
+./etc/webWSMAN							1
+./etc/webWSMAN/Res						1
+./etc/Providers							1
+
+./usr/local/sbin						1
+
+./usr/local/etc							1
+./usr/local/etc/sfcb						1
+
+./usr/local/var/lib						1	
+./usr/local/var/lib/sfcb					1	
+./usr/local/var/lib/sfcb/registration				1	
+./usr/local/var/lib/sfcb/registration/repository		1
+./usr/local/var/lib/sfcb/registration/repository/root		1
+./usr/local/var/lib/sfcb/registration/repository/root/interop	1
+./usr/local/var/lib/sfcb/registration/repository/root/cimv2	1	
+./usr/local/www					1
+./usr/local/www/cim				1
+./usr/local/www/cim/images		1
+./usr/local/www/cim/styles		1
+./usr/local/www/cim/wsman		1
+./usr/local/www/cim/Profiles       1

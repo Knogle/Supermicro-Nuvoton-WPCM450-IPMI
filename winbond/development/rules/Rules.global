@@ -1,0 +1,180 @@
+#---------------------------------------------------------------------
+# 			Global Rules.make for Firmware
+# 		   Copyright (c) 2003 American Megatrends Inc 
+#---------------------------------------------------------------------
+
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd /../.. ;pwd)
+endif
+
+#----------------------------------------------------------------------
+#			Include Project Defintion File
+#----------------------------------------------------------------------
+-include $(TOPDIR)/$(BUILD_DIR)/projdef.mk
+
+#----------------------------------------------------------------------
+#                              Cross Compile Tools
+#----------------------------------------------------------------------
+AS      =$(CROSS_COMPILE)as
+LD      =$(CROSS_COMPILE)ld
+CC      =$(CROSS_COMPILE)gcc
+CPP     =$(CC) -E
+AR      =$(CROSS_COMPILE)ar
+NM      =$(CROSS_COMPILE)nm
+STRIP   =$(CROSS_COMPILE)strip
+OBJCOPY =$(CROSS_COMPILE)objcopy
+OBJDUMP =$(CROSS_COMPILE)objdump
+LINT    =splint
+INSTALL =install
+TESTINSTALLFLAGS := $(shell echo "abc" > testfile;install -C testfile testfile1 2>/dev/null;cat testfile1 2>/dev/null;rm -rf testfile testfile1)
+ifeq ($(TESTINSTALLFLAGS),abc)
+ONLY_IF_NEW:=-C
+endif
+PRESERVE_SOURCE_TIMESTAMP := -p
+
+#----------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------
+#                       Location of Major directories 
+#-----------------------------------------------------------------------
+KERNELDIR  = $(TOPDIR)/$(BUILD_DIR)/linux
+TARGETNEWDIR  = $(TOPDIR)/$(BUILD_DIR)/target.new
+ifndef BINARYDIR
+BINARYDIR = $(TOPDIR)/development/binaries
+endif
+ifndef TARGETDIR
+TARGETDIR=$(TOPDIR)/$(BUILD_DIR)/target
+endif
+ifndef INSTALLDIR
+INSTALLDIR=$(TOPDIR)/$(BUILD_DIR)/target
+endif
+
+#-----------------------------------------------------------------------
+#                  Location of Installtion directories
+#-----------------------------------------------------------------------
+prefix = usr/local
+ifndef INSTALLDIR_OVERRIDE
+target_root	   = $(INSTALLDIR)
+target_prefix      = $(INSTALLDIR)/$(prefix)
+target_devdir      = $(INSTALLDIR)/dev
+target_confdir     = $(INSTALLDIR)/conf
+target_etcdir      = $(INSTALLDIR)/etc
+target_vardir      = $(INSTALLDIR)/var
+target_initddir	   = $(INSTALLDIR)/etc/init.d
+target_rc0dir	   = $(INSTALLDIR)/etc/rc0.d
+target_rc1dir	   = $(INSTALLDIR)/etc/rc1.d
+target_rc2dir	   = $(INSTALLDIR)/etc/rc2.d
+target_rc3dir	   = $(INSTALLDIR)/etc/rc3.d
+target_rc4dir	   = $(INSTALLDIR)/etc/rc4.d
+target_rc5dir	   = $(INSTALLDIR)/etc/rc5.d
+target_rc6dir	   = $(INSTALLDIR)/etc/rc6.d
+target_rc7dir	   = $(INSTALLDIR)/etc/rc7.d
+target_rcSdir	   = $(INSTALLDIR)/etc/rcS.d
+target_usrsbindir  = $(INSTALLDIR)/usr/sbin
+target_usrbindir  = $(INSTALLDIR)/usr/bin
+else
+target_root	   = $(INSTALLDIR_OVERRIDE)
+target_prefix      = $(INSTALLDIR_OVERRIDE)/$(prefix)
+target_devdir      = $(INSTALLDIR_OVERRIDE)/dev
+target_confdir     = $(INSTALLDIR_OVERRIDE)/conf
+target_etcdir      = $(INSTALLDIR_OVERRIDE)/etc
+target_vardir      = $(INSTALLDIR_OVERRIDE)/var
+target_initddir	   = $(INSTALLDIR_OVERRIDE)/etc/init.d
+target_rc0dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc0.d
+target_rc1dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc1.d
+target_rc2dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc2.d
+target_rc3dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc3.d
+target_rc4dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc4.d
+target_rc5dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc5.d
+target_rc6dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc6.d
+target_rc7dir	   = $(INSTALLDIR_OVERRIDE)/etc/rc7.d
+target_rcSdir	   = $(INSTALLDIR_OVERRIDE)/etc/rcS.d
+target_usrsbindir  = $(INSTALLDIR_OVERRIDE)/usr/sbin
+target_usrbindir  = $(INSTALLDIR_OVERRIDE)/usr/bin
+endif
+
+target_exec_prefix = $(target_prefix)
+target_bindir 	   = $(target_exec_prefix)/bin
+target_libdir      = $(target_exec_prefix)/lib
+targetnew_etcdir   = $(TARGETNEWDIR)/etc
+#------------------------------------------------------------------------
+
+
+#------------------------------------------------------------------------
+#                  AMI specific includes and paths
+#------------------------------------------------------------------------
+# Common include files for AMI applications and libraries
+AMI_APPS_INCDIR = $(TOPDIR)/development/common/include/global
+
+# Common include files
+#AMI_DRIVER_INCDIR = $(TOPDIR)/development/common/include/global
+AMI_DRIVER_INCDIR = $(KERNELDIR)/include
+
+# IPMI stack include files
+AMI_IPMI_EXPORT_INC_DIR = $(TOPDIR)/development/common/include/ipmi_inc
+
+# AMI Core library 
+AMIAPPS_COMMON_LIBNAME = libami.so
+AMIAPPS_COMMON_LIBDIR = $(TOPDIR)/development/proprietary/firmware/libs/libami
+AMIAPPS_COMMON_LIBPATH_FULL = $(AMIAPPS_COMMON_LIBDIR)/$(AMIAPPS_COMMON_LIBNAME)
+#-----------------------------------------------------------------------
+
+
+
+
+#----------------------------------------------------------------------
+#                     Flag settings for Building
+#----------------------------------------------------------------------
+# CFLAGS: all assignments to CFLAGS are incremental, so you can specify
+# the initial flags on the command line or environment, if needed.
+CFLAGS +=  -Wall -Werror  -mhard-float
+#CFLAGS +=  -I$(INCLUDEDIR) -I$(AMI_DRIVER_INCDIR) -I$(AMI_APPS_INCDIR)
+CFLAGS +=  -I$(INCLUDEDIR) -I$(AMI_APPS_INCDIR)
+CFLAGS += -I$(AMI_IPMI_EXPORT_INC_DIR)
+CFLAGS += -include $(TOPDIR)/$(BUILD_DIR)/projdef.h
+
+#Set Flags depending Apon whether Debug is enabled or not te DEBUG flag
+#is set in respective Makefiles
+ifeq ($(DEBUG),y)
+  DEBFLAGS = -O -g -DDEBUG # "-O" is needed to expand inlines
+else
+  DEBFLAGS = -O2
+endif
+
+CFLAGS += $(DEBFLAGS) 
+
+#LIBS += $(AMIAPPS_COMMON_LIBPATH_FULL)
+LIBS += $(TOPDIR)/development/binaries/usr/local/lib/libami.so.1
+#----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+# 				   SPLINT Flags
+#-----------------------------------------------------------------------
+# A set of good, strict splint flags.  Users may want to override these
+# settings with less strict flags while first using splint to check 
+# their programs, as these flags may result in hundreds of errors for a 
+# medium size program.
+LCHECKS		=  -warnunixlib +unixlib +checks +strict +showsummary 
+LCHECKS 	+= -booltype bool
+
+LSUPPRESS	=  -sys-dir-errors -ifblock -elseifcomplete
+LSUPPRESS	+= -exportfcn -exporttype -exportconst -protoparamname 
+LSUPPRESS	+= -fileduse +sys-dirs /usr/include:$(AMI_DRIVER_INCDIR)
+
+LDEFINES	=  -D_POSIX_SAVED_IDS -DPATH_MAX=4096 -DNAME_MAX=255 
+LDEFINES        += -DMAX_INPUT=255
+LDEFINES	+= -D__linux__ -D__signed__=signed
+
+LINCLUDES	=  -I$(AMI_APPS_INCDIR) -I$(AMI_DRIVER_INCDIR)
+LFLAGS		=  $(LINCLUDES) $(LDEFINES) $(LCHECKS) $(LSUPPRESS)
+#----------------------------------------------------------------------
+
+
+#-----------------------  End of global Rules -------------------------

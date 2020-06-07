@@ -1,0 +1,290 @@
+#!/bin/sh
+
+# Change directory to project directory
+cd $TOPDIR
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+BINARYDIR=$TOPDIR/development/binaries		# Binaries location
+
+#
+# Call PreBuildDev Hook of oemprop. Oem Proprietary code
+if [ -e $TOPDIR/development/oemprop/scripts/PreBuildDev ]
+then
+    sh $TOPDIR/development/oemprop/scripts/PreBuildDev
+    if [ $? != 0 ]
+    then
+	   echo "ERROR in executing OEM Prop PreBuildDev Script. Aborting!!!"
+	   exit 1
+	fi
+fi
+	
+
+# Select the Actual WWW or Dummy WWW based on the availability of source
+if [ -d $TOPDIR/development/oem ]
+then
+	if [ "$WEBSRC" == "" ]
+	then
+		export WWWDIR=$TOPDIR/development/oem/www
+	else
+		if  [ -d $TOPDIR/development/oem/$WEBSRC ]
+		then 
+			export WWWDIR=$TOPDIR/development/oem/$WEBSRC
+		else
+			export WWWDIR=$TOPDIR/development/oem/www
+		fi	
+	fi
+	cd  $TOPDIR/development/oem/firmware/IPMI/oem/SMC/
+	make install
+	cd $TOPDIR
+else
+	export WWWDIR=$TOPDIR/development/opensource/www
+fi
+
+
+
+# Install otherscripts before building projects as 
+# this creates the necessary directories
+if [ -e $TOPDIR/development/otherscripts ]
+then
+
+	cd  $TOPDIR/development
+
+	echo "Installing Otherscripts..."
+	export INSTALLDIR_OVERRIDE=$BINARYDIR
+	make -C otherscripts/porting install
+	if [ $? == 0 ]
+	then
+		echo "Installing Otherscripts Done"
+	else
+		echo "Installing Otherscripts Failed"
+		exit 1
+	fi
+	export INSTALLDIR_OVERRIDE=
+
+	make -C otherscripts/porting install
+	if [ $? == 0 ]
+	then
+		echo "Installing Otherscripts Done"
+	else
+		echo "Installing Otherscripts Failed"
+		exit 1
+	fi
+
+fi
+
+
+# Build Properietaty source if available
+if [ -e $TOPDIR/development/proprietary ]
+then
+
+	if ! [ -d $TOPDIR/development/proprietary/firmware ]
+	then
+		echo "Unable to find project development directory. Aborting"
+		exit 1
+	fi
+
+	cd  $TOPDIR/development/proprietary/firmware
+	echo "Building Proprietary Project ..."
+	echo $TOPDIR
+	make all
+	if [ $? == 0 ]
+	then
+		echo "Building Proprietary Project Done"
+	else
+		echo "Building Proprietary Project Failed"
+		exit 1
+	fi
+
+	echo "Installing Project ..."
+	make install
+	if [ $? == 0 ]
+	then
+		echo "Installing Project Done"
+	else
+		echo "Installing Project Failed"
+		exit 1
+	fi
+
+fi
+
+# Build modified open source if any
+if [ -e $TOPDIR/development/opensource ]
+then
+
+	if ! [ -d $TOPDIR/development/opensource/firmware ]
+	then
+		echo "Unable to find opensource development directory. Aborting"
+		exit 1
+	fi
+
+	cd  $TOPDIR/development/opensource/firmware
+	echo "Building opensource Project files..."
+	echo $TOPDIR
+	make all 
+	if [ $? == 0 ]
+	then
+		echo "Building opensource Project Done"
+	else
+		echo "Building opensource Project Failed"
+		exit 1
+	fi
+
+	echo "Installing Opensource Project ..."
+	make install
+	if [ $? == 0 ]
+	then
+		echo "Installing Opensource Project Done"
+	else
+		echo "Installing Opensource Project Failed"
+		exit 1
+	fi
+
+fi
+
+#If properietary files are missing, Use the existing binary files
+if ! [ -d $TOPDIR/development/proprietary ]
+then
+	if ! [ -d $TOPDIR/development/binaries ]
+	then
+		echo "-------------------------------------------------------------"
+		echo "ERROR:Both Proprietary Source and Binaries are not available"
+		echo "ERROR:You need either one of these to build image"
+		echo "-------------------------------------------------------------"
+		exit 1 
+	fi
+
+	cd $TOPDIR/development/binaries
+
+	for i in `find . | grep -v "\.svn"`
+	do
+		if [ -d $i ]
+		then
+			if ! [ -d $TOPDIR/$i ]
+		   	then
+				echo -n "Creating $INSTALLDIR/$i ..."
+		   		mkdir -p $INSTALLDIR/$i		
+				if [ $? != 0 ]
+				then
+					echo "Failed. Aborting Build!!!"
+			   		exit 1
+				fi
+				echo "Done"
+			fi
+			continue
+		fi
+
+		if [ -h $i ]
+		then
+		    	LINKFILE=`stat -c %N $i | awk  '{ print $3 }' | sed "s/'//g" | cut -b 2-` 	
+			echo -n "Creating link to $LINKFILE from $INSTALLDIR/$i ..."
+			ln -sf $LINKFILE $INSTALLDIR/$i
+			if [ $? != 0 ]
+			then
+				echo "Failed. Aborting Build!!!"
+		   		exit 1
+			fi
+			echo "Done"
+			continue
+		fi
+
+		if [ -c $i ]
+		then
+			rm -f $INSTALLDIR/$i
+			MAJOR=`stat -c %T $i`
+			MINOR=`stat -c %t $i`
+			echo -n "Creating mknod c 0x$MAJOR 0x$MINOR $INSTALLDIR/$i ..."
+			mknod $INSTALLDIR/$i c 0x$MAJOR 0x$MINOR 
+			if [ $? != 0 ]
+			then
+				echo "Failed. Aborting Build!!!"
+		   		exit 1
+			fi
+			echo "Done"
+			continue
+		fi
+
+		if [ -b $i ]
+		then
+			rm -f $INSTALLDIR/$i
+			MAJOR=`stat -c %T $i`
+			MINOR=`stat -c %t $i`
+			echo -n "Creating mknod b 0x$MAJOR 0x$MINOR $INSTALLDIR/$i ..."
+			mknod $INSTALLDIR/$i b 0x$MAJOR 0x$MINOR 
+			if [ $? != 0 ]
+			then
+				echo "Failed. Aborting Build!!!"
+		   		exit 1
+			fi
+			echo "Done"
+			continue
+		fi
+
+		# Not a directory. Should be a file
+		echo -n "Copying $i to $INSTALLDIR/$i ..."
+		cp -f $i $INSTALLDIR/$i
+		if [ $? != 0 ]
+		then
+			echo "Failed. Aborting Build!!!"
+		   	exit 1
+		fi
+		echo "Done"
+	done	
+fi
+
+# Build Oem if any
+if [ -e $TOPDIR/development/oem ]
+then
+
+	if ! [ -d $TOPDIR/development/oem/firmware ]
+	then
+		echo "Unable to find oem development directory. Aborting"
+		exit 1
+	fi
+
+	cd  $TOPDIR/development/oem/firmware
+	echo "Building oem Project files..."
+	echo $TOPDIR
+	make all 
+	if [ $? == 0 ]
+	then
+		echo "Building oem Project Done"
+	else
+		echo "Building oem Project Failed"
+		exit 1
+	fi
+
+	echo "Installing oem Project ..."
+	make install
+	if [ $? == 0 ]
+	then
+		echo "Installing oem Project Done"
+	else
+		echo "Installing oem Project Failed"
+		exit 1
+	fi
+
+fi
+
+#
+# Call PostBuildDev Hook of oemprop. Oem Proprietary code
+if [ -e $TOPDIR/development/oemprop/scripts/PostBuildDev ]
+then
+    sh $TOPDIR/development/oemprop/scripts/PostBuildDev
+    if [ $? != 0 ]
+    then
+	   echo "ERROR in executing OEM Prop PostBuildDev Script. Aborting!!!"
+	   exit 1
+	fi
+fi
+
+exit 0
+

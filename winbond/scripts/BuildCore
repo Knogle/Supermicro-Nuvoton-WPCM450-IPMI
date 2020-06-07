@@ -1,0 +1,244 @@
+#!/bin/sh
+
+# Change directory to project directory
+cd $TOPDIR
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+# Check if Build directory is present
+if ! [ -d $TOPDIR/$BUILD_DIR ]
+then
+	echo -n "Creating $TOPDIR/$BUILD_DIR ..."
+	mkdir -p $TOPDIR/$BUILD_DIR
+	if [ $? == 0 ]
+	then	
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+# Create Project Definition files
+sh $TOPDIR/scripts/ProjDef2H
+if [ $? != 0 ]
+then
+	exit 1
+fi
+
+# Extract Linux and Apply Patches if not done already
+if ! [ -d $TOPDIR/$BUILD_DIR/linux ]
+then
+	sh $TOPDIR/scripts/ExtractLinux
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+# Extract Uboot and Apply Patches if not done already
+if ! [ -d $TOPDIR/$BUILD_DIR/uboot ]
+then
+	sh $TOPDIR/scripts/ExtractUboot
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+# Extract BusyBox  and Apply Patches if not done already
+if ! [ -d $TOPDIR/$BUILD_DIR/busybox ]
+then
+	sh $TOPDIR/scripts/ExtractBusyBox
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+# Extract SFCB  and Apply Patches if not done already
+if ! [ -d $TOPDIR/$BUILD_DIR/sblim-sfcb ]
+then
+	sh $TOPDIR/scripts/ExtractSFCB
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+
+# Extract target  and Apply Patches if not done already
+if ! [ -d $TOPDIR/$BUILD_DIR/target ]
+then
+	sh $TOPDIR/scripts/ExtractTarget
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+if ! [ -d $TOPDIR/$BUILD_DIR/target.new ]
+then
+	sh $TOPDIR/scripts/ExtractTarget
+	if [ $? != 0 ]
+	then
+		exit 1
+	fi
+fi
+
+
+#Build SFCB
+sh $TOPDIR/scripts/BuildSFCB
+if [ $? != 0 ]
+then
+	exit 1
+fi
+
+# Build Linux
+cd $TOPDIR/$BUILD_DIR/linux
+
+if ! [ -e $TOPDIR/$CONF_DIR/config.linux ]
+then
+	echo " Unable to find config.linux file. Cannot build linux"
+	exit 1	
+fi
+
+cp $TOPDIR/$CONF_DIR/config.linux .config
+if [ $? != 0 ]
+then
+	echo "Unable to copy config.linux file. Cannot build linux"
+	exit 1
+fi
+
+make oldconfig
+if [ $? != 0 ]
+then
+	echo "Unable to create linux config file. make oldconfig failed"
+	exit 1
+fi
+
+# Basic linux Build
+make 
+if [ $? != 0 ]
+then
+	echo "Linux Build failed. Aborting"
+	exit 1
+fi
+
+#Create Uboot format image 
+make uImage
+if [ $? != 0 ]
+then
+	echo "Linux Build failed. Aborting"
+	exit 1
+fi
+
+# Build uboot
+cd $TOPDIR/$BUILD_DIR/uboot
+
+if ! [ -e $TOPDIR/$CONF_DIR/config.uboot ]
+then
+	echo " Unable to find config.uboot file. Cannot build uboot"
+	exit 1	
+fi
+
+cp $TOPDIR/$CONF_DIR/config.uboot include/configs/$BOARD.h
+if [ $? != 0 ]
+then
+	echo "Unable to copy config.uboot file. Cannot build uboot"
+	exit 1
+fi
+
+if [ -e $TOPDIR/$CONF_DIR/u-boot.lds ]
+then
+	cp $TOPDIR/$CONF_DIR/u-boot.lds  board/$BOARD/u-boot.lds
+	if [ $? != 0 ]
+	then
+		echo "Unable to copy u-boot.lds file. Cannot build uboot"
+		exit 1
+	fi
+fi
+
+SAVED_BUILD_DIR=$BUILD_DIR
+export BUILD_DIR=
+make $BOARD"_config"
+if [ $? != 0 ]
+then
+	echo "Unable to create uboot config file. make $BOARD""_config failed"
+	exit 1
+fi
+
+# U-boot libraries build failed in parallel build.So disabling it 
+# till we find a fix or the "make" is fixed
+SAVEMFLAGS=$MAKEFLAGS
+export MAKEFLAGS=
+make 
+if [ $? != 0 ]
+then
+	echo "Uboot Build failed. Aborting"
+	exit 1
+fi
+export MAKEFLAGS=$SAVEMFLAGS
+SAVEMFLAGS=
+
+export BUILD_DIR=$SAVED_BUILD_DIR
+SAVED_BUILD_DIR=
+
+# Build busybox
+cd $TOPDIR/$BUILD_DIR/busybox
+
+if ! [ -e $TOPDIR/$CONF_DIR/config.busybox ]
+then
+	echo " Unable to find config.busybox file. Cannot build busybox"
+	exit 1	
+fi
+
+cp $TOPDIR/$CONF_DIR/config.busybox .config
+if [ $? != 0 ]
+then
+	echo "Unable to copy config.busybox file. Cannot build busybox"
+	exit 1
+fi
+
+make oldconfig
+if [ $? != 0 ]
+then
+	echo "Unable to create busybox config file. make oldconfig Failed"
+	exit 1
+fi
+
+
+if [ "$BUSYBOX_VER" == "1.1.3" ]	
+then
+	# Newer versions of busybox does not require this 
+	echo "Creating dependency file for Busybox"  $BUSYBOX_VER
+	# Note: .depend will be automatically created by make all also
+	#        But when parallel make (-j) is done, .depend and related
+	#        file are created later than the object files. This will
+	#        create wrong outputs and also when running install, because
+	#	 of newer dependeny files, it is rebuild agin.
+	make .depend 
+	if [ $? != 0 ]
+	then
+		echo "Unable to create dependency file for busybox. Aborting"
+		exit 1
+	fi
+fi
+
+make all
+if [ $? != 0 ]
+then
+	echo "BusyBox Build failed. Aborting"
+	exit 1
+fi
+
+
+exit 0

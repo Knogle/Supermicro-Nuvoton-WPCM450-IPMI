@@ -1,0 +1,56 @@
+<html>
+<head>
+	<link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/monitoring_mode_str.js\"><\/script>");
+	</script>
+	<script src="../impl/monitoring_mode_imp.js"></script>
+
+  
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("monitoring_mode", "STR_MONIT_MOD_HEADING");
+		var elmt = document.getElementById("_btnSave");
+		elmt.setAttribute("value", eLang.getString("monitoring_mode", "STR_MONIT_MOD_SAVE"));
+		var elmt = document.getElementById("_btnChangeMode");
+		elmt.setAttribute("value", eLang.getString("monitoring_mode", "STR_MONIT_MOD_CHMOD"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+	<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("monitoring_mode", "STR_MONIT_MOD_HEADING"));</script>
+</h3>
+	
+	<p>
+<script>document.writeln(eLang.getString("monitoring_mode", "STR_MONIT_MOD_DESCRIPTION"));</script>
+</p>	
+
+	<div class="subSection">
+	<p><strong id="_curMode">
+<script>document.writeln(eLang.getString("monitoring_mode", "STR_MONIT_MOD_CUR_MOD"));</script>
+</strong></p>
+	<p id="_description"></p>
+	<br>
+	<div class="subSection" id="_extBMCUnit"> 
+<script>document.writeln(eLang.getString("monitoring_mode", "STR_MONIT_MOD_EXTBMC"));</script>
+ <input type="text" id="_bmcSlaveAddr" />
+	<br>
+	</div>
+
+	<div class="btnTray" style="width: 360px;">
+		<input type="button" class="classicBtn" id="_btnSave" />
+		<input type="button" class="classicBtn" id="_btnChangeMode" />
+	</div>
+	</div>
+</body>
+</html>

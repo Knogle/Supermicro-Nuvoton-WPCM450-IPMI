@@ -1,0 +1,60 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/upload_ssl_certificate_str.js\"><\/script>");
+	</script>
+	<script src="../impl/upload_ssl_certificate_imp.js"></script>
+
+  
+  <script src="../lib/eExt.js"></script>
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_TITLE");
+		var elmt = document.getElementById("_uploadBtn");
+		elmt.setAttribute("value", eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_UPLDBTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_DESCRIPTION"));</script>
+</p>
+
+ <div class="subSection">
+ 	<div class="subSection">
+ 		<form method="POST" action="" enctype="multipart/form-data">
+		<table cellspacing="0" cellpadding="5" border="0" width="450">
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_DEFCERT"));</script>
+</strong></td><td><label id="_defCert">
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_NONETXT"));</script>
+</label></td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_DEFPRIVKEY"));</script>
+</strong></td><td><label id="_defPrivKey">
+<script>document.writeln(eLang.getString("upload_ssl_certificate", "STR_UPLD_SSL_NONETXT"));</script>
+</label></td></tr>
+		<tr><td><strong id="_upldType"></strong></td><td><input type="file" id="_sslFileBrowse" style="width:220px;"></td></tr>
+		</table>
+		</form>
+ 	</div>
+ <div class="btnTray" style="width: 390px;">
+ <input type="button" class="classicBtn" id="_uploadBtn" />
+ </div>
+ </div>
+ 
+</body>
+</html>

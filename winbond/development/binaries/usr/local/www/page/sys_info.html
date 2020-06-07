@@ -1,0 +1,46 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/sys_info_str.js\"><\/script>");
+	</script>
+	<script src="../impl/sys_info_imp.js"></script>
+
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("sys_info", "STR_SYS_INFO_TITLE");
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("sys_info", "STR_SYS_INFO_HEADING"));</script>
+</h3>
+
+
+<div class="sysInfoBox" align="left">
+
+<!-- Linda removed "Device Power Status" in system information page
+	<label>
+<script>document.writeln(eLang.getString("sys_info", "STR_SYS_INFO_DEV_AVAIL"));</script>
+ </label><span id="_deviceAvailable"></span><br>
+-->
+	<label>
+<script>document.writeln(eLang.getString("sys_info", "STR_SYS_INFO_FW_REV"));</script>
+ </label><span id="_fwRev"></span><br>
+	<label>
+<script>document.writeln(eLang.getString("sys_info", "STR_SYS_INFO_BUILD_TIME"));</script>
+ </label><span id="_buildTime"></span><br>
+</div>
+
+</body>
+</html>

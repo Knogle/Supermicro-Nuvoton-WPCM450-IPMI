@@ -1,0 +1,21 @@
+domapi.lang["WEEKDAYS"           ] = "Sonntag,Montag,Dienstag,Mittwoch,Donnerstag,Freitag,Samstag".split(",");
+domapi.lang["SHORTWEEKDAYS"      ] = "So,Mo,Di,Mi,Do,Fr,Sa".split(",");
+domapi.lang["STARTOFWEEK"        ] = 1; // monday
+domapi.lang["TODAYSTR"           ] = "Heute";
+domapi.lang["MONTHS"             ] = "Januar,Februar,M\xE4rz,April,Mai,Juni,Juli,August,September,Oktober,November,Dezember".split(",");
+domapi.lang["SHORTMONTHS"        ] = "Jan,Feb,M\xE4r,Apr,Mai,Jun,Jul,Aug,Sep,Okt,Nov,Dez".split(",");
+domapi.lang["DROPDOWN_OPEN"      ] = "Zum \xD6ffnen hier klicken";
+domapi.lang["DROPDOWN_CLOSE"     ] = "Zum Schliessen hier klicken";
+domapi.lang["COLORPICKER_SAFE"   ] = "Sicher";
+domapi.lang["COLORPICKER_CUSTOM" ] = "Personalisiert"; domapi.lang["COLORPICKER_SELECT" ] = "Zum ausw\xE4len hier klicken";
+domapi.lang["LISTGRID_SORT"      ] = "Zum Sortieren hier klicken";
+domapi.lang["LISTGRID_RESIZE"    ] = "Ziehen um Gr\xF6\xDFe zu ver\xE4ndern";
+domapi.lang["WINDOW_MINIMIZE"    ] = "Minimieren";
+domapi.lang["WINDOW_MAXIMIZE"    ] = "Maximieren";
+domapi.lang["WINDOW_RESTORE"     ] = "Wiederherstellen";
+domapi.lang["WINDOW_HELP"        ] = "Hilfe";
+domapi.lang["WINDOW_CLOSE"       ] = "Schliessen";
+domapi.lang["RPC_DEF_STATUS"     ] = "Laden";
+domapi.lang["ERR_GET_CONTENT"    ] = "Fehler in getContent: ";
+domapi.lang["INCREMENT_MONTH"    ] = "Monat inkrementieren";
+domapi.lang["DECREMENT_MONTH"    ] = "Monat dekrementieren";

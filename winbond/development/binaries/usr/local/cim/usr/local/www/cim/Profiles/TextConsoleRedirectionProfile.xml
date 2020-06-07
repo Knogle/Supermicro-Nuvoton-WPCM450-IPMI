@@ -1,0 +1,62 @@
+<profile name="TextConsoleRedirectionProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_TextRedirectionSAP" profile="TextConsoleRedirectionProfile">
+      </class>
+      <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_EnabledLogicalElementCapabilities" profile="TextConsoleRedirectionProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <class name="CIM_ProtocolEndpoint" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+      </class>
+      <association classname="CIM_HostedAccessPoint" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_EnabledLogicalElementCapabilities" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_TextRedirectionSAP" profile="TextConsoleRedirectionProfile">
+            </class>  
+      </association>
+      <association classname="CIM_SAPAvailableForElement" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_TextRedirectionSAP" profile="TextConsoleRedirectionProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_BindsTo" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_TextRedirectionSAP" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_ProtocolEndpoint" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAccessBySAP" profile="TextConsoleRedirectionProfile">
+            <class name="CIM_TextRedirectionSAP" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+      </association>  
+</profile>

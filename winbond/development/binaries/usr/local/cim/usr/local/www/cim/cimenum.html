@@ -1,0 +1,294 @@
+<html>
+	<head>
+		<!-- Style sheet Link -->
+    		<link href="styles/style.css" rel="stylesheet" type="text/css">
+		<title>Enumerating CIM data</title>
+	</head>
+	<body>
+
+	<div id="WaitDiv" style="visibility:hidden; position:absolute; left:90px; top:100px; width:500px; height:69px; z-index:2; background-color: #FFFFFF; layer-background-color: #FFFFFF; border: 1px none #000000;">
+	  <table width="100%" height="68"  border="2" cellpadding="0" cellspacing="0" bordercolor="#666666">
+		<tr>
+		  <td><div align="center"><img src="../res/loader.gif" align="absmiddle"><span id="WaitMsg"></span></div></td>
+		</tr>
+	  </table>
+	</div>
+
+		<img src="images/ami.gif">
+
+
+		<br/>
+		<br/>
+		<table border="0" cellspacing="0" cellpadding="5" width="900">
+
+		<tr align="left" valign="top" class="tddatadark">
+			<td>
+				<b>Enter Enumeration information</b>
+			</td>
+			<td>
+			</td>
+		</tr>
+
+
+			<tr bgcolor = "e8e8d0">
+			<td>
+			Enter WSMAN URI:
+			</td>
+			<td>
+			<input type="text" id="txtWSMANURI" class="InputBoxSmall" size="60"/>
+			</td>
+			</tr>
+
+			<tr bgcolor = "e8e8d0">
+			<td>
+			Enter CIM class Name:
+			</td>
+			<td>
+			<input type="text" id="txtClassName" class=               "InputBoxSmall" value="" size="60"/>
+			</td>
+			</tr>
+			<tr bgcolor = "e8e8d0">
+			<td>
+			Enumeration mode:
+			</td>
+			<td>
+			<input type="text" id="txtEnumMode" class=               "InputBoxSmall" value=""/>
+			</td>
+			</tr>
+
+
+
+		</table>
+		<br/><br/>
+
+	<table border="0" cellspacing="0" cellpadding="5"   width="900">
+
+		<tr align="left" valign="top" class="tddatadark">
+			<td>
+
+				<b>Enter Association information</b><br/>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+
+
+		<tr bgcolor = "e8e8d0">
+
+			<td>
+			<b>CIM Class Name : </b>
+			</td>
+			<td>
+			<input type="text" id="txtInsClassName" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+
+		</tr>
+		<tr bgcolor = "e8e8d0">
+
+			<td>
+				<br/>
+			</td>
+			<td>
+
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+
+		</tr>
+		<tr bgcolor = "e8e8d0">
+
+			<td>
+
+			</td>
+			<td>
+
+			</td>
+			<td>
+			</td>
+			<td>
+			</td>
+
+		</tr>
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName1" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue1" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+
+		</tr>
+
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName2" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue2" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName3" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue3" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName4" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue4" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName5" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue5" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName6" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue6" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName7" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue7" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+		<tr bgcolor = "e8e8d0">
+			<td>
+			Key property name:
+			</td>
+			<td>
+			<input type="text" id="txtPropName8" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Key property value:
+			</td>
+			<td>
+			<input type="text" id="txtPropValue8" class=               "InputBoxSmall" value="" size="40"/>
+			</td>
+		</tr>
+		</table>
+
+		<br/><br/>
+
+		<table>
+
+			<tr>
+			<td>
+			Association class name:
+			</td>
+			<td>
+			<input type="text" id="txtAssociationClassName" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+
+			<td>
+			Role:
+			</td>
+			<td>
+			<input type="text" id="txtRole" value="" class=               "InputBoxSmall" size="30"/>
+			</td>
+			</tr>
+
+			<tr>
+			<td>
+			Result class name:
+			</td>
+			<td>
+			<input type="text" id="txtResultClassName" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			<td>
+			Result Role:
+			</td>
+			<td>
+			<input type="text" id="txtResultRole" class=               "InputBoxSmall" value="" size="30"/>
+			</td>
+			</tr>
+
+		</table>
+		<br/>
+		<table>
+			<tr>
+			<input type="button" value="Enumerate" onclick="startEnum()"/>
+			<tr>
+		</table>
+		<br/><br/>
+
+
+		Enumerated items XML <br/><br/>
+
+		<pre id="xml" cols="100%" rows="100%"></pre>
+
+		<!-- Including scripts after the page is loaded -->
+		<script src="wsman/wsman.js"></script>
+		<script src="cimenum.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,805 @@
+
+#
+[$ClassProvider$]
+	provider: ClassProvider
+	location: sfcClassProviderGz
+	type: class method
+	namespace: *
+#
+[$DefaultProvider$]
+	provider: InternalProvider
+	location: sfcInternalProvider
+	type: instance association method
+	namespace: *
+#
+[$InterOpProvider$]
+	provider: InteropProvider
+	location: sfcInteropProvider
+	type: instance method
+	namespace: *
+#
+[CIM_IndicationHandlerCIMXML]
+	provider: IndCIMXMLHandler
+	location: sfcIndCIMXMLHandler
+	type: instance method
+	namespace: root/interop
+#
+[CIM_ListenerDestinationCIMXML]
+	provider: IndCIMXMLHandler
+	location: sfcIndCIMXMLHandler
+	type: instance method
+	namespace: root/interop
+#
+[CIM_IndicationSubscription]
+	provider: InteropProvider
+	location: sfcInteropProvider
+	type: instance method
+	namespace: root/interop
+#
+[CIM_IndicationFilter]
+	provider: InteropProvider
+	location: sfcInteropProvider
+	type: instance method
+	namespace: root/interop
+#
+[CIM_Namespace]
+	provider: ServerProvider
+	location: sfcInteropServerProvider
+	type: instance
+	namespace: root/interop
+#
+[__Namespace]
+	provider: ServerProvider
+	location: sfcInteropServerProvider
+	type: instance
+	namespace: *
+#
+[CIM_ObjectManager]
+	provider: ServerProvider
+	location: sfcInteropServerProvider
+	type: instance
+	namespace: root/interop
+#
+[CIM_ObjectManagerCommunicationMechanism]
+	provider: ServerProvider
+	location: sfcInteropServerProvider
+	type: instance
+	namespace: root/interop
+#
+[CIM_EnabledLogicalElementCapabilities]
+	provider: OSBase_EnabledLogicalElementCapabilitiesProvider
+	location: cmpiOSBase_EnabledLogicalElementCapabilitiesProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_RegisteredProfile]
+	provider: OSBase_RegisteredProfileProvider
+	location: cmpiOSBase_RegisteredProfileProvider
+	type: instance
+	namespace: root/interop
+#
+[CIM_ElementConformsToProfile]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/interop root/cimv2
+#
+[CIM_ReferencedProfile]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/interop
+#
+[Host_ComputerSystem]
+	provider: OSBase_HostComputerSystemProvider
+	location: cmpiOSBase_ComputerSystemProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_HostedService]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_TimeService]
+	provider: OSBase_TimeServiceProvider
+	location: cmpiOSBase_TimeServiceProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_ElementCapabilities]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_ServiceAffectsElement]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_ComputerSystemPackage]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[SP_ComputerSystem]
+	provider: OSBase_SPComputerSystemProvider
+	location: cmpiOSBase_ComputerSystemProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_RedundancySet]
+	provider: OSBase_RedundancySetProvider
+	location: cmpiOSBase_RedundancySetProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_MemberOfCollection]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_SystemDevice]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Sensor]
+	provider: OSBase_NumericSensorProvider
+	location: cmpiOSBase_NumericSensorProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_AssociatedSensor]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_PowerManagementService]
+	provider: OSBase_PowerManagementServiceProvider
+	location: cmpiOSBase_PowerManagementServiceProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_AssociatedPowerManagementService]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_PowerManagementCapabilities]
+	provider: OSBase_PowerManagementCapabilitiesProvider
+	location: cmpiOSBase_PowerManagementCapabilitiesProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_OwningCollectionElement]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_Role]
+	provider: OSBase_RoleProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_RoleBasedAuthorizationService]
+	provider: OSBase_RoleBasedAuthorizationServiceProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_RoleLimitedToTarget]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_ConcreteDependency]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Privilege]
+	provider: OSBase_PrivilegeProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ServiceServiceDependency]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_RoleBasedManagementCapabilities]
+	provider: OSBase_RoleBasedManagementCapabilitiesProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_AccountOnSystem]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Account]
+	provider: OSBase_AccountProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_AssignedIdentity]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Identity]
+	provider: OSBase_IdentityProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Group]
+	provider: OSBase_GroupProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_UserContact]
+	provider: OSBase_UserContactProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_AccountManagementService]
+	provider: OSBase_AccountManagementServiceProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_AccountManagementCapabilities]
+	provider: OSBase_AccountManagementCapabilitiesProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ElementSettingData]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2 root/interop
+#
+[CIM_AccountSettingData]
+	provider: OSBase_AccountSettingDataProvider
+	location: cmpiOSBase_SimpleRoleBasedProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SettingsDefineCapabilities]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_ConcreteComponent]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_BootConfigSetting]
+	provider: OSBase_BootConfigSettingProvider
+	location: cmpiOSBase_BootControlProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_BootSettingData]
+	provider: OSBase_BootSettingDataProvider
+	location: cmpiOSBase_BootControlProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_BootSourceSetting]
+	provider: OSBase_BootSourceSettingProvider
+	location: cmpiOSBase_BootControlProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_BootService]
+	provider: OSBase_BootServiceProvider
+	location: cmpiOSBase_BootControlProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_BootServiceCapabilities]
+	provider: OSBase_BootServiceCapabilitiesProvider
+	location: cmpiOSBase_BootControlProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_LogicalIdentity]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_OrderedComponent]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_SoftwareInstallationService]
+	provider: OSBase_SoftwareInstallationServiceProvider
+	location: cmpiOSBase_SoftwareUpdateProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_SoftwareInstallationServiceCapabilities]
+	provider: OSBase_SoftwareInstallationServiceCapabilitiesProvider
+	location: cmpiOSBase_SoftwareUpdateProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ElementSoftwareIdentity]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_SoftwareIdentity]
+	provider: OSBase_SoftwareIdentityProvider
+	location: cmpiOSBase_SoftwareInventoryProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SoftwareIdentityResource]
+	provider: OSBase_SoftwareIdentityResourceProvider
+	location: cmpiOSBase_SoftwareInventoryProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SystemSpecificCollection]
+	provider: OSBase_SystemSpecificCollectionProvider
+	location: cmpiOSBase_SoftwareInventoryProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SAPAvailableForElement]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_InstalledSoftwareIdentity]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_HostedCollection]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_HostedAccessPoint]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_OrderedDependency]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_RecordLog]
+	provider: OSBase_RecordLogProvider
+	location: cmpiOSBase_RecordLogProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_LogManagesRecord]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_LogEntry]
+	provider: OSBase_LogEntryProvider
+	location: cmpiOSBase_RecordLogProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_UseOfLog]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_AdminDomain]
+	provider: OSBase_AdminDomainProvider
+	location: cmpiOSBase_AdminDomainProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ConcreteCollection]
+	provider: OSBase_ConcreteCollectionProvider
+	location: cmpiOSBase_ConcreteCollectionProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SystemComponent]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Fan]
+	provider: OSBase_FanProvider
+	location: cmpiOSBase_FanProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_IsSpare]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Realizes]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_PowerSupply]
+	provider: OSBase_PowerSupplyProvider
+	location: cmpiOSBase_PowerSupplyProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SuppliesPower]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_CLPProtocolEndpoint]
+	provider: OSBase_CLPProtocolEndpointProvider
+	location: cmpiOSBase_CLPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_CLPSettingData]
+	provider: OSBase_CLPSettingDataProvider
+	location: cmpiOSBase_CLPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_CLPCapabilities]
+	provider: OSBase_CLPCapabilitiesProvider
+	location: cmpiOSBase_CLPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ProtocolService]
+	provider: OSBase_ProtocolServiceProvider
+	location: cmpiOSBase_ProtocolServiceProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_TCPProtocolEndpoint]
+	provider: OSBase_TCPProtocolEndpointProvider
+	location: cmpiOSBase_TCPProtocolEndpointProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_JobQueue]
+	provider: OSBase_JobQueueProvider
+	location: cmpiOSBase_JobQueueProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_ServiceAccessBySAP]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_BindsTo]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_ProvidesEndpoint]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_OwningJobElement]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_ConcreteJob]
+	provider: OSBase_ConcreteJobProvider
+	location: cmpiOSBase_ConcreteJobProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_IdentityContext]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_HostedJobDestination]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_DHCPProtocolEndpoint]
+	provider: OSBase_DHCPProtocolEndpointProvider
+	location: cmpiOSBase_DHCPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_DHCPSettingData]
+	provider: OSBase_DHCPSettingDataProvider
+	location: cmpiOSBase_DHCPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_DHCPCapabilities]
+	provider: OSBase_DHCPCapabilitiesProvider
+	location: cmpiOSBase_DHCPProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_RemoteServiceAccessPoint]
+	provider: OSBase_RemoteServiceAccessPointProvider
+	location: cmpiOSBase_RemoteServiceAccessPointProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_RemoteAccessAvailableToElement]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_SAPSAPDependency]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_DNSProtocolEndpoint]
+	provider: OSBase_DNSProtocolEndpointProvider
+	location: cmpiOSBase_DNSProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_DNSSettingData]
+	provider: OSBase_DNSSettingDataProvider
+	location: cmpiOSBase_DNSProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_DNSGeneralSettingData]
+	provider: OSBase_DNSGeneralSettingDataProvider
+	location: cmpiOSBase_DNSProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_EthernetPort]
+	provider: OSBase_EthernetPortProvider
+	location: cmpiOSBase_EthernetPortProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ControlledBy]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_DeviceSAPImplementation]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_LANEndpoint]
+	provider: OSBase_LANEndpointProvider
+	location: cmpiOSBase_EthernetPortProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PortController]
+	provider: OSBase_PortControllerProvider
+	location: cmpiOSBase_EthernetPortProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_NetworkPortConfigurationService]
+	provider: OSBase_NetworkPortConfigurationServiceProvider
+	location: cmpiOSBase_EthernetPortProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SSHProtocolEndpoint]
+	provider: OSBase_SSHProtocolEndpointProvider
+	location: cmpiOSBase_SSHProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SSHSettingData]
+	provider: OSBase_SSHSettingDataProvider
+	location: cmpiOSBase_SSHProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_SSHCapabilities]
+	provider: OSBase_SSHCapabilitiesProvider
+	location: cmpiOSBase_SSHProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_AssociatedCacheMemory]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_HardwareThread]
+	provider: OSBase_HardwareThreadProvider
+	location: cmpiOSBase_CPUProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_Memory]
+	provider: OSBase_MemoryProvider
+	location: cmpiOSBase_MemoryProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Processor]
+	provider: OSBase_ProcessorProvider
+	location: cmpiOSBase_CPUProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_ProcessorCore]
+	provider: OSBase_ProcessorCoreProvider
+	location: cmpiOSBase_CPUProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_IPProtocolEndpoint]
+	provider: OSBase_IPProtocolEndpointProvider
+	location: cmpiOSBase_IPInterfaceProfileProvider
+	type: instance method
+	namespace: root/cimv2
+#
+[CIM_IPConfigurationService]
+	provider: OSBase_IPConfigurationServiceProvider
+	location: cmpiOSBase_IPInterfaceProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_StaticIPAssignmentSettingData]
+	provider: OSBase_StaticIPAssignmentSettingDataProvider
+	location: cmpiOSBase_IPInterfaceProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_IPAssignmentSettingData]
+	provider: OSBase_IPAssignmentSettingDataProvider
+	location: cmpiOSBase_IPInterfaceProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_BindsToLANEndpoint]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_EndpointIdentity]
+	provider: OSBase_AssociationProvider
+	location: cmpiOSBase_AssociationProvider
+	type: instance association
+	namespace: root/cimv2
+#
+[CIM_Card]
+	provider: OSBase_CardProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Chassis]
+	provider: OSBase_ChassisProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Chip]
+	provider: OSBase_ChipProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_ConfigurationCapacity]
+	provider: OSBase_ConfigurationCapacityProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalAssetCapabilities]
+	provider: OSBase_PhysicalAssetCapabilitiesProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalComponent]
+	provider: OSBase_PhysicalComponentProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalConnector]
+	provider: OSBase_PhysicalConnectorProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalFrame]
+	provider: OSBase_PhysicalFrameProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalMemory]
+	provider: OSBase_PhysicalMemoryProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_PhysicalPackage]
+	provider: OSBase_PhysicalPackageProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Rack]
+	provider: OSBase_RackProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2
+#
+[CIM_Slot]
+	provider: OSBase_SlotProvider
+	location: cmpiOSBase_PhysicalAssetProfileProvider
+	type: instance
+	namespace: root/cimv2

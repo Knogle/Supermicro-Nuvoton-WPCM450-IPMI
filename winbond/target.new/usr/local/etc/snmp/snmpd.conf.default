@@ -1,0 +1,10 @@
+###########################################################################
+# SECTION: Extending the Agent
+#
+#   You can extend the snmp agent to have it return information
+#   that you yourself define.
+
+# dlmod: dynamically extend the agent using a shared-object
+#   arguments:  module-name module-path
+
+#dlmod	<module name>	<module full path>

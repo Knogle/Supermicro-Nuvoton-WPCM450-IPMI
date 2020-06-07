@@ -1,0 +1,148 @@
+#! /bin/sh
+#
+# rcS		Call all S??* scripts in /etc/rcS.d in
+#		numerical/alphabetical order.
+#
+# Version:	@(#)/etc/init.d/rcS  2.76  19-Apr-1999  miquels@cistron.nl
+#
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
+runlevel=S
+prevlevel=N
+LD_LIBRARY_PATH=/lib:/usr/lib:/usr/local/lib:/usr/local/cim/usr/local/lib
+umask 022
+export PATH runlevel prevlevel LD_LIBRARY_PATH
+
+
+#ATTENTION This is the INITRD RCS
+echo "Starting rcS Script ..."
+mount -t proc /dev/proc /proc
+
+#
+# Create var directory in ramdisk - Ractrends Specific
+#
+#set VARDISKSIZE in KB here
+#VARDISKNUMBLOCKS=256
+#RDBLOCKSIZE=4096
+
+#we will always create 4096K blocks size ramdisks
+#and uboot will always pass ramdisk_blocksize=4096
+#and we will always use ext2
+#echo -n "Creating ext2 ramdisk for /var of blocksize $RDBLOCKSIZE block count $VARDISKNUMBLOCKS ..."
+#dd if=/dev/zero of=/dev/ram1 bs=$RDBLOCKSIZE count=$VARDISKNUMBLOCKS 2> /dev/null
+#mkfs.ext2 -v -m 0 -b $RDBLOCKSIZE /dev/ram1 $VARDISKNUMBLOCKS > /dev/null
+#mount /dev/ram1 /var
+#rmdir /var/lost+found
+#echo "done."
+
+#unmounts the old root automatically created by init
+umount	/initrd
+
+echo -n "Creating area for var using tmpfs ..."
+#instead of our ext2 based ramdisk we now do a tmpfs ramdisk which is cool
+mount -t tmpfs /dev/shm -o size=1M /var
+echo "done."
+
+echo -n "Creating directories in /var ..."
+chmod 777 /var
+chmod -t /var
+
+mkdir /var/tmp
+#chmod +t /var/tmp
+
+mkdir /var/run
+chmod 777 /var/run	# stunnele need write access 
+mkdir /var/pipe
+mkdir /var/log
+mkdir /var/lock
+mkdir /var/lock/etc     #needed because fo userm changes..the lib insists on doing /etc/something..
+mkdir /var/state        #used by some AMI progs to maintain state
+mkdir /var/etc          # to help progs (userm) that stick to /etc/ before all their filenames
+
+mkdir /var/empty		# Used by sshd ?!!
+
+# Used by HA
+#mkdir -p /var/lib/heartbeat/cores/root
+#mkdir -p /var/lib/heartbeat/cores/nobody
+#mkdir -p /var/lib/heartbeat/cores/hacluster
+#ln -s /conf/hb_generation /var/lib/heartbeat/hb_generation
+
+mkdir -p /var/run/samba
+mkdir -p /var/cache/samba
+mkdir -p /var/log/samba
+
+mkdir -p /var/lib/logrotate
+mkdir -p /var/spool/cron/crontabs
+
+mkdir -p /var/floppyimages
+
+
+
+echo "done."
+
+
+#
+#	See if system needs to be setup. This is ONLY meant to
+#	be used for the initial setup after a fresh installation!
+#
+if [ -x /sbin/unconfigured.sh ]
+then
+  /sbin/unconfigured.sh
+fi
+
+#
+#	Source defaults.
+#
+. /etc/default/rcS
+export VERBOSE
+
+#
+#	Trap CTRL-C &c only in this shell so we can interrupt subprocesses.
+#
+trap ":" INT QUIT TSTP
+
+#
+#	Call all parts in order.
+#
+for i in /etc/rcS.d/S??*
+do
+	# Ignore dangling symlinks for now.
+	[ ! -f "$i" ] && continue
+
+	case "$i" in
+		*.sh)
+			# Source shell script for speed.
+			(
+				trap - INT QUIT TSTP
+				set start
+				. $i
+			)
+			;;
+		*)
+			# No sh extension, so fork subprocess.
+			$i start
+			;;
+	esac
+done
+#	Run /etc/rc.d/rc.local if it exists
+[ -x /etc/rc.d/rc.local ] && /etc/rc.d/rc.local
+
+
+# Run ldconfig - Ractrends Specific  
+if [ -x /sbin/ldconfig ] 
+then 
+echo "Creating /var/ld.so.cache to which /etc/ld.so.cache is linked..."
+/sbin/ldconfig -C /var/ld.so.cache
+fi
+
+#
+#	Finish setup if needed. The comment above about
+#	/sbin/unconfigured.sh applies here as well!
+#
+if [ -x /sbin/setup.sh ]
+then
+  /sbin/setup.sh
+fi
+# this permission is required to make the mgetty to read the login.config.
+#chmod 0600 /conf/login.config
+#set date and time to something reasonable to 2007
+date 010100002007

@@ -1,0 +1,88 @@
+<profile name="IndicationsProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_IndicationService" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_IndicationFilter" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_IndicationServiceSettingData" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_IndicationServiceCapabilities" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_System" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_FilterCollection" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_ListenerDestination" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_InstIndication" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_InstCreation" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_InstDeletion" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_InstModification" profile="IndicationsProfile">
+      </class>
+      <class name="CIM_AlertIndication" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedService" profile="IndicationsProfile">
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="IndicationsProfile">
+            <class name="CIM_IndicationServiceSettingData" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="IndicationsProfile">
+            <class name="CIM_IndicationServiceCapabilities" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="IndicationsProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteDependency" profile="IndicationsProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_FilterCollection" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="IndicationsProfile">
+            <class name="CIM_IndicationFilter" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="IndicationsProfile">
+            <class name="CIM_IndicationFilter" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_FilterCollection" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_OwningCollectionElement" profile="IndicationsProfile">
+            <class name="CIM_IndicationService" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_FilterCollection" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_FilterCollectionSubscription" profile="IndicationsProfile">
+            <class name="CIM_ListenerDestination" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_FilterCollection" profile="IndicationsProfile">
+            </class>
+      </association>
+      <association classname="CIM_IndicationSubscription" profile="IndicationsProfile">
+            <class name="CIM_IndicationFilter" profile="IndicationsProfile">
+            </class>
+            <class name="CIM_ListenerDestination" profile="IndicationsProfile">
+            </class>
+      </association>
+</profile>

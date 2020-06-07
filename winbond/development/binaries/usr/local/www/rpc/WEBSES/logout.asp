@@ -1,0 +1,2 @@
+
+<% WebSession("WebSession","Logout", "param"); %>

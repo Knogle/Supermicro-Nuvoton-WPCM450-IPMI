@@ -1,0 +1,79 @@
+body{
+  margin:2px 1px;
+  background: #414141;
+  color:white;
+  overflow:hidden;
+}
+body,td,th{
+  font:8pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+th,td{
+  color: Black;
+  padding: 1px 5px;
+  background-color: white;
+}
+th{
+  font-weight: bold;
+  text-align: left;
+  color: gray;
+}
+#consoleOuter{
+  background: white;
+  position:relative;
+  padding:5px 5px;
+  color:black;
+}
+#consoleToolbar{
+  padding:0px 0px 5px;
+}
+#consoleInner{
+  overflow:auto;
+  position:relative;
+  border:1px solid silver;
+  color:black;
+  white-space: normal;
+}
+div.event{
+  /*white-space:nowrap;*/
+  color:black;
+  border: 1px outset;
+  margin: 5px 5px;
+  padding: 2px 4px;
+  min-height: 27px;
+}
+div.event .metrics{
+  float: right;
+}
+div.event table{
+  margin:5px;
+  border: 1px solid gray;
+}
+div.event.request{
+  background-color: #EEEEEE;
+  border-width: 1px;
+}
+div.event.queueappend{
+ background-color: #FFFFB7;
+ border-color: yellow;
+ margin-left:20px;
+}
+div.event.loading{
+ background-color: #FFFFFF;
+ border-color: white;
+ margin-left:20px;
+}
+div.event.success{
+ background-color: #D5F8D5;
+ border-color: green;
+ margin-left:20px;
+}
+div.event.timeout{
+ background-color: salmon;
+ border-color: red;
+ margin-left:20px;
+}
+div.event.error{
+ background-color: salmon;
+ border-color: red;
+ margin-left:20px;
+}

@@ -1,0 +1,160 @@
+<profile name="ChassisManagerProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_RedundancySet" profile="ChassisManagerProfile">
+      </class>
+      <class name="CIM_SoftwareInstallationService" profile="SoftwareUpdateProfile">
+      </class>
+      <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+      </class>
+      <class name="CIM_PowerManagementService" profile="PowerStateManagementServiceProfile">
+      </class>
+      <class name="CIM_BootService" profile="BootControlProfile">
+      </class>
+      <class name="CIM_SharedDeviceManagementService" profile="SharedDeviceManagementProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="CLPServiceProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_TimeService" profile="ChassisManagerProfile">
+      </class>
+      <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+      </class>
+      <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+      </class>
+      <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_RecordLog" profile="RecordLogProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <class name="CIM_Sensor" profile="SensorProfile">
+      </class>
+      <class name="CIM_EthernetPort" profile="EthernetPortProfile">
+      </class>
+      <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_DHCPProtocolEndpoint" profile="DHCPClientProfile">
+      </class>
+      <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+      </class>
+      <association classname="CIM_HostedAccessPoint" profile="ChassisManagerProfile">
+            <class name="CIM_DHCPProtocolEndpoint" profile="DHCPClientProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="ChassisManagerProfile">
+            <class name="CIM_SoftwareInstallationService" profile="SoftwareUpdateProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+            <class name="CIM_TimeService" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_PowerManagementService" profile="PowerStateManagementServiceProfile">
+            </class>
+            <class name="CIM_SharedDeviceManagementService" profile="SharedDeviceManagementProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="CLPServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+            </class>
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ManagesAccountOnSystem" profile="ChassisManagerProfile">
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_UseOfLog" profile="ChassisManagerProfile">
+            <class name="CIM_RecordLog" profile="RecordLogProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_OwningCollectionElement" profile="ChassisManagerProfile">
+            <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_RedundancySet" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_IsSpare" profile="ChassisManagerProfile">
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_RedundancySet" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="ChassisManagerProfile">
+            <class name="CIM_RedundancySet" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="ChassisManagerProfile">
+            <class name="CIM_TimeService" profile="ChassisManagerProfile">
+            </class>
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemDevice" profile="ChassisManagerProfile">
+            <class name="CIM_Sensor" profile="SensorProfile">
+            </class>
+            <class name="CIM_EthernetPort" profile="EthernetPortProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_InstalledSoftwareIdentity" profile="ChassisManagerProfile">
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ComputerSystemPackage" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemComponent" profile="ChassisManagerProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ChassisManagerProfile">
+            </class>
+      </association>
+</profile>

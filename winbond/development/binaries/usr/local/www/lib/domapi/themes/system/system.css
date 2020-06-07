@@ -1,0 +1,134 @@
+.DA_SKINNED .DA_BUTTON{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 3px;
+  margin:0px;
+  background:url("button/norm_left.gif") no-repeat left top;
+}
+.DA_SKINNED .DA_BUTTON_OVER{background-color: transparent !important}
+.DA_SKINNED .DA_BUTTON div{padding:0px 15px 0px 11px;background:url("button/norm_right.gif") no-repeat right top}
+.DA_SKINNED .DA_BUTTON.DA_INACTIVEBUTTONFACE{background:url("button/disabled_left.gif") no-repeat left top}
+.DA_SKINNED .DA_BUTTON.DA_INACTIVEBUTTONFACE div{background:url("button/disabled_right.gif") no-repeat right top}
+.DA_SKINNED .DA_BUTTON_OVER{background:url("button/over_left.gif") no-repeat left top}
+.DA_SKINNED .DA_BUTTON_OVER div{background:url("button/over_right.gif") no-repeat right top}
+.DA_SKINNED .DA_BUTTON_DEPRESS{background:url("button/depressed_left.gif") no-repeat left top}
+.DA_SKINNED .DA_BUTTON_DEPRESS div{background:url("button/depressed_right.gif") no-repeat right top}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_MENUBAR{background: url("menubar/background.jpg" );background-color:#FFFCF7;border-style:none;}
+.DA_SKINNED .DA_MENUBUTTON,
+.DA_SKINNED .DA_MENUBUTTON_DISABLED{border-style:none;padding:2px 6px 2px 6px;}
+.DA_SKINNED a.DA_MENUBUTTON:hover{background-color: #b6bdd2 !important;border:1px solid #0a2464 !important;color:black;padding:2px 5px 2px 5px;}
+.DA_SKINNED a.DA_MENUBUTTON_ACTIVE,
+.DA_SKINNED a.DA_MENUBUTTON_ACTIVE:hover{
+  background-color:#F9F8F6;
+  border-color: #666666;
+  border-bottom-color:#F9F8F6;
+  padding:2px 5px 2px 5px;
+}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_NOTEBOOK{background-color: #FFFFFF !important;border-color:#919B9C !important}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_OUTLOOKBAR{border-color:#808080 !important}
+.DA_SKINNED .DA_OB_TAB{background: url("outlookbar/normal.jpg" );border-color:#808080 !important}
+.DA_SKINNED .DA_OB_TAB_DEPRESS{background: url("outlookbar/depressed.jpg");color:white}
+.DA_SKINNED .DA_OB_TAB_SELECTED{background: url("outlookbar/selected.jpg");color:buttontext !important}
+.DA_SKINNED .DA_OB_TAB_OVER{background: url("outlookbar/over.jpg")}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_POPUPMENU                          {background: url("popupmenu/normal.jpg" )}
+.DA_SKINNED .DA_POPUPMENU tr.DA_HIGHLIGHT td       {background: url("popupmenu/focus.gif"  )}
+.DA_SKINNED .DA_POPUPMENU                          {border: 1px solid #666666;}
+.DA_SKINNED div.DA_MENUITEMSEP {border: 1px solid #a6a6a6;border-bottom-style:none;margin: 4px 0px 4px 30px;}
+.DA_SKINNED a.DA_MENUITEM:hover{background-color: #b6bdd2;border:1px solid #0a2464;color:black;padding: 0px 2px;}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_PROGRESSBAR.DA_HORZ .DA_BAR{
+  background-image: url("progressbar/horizontal.gif");
+  background-position: left top;
+  background-color: transparent;
+}
+.DA_SKINNED .DA_PROGRESSBAR.DA_VERT .DA_BAR{
+  background-image: url("progressbar/vertical.gif");
+  background-position: left bottom;
+  background-color: transparent;
+}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_SIDEBAR{background-color: #7392E7}
+.DA_SKINNED .DA_SIDEBAR_PANELBODY{
+  background-color: #D6DFF7;
+  border-style:solid;
+  border-color:white;
+  border-width:0px 1px 1px;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 3px;
+  margin:0px;
+  background:url("sidebar/left.gif") no-repeat left top;
+  height :25px;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER div{
+  height :25px;
+  padding:0px 8px 0px 11px;
+  background:url("sidebar/right.gif") no-repeat right top;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER td{
+  color:black;
+  line-height:25px;
+  vertical-align: middle;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER td div{background-image: none !important}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER{
+background:url("sidebar/left_disabled.gif") no-repeat left top !important;
+}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER div{
+background:url("sidebar/right_disabled.gif") no-repeat right top !important;
+}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER td{color:white}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELBODY{background-color:silver;color:gray;border-color:#B5B5B5}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_TABSET .DA_TAB{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 3px;
+  margin:0px;
+  background:url("tab/top_norm_left.gif") no-repeat left top;
+/*  background-color:transparent !important;*/
+}
+.DA_SKINNED .DA_TABSET span{padding:5px 15px 0px 11px;background:url("tab/top_norm_right.gif") no-repeat right top}
+.DA_SKINNED .DA_TABSET .DA_TAB_SELECTED{background:url("tab/top_sel_left.gif") no-repeat left top;}
+.DA_SKINNED .DA_TABSET .DA_TAB_SELECTED span{background:url("tab/top_sel_right.gif") no-repeat right top;padding-bottom:5px !important}
+/*****************************/
+.DA_SKINNED .DA_TABSET_DOWN .DA_TAB{background:url("tab/bottom_norm_left.gif") no-repeat left bottom}
+.DA_SKINNED .DA_TABSET_DOWN span{background:url("tab/bottom_norm_right.gif") no-repeat right bottom;padding:1px 15px 3px 11px;}
+.DA_SKINNED .DA_TABSET_DOWN .DA_TAB_SELECTED{background:url("tab/bottom_sel_left.gif") no-repeat left bottom;}
+.DA_SKINNED .DA_TABSET_DOWN .DA_TAB_SELECTED span{background:url("tab/bottom_sel_right.gif") no-repeat right bottom}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_TOOLBAR{background: url("toolbar/background.jpg" );background-color:#FFFCF7;border-style:none;}
+/*----------------------------------------------------------------------------*/
+/*var v = "background-repeat: repeat-y;background-position: top;";
+var h = "background-repeat: repeat-x;background-position: left;";
+.DA_SCROLLBAR_VBack",      'background:url(' + s.DA_SCROLLBAR__v_base_mid + ');' + v, true);
+
+.DA_SCROLLBAR_VBtn1",      'background:url(' + s.DA_SCROLLBAR__v_btn_up   + ');' + v, true);
+.DA_SCROLLBAR_VBtn2",      'background:url(' + s.DA_SCROLLBAR__v_btn_dwn  + ');' + v, true);
+
+.DA_SCROLLBAR_VEnd1",      'background:url(' + s.DA_SCROLLBAR__v_base_top + ');' + v, true);
+.DA_SCROLLBAR_VEnd2",      'background:url(' + s.DA_SCROLLBAR__v_base_bot + ');' + v, true);
+
+.DA_SCROLLBAR_VThumbEnd1", 'background:url(' + s.DA_SCROLLBAR__v_th_top   + ');' + v, true);
+.DA_SCROLLBAR_VThumbMid",  'background:url(' + s.DA_SCROLLBAR__v_th_mid   + ');' + v, true);
+.DA_SCROLLBAR_VThumbEnd2", 'background:url(' + s.DA_SCROLLBAR__v_th_bot   + ');' + v, true);
+//------
+.DA_SCROLLBAR_HBack",      'background:url(' + s.DA_SCROLLBAR__h_base_mid + ');' + h, true);
+
+.DA_SCROLLBAR_HBtn1",      'background:url(' + s.DA_SCROLLBAR__h_btn_up   + ');' + h, true);
+.DA_SCROLLBAR_HBtn2",      'background:url(' + s.DA_SCROLLBAR__h_btn_dwn  + ');' + h, true);
+
+.DA_SCROLLBAR_HEnd1",      'background:url(' + s.DA_SCROLLBAR__h_base_top + ');' + h, true);
+.DA_SCROLLBAR_HEnd2",      'background:url(' + s.DA_SCROLLBAR__h_base_bot + ');' + h, true);
+
+.DA_SCROLLBAR_HThumbEnd1", 'background:url(' + s.DA_SCROLLBAR__h_th_top   + ');' + h, true);
+.DA_SCROLLBAR_HThumbMid",  'background:url(' + s.DA_SCROLLBAR__h_th_mid   + ');' + h, true);
+.DA_SCROLLBAR_HThumbEnd2", 'background:url(' + s.DA_SCROLLBAR__h_th_bot   + ');' + h, true);
+};*/
+/*----------------------------------------------------------------------------*/

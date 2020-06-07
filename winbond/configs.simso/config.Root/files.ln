@@ -1,0 +1,458 @@
+# *****************************************************************************
+# Generic Linux Symbolic Links
+# *****************************************************************************
+
+#
+# Device links
+#
+./dev/fd -> /proc/self/fd
+./dev/core -> /proc/kcore
+./dev/nfsd -> socksys
+./dev/X0R -> null
+./dev/stdin -> fd/0
+./dev/stdout -> fd/1
+./dev/stderr -> fd/2
+./dev/ram -> ram1
+./dev/ramdisk -> ram0
+./usr/sbin/dropbear -> /usr/sbin/dropbearmulti
+./usr/bin/dropbearkey -> /usr/sbin/dropbearmulti
+
+#
+# Misc Links
+#
+./etc/network/run -> /var/network/run
+./etc/mtab -> /proc/mounts
+./tmp -> ./var/tmp
+./etc/versions -> /proc/ractrends/Helper/FwInfo
+./sbin/reboot -> halt
+./sbin/poweroff -> halt
+#./usr/sbin/stunnelvm -> /usr/sbin/stunnel4
+#./usr/sbin/stunnelvm -> /bin/ls
+#since root fs is readonly and cron has a bug with crontab date being 1970
+#we need it in a place where crontab date can be more than 1970
+./etc/crontab -> /conf/crontab
+./etc/resolv.conf -> /conf/resolv.conf
+./etc/ldap.conf -> /conf/ldap.conf
+./etc/pam_ldap.conf -> /conf/ldap.conf
+./etc/libnss-ldap.conf -> /conf/ldap.conf
+
+
+#
+# Startup Script rcS Links 
+#
+#./etc/rcS.d/S10checkroot.sh -> ../init.d/checkroot.sh
+#./etc/rcS.d/S30checkfs.sh -> ../init.d/checkfs.sh
+./etc/rcS.d/S33modutils -> ../init.d/module-init-tools
+./etc/rcS.d/S35devpts.sh -> ../init.d/devpts.sh
+./etc/rcS.d/S35devshm.sh -> ../init.d/devshm.sh
+./etc/rcS.d/S35mountall.sh -> ../init.d/mountall.sh
+./etc/rcS.d/S35ifupdown -> ../init.d/ifupdown
+#./etc/rcS.d/S35vlanconfig -> ../init.d/vlanconfig
+./etc/rcS.d/S40networking -> ../init.d/networking
+./etc/rcS.d/S40vlannetworking -> ../init.d/vlannetworking
+./etc/rcS.d/S41hostname -> ../init.d/hostname.sh
+./etc/rcS.d/S41ipmistack -> ../init.d/ipmistack
+#./etc/rcS.d/S45ntpdate -> ../init.d/ntpdate
+./etc/rcS.d/S55bootmisc.sh -> ../init.d/bootmisc.sh
+
+#
+# RunLevel 0 Links 
+#
+./etc/rc0.d -> rc6.d
+
+#
+# RunLevel 1 Links 
+#
+./etc/rc1.d/S20single -> ../init.d/single
+#./etc/rc1.d/K25snmpd -> ../init.d/snmpd
+./etc/rc1.d/K20sshd -> ../init.d/ssh
+#./etc/rc1.d/K25nmbd -> ../init.d/nmbd.sh
+./etc/rc1.d/K30cron -> ../init.d/cron
+#./etc/rc1.d/K90syslog -> ../init.d/syslog
+
+#
+# RunLevel 2 Links 
+#
+./etc/rc2.d -> rc3.d
+
+
+#
+# RunLevel 3 Links 
+#
+#./etc/rc3.d/S10syslog -> ../init.d/syslog
+#./etc/rc3.d/S25snmpd -> ../init.d/snmpd	
+./etc/rc3.d/S20ntpdate -> ../init.d/ntpdate
+./etc/rc3.d/S20sshd -> ../init.d/ssh
+#./etc/rc3.d/S25nmbd -> ../init.d/nmbd.sh
+./etc/rc3.d/S30cron -> ../init.d/cron
+./etc/rc3.d/S50flasher -> ../init.d/flasher
+
+
+#
+# RunLevel 4 Links 
+#
+./etc/rc4.d -> rc3.d
+
+#
+# RunLevel 5 Links 
+#
+./etc/rc5.d -> rc3.d
+
+#
+# RunLevel 6 Links 
+#
+./etc/rc6.d/S20sendsigs -> ../init.d/sendsigs
+#./etc/rc6.d/K25snmpd -> ../init.d/snmpd
+./etc/rc6.d/K20sshd -> ../init.d/ssh
+#./etc/rc6.d/K25nmbd -> ../init.d/nmbd.sh
+./etc/rc6.d/K30cron -> ../init.d/cron
+./etc/rc6.d/S31umountnfs.sh -> ../init.d/umountnfs.sh
+./etc/rc6.d/S40umountfs -> ../init.d/umountfs
+#./etc/rc6.d/K90syslog -> ../init.d/syslog
+./etc/rc6.d/S90reboot -> ../init.d/reboot
+
+#
+# RunLevel 7 Links 
+#
+#./etc/rc7.d/K25snmpd -> ../init.d/snmpd
+./etc/rc7.d/K20sshd -> ../init.d/ssh
+#./etc/rc7.d/K25nmbd -> ../init.d/nmbd.sh
+./etc/rc7.d/K30cron -> ../init.d/cron
+./etc/rc7.d/S31umountnfs.sh -> ../init.d/umountnfs.sh
+### This is replaced with flumount
+###./etc/rc7.d/S40umountfs -> ../init.d/umountfs
+#./etc/rc7.d/K90syslog -> ../init.d/syslog
+
+./etc/rc7.d/S40flumount -> ../init.d/flumount
+./etc/rc7.d/K90forcekill -> ../init.d/forcekill
+./etc/rc7.d/S50prepfl -> ../init.d/prepfl
+./etc/rc7.d/S51stopgc -> ../init.d/stopgc
+./etc/rc7.d/S52initcomplete -> ../init.d/initcomplete
+
+
+
+#
+# Standard Library Links
+#
+./lib/ld-linux.so.2 -> ld-2.3.2.so
+./lib/libc.so.6 -> libc-2.3.2.so
+./lib/ld.so.1 -> ld-2.3.2.so
+./lib/libdl.so.2 -> libdl-2.3.2.so
+./lib/libcrypt.so.1 -> libcrypt-2.3.2.so
+./lib/libwrap.so.0 -> libwrap.so.0.7.6
+./lib/libnsl.so.1 -> libnsl-2.3.2.so
+./lib/libpam.so.0 -> libpam.so.0.76
+./lib/libblkid.so.1 -> libblkid.so.1.0
+./lib/security/pam_unix_acct.so -> pam_unix.so
+./lib/security/pam_unix_auth.so -> pam_unix.so
+./lib/security/pam_unix_passwd.so -> pam_unix.so
+./lib/security/pam_unix_session.so -> pam_unix.so
+./lib/libpthread.so.0 -> libpthread-0.10.so
+./lib/libnss_files.so.2 -> libnss_files-2.3.2.so
+./lib/libnss_dns.so.2 -> libnss_dns-2.3.2.so
+./lib/libnss_ldap.so.2 -> libnss_ldap-2.3.2.so
+./lib/libresolv.so.2 -> libresolv-2.3.2.so
+./lib/libutil.so.1 -> libutil-2.3.2.so
+./lib/libm.so.6 -> libm-2.3.2.so
+./lib/libpopt.so -> libpopt.so.0
+./lib/libpopt.so.0 -> libpopt.so.0.0.0
+./usr/lib/libz.so -> libz.so.1
+./usr/lib/libz.so.1 -> libz.so.1.2.2
+./usr/lib/libcrypto.so	-> libcrypto.so.0.9.7
+./usr/lib/libcrypto.so.0 -> libcrypto.so.0.9.7
+./lib/libuuid.so.1 -> libuuid.so.1.2
+./usr/lib/libjpeg.so -> libjpeg.so.62.0.0
+./usr/lib/libjpeg.so.62 -> libjpeg.so.62.0.0
+
+#ssl libraries
+./usr/lib/libssl.so -> libssl.so.0.9.7
+./usr/lib/libssl.so.0 -> libssl.so.0.9.7
+
+#
+# Temporary Files Links
+#
+
+#---------------------------------------------------------------------------
+# These are links from root file system to a temporary directory (ramdisk)
+# These entries need to be within root diretory structure for various reasons,
+# but the actual content can be symbolically linked to the directory structure
+# and it is not needed to be preseved across resets (The contents are volatile)
+#--------------------------------------------------------------------------
+./lib/modules/2.6.24-ami/modules.dep -> /var/modules.dep
+./lib/modules/2.6.24-ami/modules.dep.temp -> /var/modules.dep.temp
+./lib/modules//modules.generic_string -> /var/modules.generic_string
+./lib/modules/2.6.24-ami/modules.pcimap -> /var/modules.pcimap
+./lib/modules/2.6.24-ami/modules.isapnpmap -> /var/modules.isapnpmap
+./lib/modules/2.6.24-ami/modules.usbmap -> /var/modules.usbmap
+./lib/modules/2.6.24-ami/modules.parportmap -> /var/modules.parportmap
+./lib/modules/2.6.24-ami/modules.ieee1394map -> /var/modules.ieee1394map
+./lib/modules/2.6.24-ami/modules.pnpbiosmap -> /var/modules.pnpbiosmap
+./etc/ioctl.save -> /var/ioctl.save
+./etc/ld.so.cache -> /var/ld.so.cache
+./etc/network/ifstate -> /var/ifstate
+./etc/.pwd.lock -> /var/.pwd.lock
+#-------------------------------------------------------------
+#syslog needs /dev/log. So we start syslog with an option to 
+#create the socket in /var/syslogsock, but make /dev/log a link 
+#to /var/syslogsock that way whoever opens /dev/log will be ok
+#--------------------------------------------------------------
+./dev/log -> /var/syslogsock				
+
+#
+# Config Section Links
+#
+#---------------------------------------------------------------------------
+# These are links from root into the config section. (i.e.) Configuration
+# files that need to be maintained across resets 
+#--------------------------------------------------------------------------
+./etc/network/network.conf -> /conf/network.conf
+./etc/network/interfaces -> /conf/interfaces
+./etc/hostname -> /conf/hostname
+./etc/hosts -> /conf/hosts
+./etc/hosts.allow -> /conf/hosts.allow
+./etc/hosts.deny -> /conf/hosts.deny
+./etc/passwd -> /conf/passwd
+./etc/group -> /conf/group
+./etc/shadow -> /conf/shadow
+./etc/adjtime -> /conf/adjtime
+./etc/ntp.conf -> /conf/ntp.conf
+./etc/utc.offset -> /conf/utc.offset
+./etc/smcntp.enable -> /conf/smcntp.enable
+./etc/webshadow -> /conf/webshadow
+./etc/clearpasswd -> /conf/clearpasswd
+./etc/smc.conf -> /conf/smc.conf
+
+
+#SSL certificates which will be uploaded
+./etc/actualprivkey.pem -> /conf/actualprivkey.pem
+./etc/actualcert.pem -> /conf/actualcert.pem
+
+#Active Directory certificates which will be uploaded
+./etc/adcert.pem -> /conf/adcert.pem
+
+
+./usr/bin/awk -> /usr/bin/gawk
+# *****************************************************************************
+# Ractrends Common Symbolic Links
+# *****************************************************************************
+
+#
+# ssh related keys
+#
+#./etc/ssh/ssh_host_rsa_key -> /conf/ssh_host_rsa_key
+#./etc/ssh/ssh_host_dsa_key -> /conf/ssh_host_dsa_key
+#./etc/ssh/ssh_host_rsa_key.pub -> /conf/ssh_host_rsa_key.pub
+#./etc/ssh/ssh_host_dsa_key.pub -> /conf/ssh_host_dsa_key.pub
+
+./etc/dropbear/dropbear_rsa_host_key -> /conf/dropbear_rsa_host_key
+
+#
+# Videod and hid related
+#
+./etc/hid.conf  -> /conf/hid.conf
+#./etc/redir.conf -> /conf/redir.conf
+./etc/PwrCtrl    -> /conf/PwrCtrl
+./etc/sessiontimeout.conf -> /conf/sessiontimeout.conf
+./etc/MacroConfig   -> /conf/MacroConfig
+
+#
+# Libraries : ldconfig cannot do the links since root file system is ReadOnly
+#			  So we manually create the links here
+#	
+./usr/local/lib/libami.so.1 -> libami.so.1.0
+#./usr/local/lib/libredircfg.so.1 -> libredircfg.so.1.0
+./usr/local/lib/libuserm.so.1 -> libuserm.so.1.0
+./usr/local/lib/libipmi.so.1 -> libipmi.so.1.0
+./usr/local/lib/libsensors.so.1 -> libsensors.so.1.0
+./usr/local/lib/libPDKAPI.so.1 -> libPDKAPI.so.1.0
+./usr/local/lib/libPDK.so.1 -> libPDK.so.1.0
+./usr/local/lib/libPDKFlash.so.1 -> libPDKFlash.so.1.0
+./usr/local/lib/libPAR.so.1 -> libPAR.so.1.0	
+./usr/local/lib/libPDKCmd.so.1 -> libPDKCmd.so.1.0
+#./usr/local/lib/libSTACKCommon.so.1 -> libSTACKCommon.so.1.0
+./usr/local/lib/libipmihalapi.so.1 -> libipmihalapi.so.1.0
+./usr/local/lib/libipmihalhw.so.1 -> libipmihalhw.so.1.0
+
+./usr/local/lib/libifc_ipmi.so.1 -> libifc_ipmi.so.1.0
+./usr/local/lib/libsmtp.so.1 -> libsmtp.so.1.0
+
+./usr/local/lib/libOEMTestTarget.so.1 -> libOEMTestTarget.so.1.0
+./usr/local/lib/libOEMTestCommand.so.1 -> libOEMTestCommand.so.1.0
+
+#./usr/local/lib/libDOMParser.so.1 -> libDOMParser.so.1.0
+#./usr/local/lib/libwsman.so.1 -> libwsman.so.1.0
+#./usr/local/lib/libLan.so.1 -> libLan.so.1.0
+#./usr/local/lib/libLog.so.1 -> libLog.so.1.0
+#./usr/local/lib/libSensor.so.1 -> libSensor.so.1.0
+#./usr/local/lib/libSystem.so.1 -> libSystem.so.1.0
+#./usr/local/lib/libUser.so.1 -> libUser.so.1.0
+#./usr/local/lib/libWSDL1.1.so.1 -> libWSDL1.1.so.1.0
+#./usr/local/lib/libDOMParser.so -> libDOMParser.so.1.0
+#./usr/local/lib/libwsman.so -> libwsman.so.1.0
+#./usr/local/lib/libLan.so -> libLan.so.1.0
+#./usr/local/lib/libLog.so -> libLog.so.1.0
+#./usr/local/lib/libSensor.so -> libSensor.so.1.0
+#./usr/local/lib/libSystem.so -> libSystem.so.1.0
+#./usr/local/lib/libUser.so -> libUser.so.1.0
+#./usr/local/lib/libWSDL1.1.so -> libWSDL1.1.so.1.0
+
+
+./usr/local/lib/libminilzo.so.1 -> libminilzo.so.1.0
+#./usr/local/lib/libcuri_local.so.1 -> libcuri_local.so.1.0
+#./usr/local/lib/libfwall.so.1 -> libfwall.so.1.0
+./usr/local/lib/libgpio.so.1 -> libgpio.so.1.0
+./usr/local/lib/libsnoop.so.1 -> libsnoop.so.1.0
+./usr/local/lib/libpwmtach.so.1 -> libpwmtach.so.1.0
+#./usr/local/lib/libdatetime.so.1 -> libdatetime.so.1.0
+./usr/local/lib/libhidconf.so.1 -> libhidconf.so.1.0
+#./usr/local/lib/libredircfg.so.1 -> libredircfg.so.1.0
+#./usr/local/lib/libmacro.so.1 -> libmacro.so.1.0
+./usr/local/lib/liblogin.so.1 -> liblogin.so.1.0
+./usr/local/lib/libadc.so.1 -> libadc.so.1.0
+./usr/local/lib/libmmap.so.1 -> libmmap.so.1.0
+./usr/local/lib/libpeci.so.1 -> libpeci.so.1.0
+./usr/local/lib/libmisc.so.1 -> libmisc.so.1.0
+./usr/local/lib/libpamipmi.so.1 -> libpamipmi.so.1.0
+
+#./usr/local/lib/libifc_redircfg.so.1 -> libifc_redircfg.so.1.0
+./usr/local/lib/libifc_flasher.so.1 -> libifc_flasher.so.1.0
+#./usr/local/lib/libifc_nw.so.1 -> libifc_nw.so.1.0
+./usr/local/lib/libifc_misc.so.1 -> libifc_misc.so.1.0
+#./usr/local/lib/libifc_userm.so.1 -> libifc_userm.so.1.0
+#./usr/local/lib/libifc_fwall.so.1 -> libifc_fwall.so.1.0
+#./usr/local/lib/libifc_authenticate.so.1 -> libifc_authenticate.so.1.0
+#./usr/local/lib/libifc_datetime.so.1 -> libifc_datetime.so.1.0
+#./usr/local/lib/libifc_fpgacfg.so.1 -> libifc_fpgacfg.so.1.0
+#./usr/local/lib/libifc_calib.so.1 -> libifc_calib.so.1.0
+#./usr/local/lib/libifc_ubenv.so.1 -> libifc_ubenv.so.1.0
+#./usr/local/lib/libifc_macro.so.1 -> libifc_macro.so.1.0
+./usr/local/lib/libifc_login.so.1 -> libifc_login.so.1.0
+
+./usr/local/lib/libldapauth.so.1 -> libldapauth.so.1.0
+#
+# Run Level scripts
+#
+ 
+#./etc/rc3.d/S35vmedia_servers -> ../init.d/vmedia_servers
+./etc/rc3.d/S30kvm_servers -> ../init.d/kvm_servers
+./etc/rc3.d/S35cdserver -> ../init.d/cdserver
+./etc/rc3.d/S35fdserver -> ../init.d/fdserver
+#./etc/rc3.d/S45adviserd -> ../init.d/adviserd
+#./etc/rc3.d/S20ipmistack -> ../init.d/ipmistack
+#./etc/rc3.d/S10sshkey -> ../init.d/sshkey
+#./etc/rc.d/rc3.d/S50upnp -> ../init.d/upnp
+
+# *****************************************************************************
+# Project Specific Symbolic Links
+# *****************************************************************************
+
+
+
+
+./usr/local/lib/libi2c.so.1 -> libi2c.so.1.0
+./usr/local/lib/libi2c.so -> libi2c.so.1.0
+
+
+#
+# RunLevel Links 
+#
+# SMASH-Lite  related links
+#./etc/smash.ini -> /var/smash.ini
+#./etc/bmc.ini -> /conf/bmc.ini
+#./etc/SM_OEM_CMD -> /conf/SM_OEM_CMD
+#./etc/SM_OEM_TRG -> /conf/SM_OEM_TRG
+#./etc/SMASHTarget.map -> /conf/SMASHTarget.map
+#./etc/CIM_NumericSensor.ini -> /conf/CIM_NumericSensor.ini
+#./etc/CIM_LogRecord.ini -> /conf/CIM_LogRecord.ini
+#./etc/CIM_RecordLog.ini -> /conf/CIM_RecordLog.ini
+
+# OLD WSMAN links - Deprecated
+#./etc/Catalog/Lan.cat -> /conf/Lan.cat
+#./etc/Catalog/Log.cat -> /conf/Log.cat
+#./etc/Catalog/Sensor.cat -> /conf/Sensor.cat
+#./etc/Catalog/System.cat -> /conf/System.cat
+#./etc/Catalog/User.cat -> /conf/User.cat
+
+# *****************************************************************************
+# CIM Based  SMASH/WSMAN
+# *****************************************************************************
+#SFCB Libraries
+./usr/local/cim/usr/local/lib/libsfcBasicAuthentication.so.0 -> /usr/local/cim/usr/local/lib/libsfcBasicAuthentication.so.0.0.0					1	P3
+./usr/local/cim/usr/local/lib/libsfcBrokerCore.so.0 -> /usr/local/cim/usr/local/lib/libsfcBrokerCore.so.0.0.0							1	P3			
+./usr/local/cim/usr/local/lib/libsfcCertificateAuthentication.so.0 -> /usr/local/cim/usr/local/lib/libsfcCertificateAuthentication.so.0.0.0				1	P3
+./usr/local/cim/usr/local/lib/libcimcClientSfcbLocal.so.0 -> /usr/local/cim/usr/local/lib/libcimcClientSfcbLocal.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcCimXmlCodec.so.0 -> /usr/local/cim/usr/local/lib/libsfcCimXmlCodec.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProviderGz.so.0 -> /usr/local/cim/usr/local/lib/libsfcClassProviderGz.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProviderMem.so.0 -> /usr/local/cim/usr/local/lib/libsfcClassProviderMem.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProvider.so.0 -> /usr/local/cim/usr/local/lib/libsfcClassProvider.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcFileRepository.so.0 -> /usr/local/cim/usr/local/lib/libsfcFileRepository.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcHttpAdapter.so.0 -> /usr/local/cim/usr/local/lib/libsfcHttpAdapter.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcIndCIMXMLHandler.so.0 -> /usr/local/cim/usr/local/lib/libsfcIndCIMXMLHandler.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcInternalProvider.so.0 -> /usr/local/cim/usr/local/lib/libsfcInternalProvider.so.0.0.0						1	P3	
+./usr/local/cim/usr/local/lib/libsfcInteropProvider.so.0 -> /usr/local/cim/usr/local/lib/libsfcInteropProvider.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcInteropServerProvider.so.0 -> /usr/local/cim/usr/local/lib/libsfcInteropServerProvider.so.0.0.0					1	P3
+./usr/local/cim/usr/local/lib/libsfcObjectImplSwapI32toP32.so.0 -> /usr/local/cim/usr/local/lib/libsfcObjectImplSwapI32toP32.so.0.0.0				1	P3
+./usr/local/cim/usr/local/lib/libsfcQualifierProvider.so.0 -> /usr/local/cim/usr/local/lib/libsfcQualifierProvider.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcUtil.so.0 -> /usr/local/cim/usr/local/lib/libsfcUtil.so.0.0.0									1	P3
+
+./usr/local/cim/usr/local/lib/libsfcBasicAuthentication.so -> /usr/local/cim/usr/local/lib/libsfcBasicAuthentication.so.0.0.0					1	P3
+./usr/local/cim/usr/local/lib/libsfcBrokerCore.so -> /usr/local/cim/usr/local/lib/libsfcBrokerCore.so.0.0.0								1	P3
+./usr/local/cim/usr/local/lib/libsfcCertificateAuthentication.so -> /usr/local/cim/usr/local/lib/libsfcCertificateAuthentication.so.0.0.0				1	P3
+./usr/local/cim/usr/local/lib/libcimcClientSfcbLocal.so -> /usr/local/cim/usr/local/lib/libcimcClientSfcbLocal.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcCimXmlCodec.so -> /usr/local/cim/usr/local/lib/libsfcCimXmlCodec.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProviderGz.so -> /usr/local/cim/usr/local/lib/libsfcClassProviderGz.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProviderMem.so -> /usr/local/cim/usr/local/lib/libsfcClassProviderMem.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcClassProvider.so -> /usr/local/cim/usr/local/lib/libsfcClassProvider.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcFileRepository.so -> /usr/local/cim/usr/local/lib/libsfcFileRepository.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcHttpAdapter.so -> /usr/local/cim/usr/local/lib/libsfcHttpAdapter.so.0.0.0							1	P3
+./usr/local/cim/usr/local/lib/libsfcIndCIMXMLHandler.so -> /usr/local/cim/usr/local/lib/libsfcIndCIMXMLHandler.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcInternalProvider.so -> /usr/local/cim/usr/local/lib/libsfcInternalProvider.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcInteropProvider.so -> /usr/local/cim/usr/local/lib/libsfcInteropProvider.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcInteropServerProvider.so -> /usr/local/cim/usr/local/lib/libsfcInteropServerProvider.so.0.0.0					1	P3
+./usr/local/cim/usr/local/lib/libsfcObjectImplSwapI32toP32.so -> /usr/local/cim/usr/local/lib/libsfcObjectImplSwapI32toP32.so.0.0.0					1	P3
+./usr/local/cim/usr/local/lib/libsfcQualifierProvider.so -> /usr/local/cim/usr/local/lib/libsfcQualifierProvider.so.0.0.0						1	P3
+./usr/local/cim/usr/local/lib/libsfcUtil.so -> /usr/local/cim/usr/local/lib/libsfcUtil.so.0.0.0									1	P3
+
+
+#CIM WSMAN File links
+
+./usr/local/cim/usr/local/lib/libwsman.so.1  ->		/usr/local/cim/usr/local/lib/libwsman.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libXMLParser.so.1 -> 	/usr/local/cim/usr/local/lib/libXMLParser.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libCIM-Client.so.1 ->	/usr/local/cim/usr/local/lib/libCIM-Client.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/liblocalcimclient.so.1 ->   /usr/local/cim/usr/local/lib/liblocalcimclient.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/libinihandler.so.1 ->	/usr/local/cim/usr/local/lib/libinihandler.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libiniparser.so.1 ->   /usr/local/cim/usr/local/lib/libiniparser.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libdmiinfo.so.1 ->	/usr/local/cim/usr/local/lib/libdmiinfo.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libCimPermission.so.1 ->    /usr/local/cim/usr/local/lib/libCimPermission.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/libCimPermission.so ->    /usr/local/cim/usr/local/lib/libCimPermission.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/libPetToPem.so ->    /usr/local/cim/usr/local/lib/libPetToPem.so.1.0						1	P3
+./usr/local/cim/usr/local/lib/libPetToPem.so.1 ->    /usr/local/cim/usr/local/lib/libPetToPem.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libAuthentication.so.1 ->    /usr/local/cim/usr/local/lib/libAuthentication.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/libAuthentication.so ->    /usr/local/cim/usr/local/lib/libAuthentication.so.1.0				1	P3
+
+./usr/local/cim/usr/local/lib/libwsman.so ->		/usr/local/cim/usr/local/lib/libwsman.so.1.0						1	P3
+./usr/local/cim/usr/local/lib/libXMLParser.so -> 	/usr/local/cim/usr/local/lib/libXMLParser.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libCIM-Client.so ->	/usr/local/cim/usr/local/lib/libCIM-Client.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/liblocalcimclient.so ->   /usr/local/cim/usr/local/lib/liblocalcimclient.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/libinihandler.so ->	/usr/local/cim/usr/local/lib/libinihandler.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/libiniparser.so -> /usr/local/cim/usr/local/lib/libiniparser.so.1.0						1	P3
+./usr/local/cim/usr/local/lib/libdmiinfo.so 	->	/usr/local/cim/usr/local/lib/libdmiinfo.so.1.0					1	P3
+./usr/local/cim/usr/local/lib/librtlog.so.1 ->    /usr/local/cim/usr/local/lib/librtlog.so.1.0				1	P3
+./usr/local/cim/usr/local/lib/librtlog.so 	->	/usr/local/cim/usr/local/lib/librtlog.so.1.0					1	P3
+
+
+#SMASH Config file
+./usr/local/cim/etc/smash-cim.ini -> /conf/smash-cim.ini									1	P3
+./usr/local/cim/etc/Providers/IPMI_Conf.ini -> /conf/IPMI_Conf.ini								1	P3
+./usr/bin/smashclp -> /usr/local/cim/usr/local/bin/smashclp
+
+#added for cim browser support
+./usr/local/www/cim	-> /usr/local/cim/usr/local/www/cim
+
+# Should be loaded after IPMIMain and Networking
+./etc/rcS.d/S42cim_sfcb -> ../init.d/cim_sfcb										
+
+
+# Standard files need for CIM 
+./usr/lib/libcurl.so -> /usr/lib/libcurl.so.3.0.0
+./usr/lib/libcurl.so.3 -> /usr/lib/libcurl.so.3.0.0

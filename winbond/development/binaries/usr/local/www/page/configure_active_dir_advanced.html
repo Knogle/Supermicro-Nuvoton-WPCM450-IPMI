@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <script src="../lib/eVal.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_active_dir_advanced_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_active_dir_advanced_imp.js"></script>
+
+  
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_TITLE");
+		var elmt = document.getElementById("_saveBtn");
+		elmt.setAttribute("value", eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_SAVEBTN"));
+		var elmt = document.getElementById("_cancelBtn");
+		elmt.setAttribute("value", eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_CANCELBTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_HEADING"));</script>
+</h3> 
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_DESC"));</script>
+ <div class="subSection">
+	<table cellspacing="0" cellpadding="5" border="0" width="600">
+	<tr><td colspan="2">
+		<input type="checkbox" id="_enableAD" /> 
+		<strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_ENABLEAD"));</script>
+</strong>
+	</td></tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_DOMAINNAME"));</script>
+</strong></td>
+		<td><input type="text" id="_domainname" disabled style="width:150px;" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_TIMEOUT"));</script>
+</strong></td>
+		<td><input type="text" id="_timeout" disabled style="width:150px;" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_DOMAINSRVR1"));</script>
+</strong></td>
+		<td><input type="text" id="_domainaddr1" disabled style="width:150px;" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_DOMAINSRVR2"));</script>
+</strong></td>
+		<td><input type="text" id="_domainaddr2" disabled style="width:150px;" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_DOMAINSRVR3"));</script>
+</strong></td>
+		<td><input type="text" id="_domainaddr3" disabled style="width:150px;" /></td>
+	</tr>
+	<tr>
+		<td><strong><label id="_adCertStatus">
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_ADCERT"));</script>
+</label></strong></td>
+		<td><label id="_adCertInfo"></label></td>
+	</tr>
+	<form method="POST" action="" enctype="multipart/form-data">
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("configure_active_dir_advanced", "STR_CONF_AD_ADV_UPLOAD_ADCERT"));</script>
+</strong></td>
+		<td><input type="file" id="_adFileBrowse" disabled size="25"></td>
+	</tr>
+	</form>
+	</table>
+</div>
+
+<div class="btnTray" style="width: 600px;">
+	<input type="button" class="classicBtn" id="_saveBtn" />
+	<input type="button" class="classicBtn" id="_cancelBtn" />
+</div>
+</body>
+</html>

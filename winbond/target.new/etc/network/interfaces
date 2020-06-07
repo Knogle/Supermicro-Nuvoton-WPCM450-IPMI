@@ -1,0 +1,14 @@
+##This file has been modified to reduce size.
+##vast chunks of commenetd out information
+##have been removed
+##in case you want to look at what the comments said
+##look at an older CD
+
+# We always want the loopback interface.
+
+auto lo
+iface lo inet loopback
+
+
+auto eth0
+iface eth0 inet dhcp

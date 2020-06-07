@@ -1,0 +1,72 @@
+#----------------------------------------------------------------------
+# 		Makefile for Linux Modules (2.6) for ractrends boards 
+# 		   Copyright (c) 2006 American Megatrends Inc 
+#----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif
+
+# TOPDIR will be modified by the Kernel makefiles used to build drivers
+ifndef PROJDIR
+PROJDIR:= $(shell cd ../../.. ;pwd)
+endif
+
+#----------------------------------------------------------------------
+#			Include Global Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.global
+
+# The include files to be taken from kernel
+INCLUDEDIR = $(KERNELDIR)/include
+
+# Local include files 
+LOCALINCLUDE= $(TOPDIR)/development/common/include/global
+
+# Include files having the symbols exported
+SYMBOLSDIR = $(TOPDIR)/development/firmware/drivers/exports
+
+
+
+
+
+#Install directory
+ifeq ($(LINUX_VER), 2.6.24)
+VERSIONFILE = $(INCLUDEDIR)/linux/utsrelease.h
+else
+VERSIONFILE = $(INCLUDEDIR)/linux/version.h
+endif
+VERSION     = $(shell awk -F\" '/REL/ {print $$2}' $(VERSIONFILE))
+MODULESDIR  = $(INSTALLDIR)/lib/modules/$(VERSION)/misc
+
+# Module (2.6) Creation Rule 
+ifeq ($(KERNELRELEASE),)
+all: $(MODULE)
+
+$(MODULE):
+	@$(MAKE) -C $(KERNELDIR) SUBDIRS=$(PWD) modules
+endif
+
+# Clean directory 
+clean:
+	@find $(PWD) \
+		\( -name '*.[oas]' -o -name '*.ko' -o -name '.*.cmd' \
+		-o -name '.*.d' -o -name '.*.tmp' -o -name '*.mod.c' \) \
+		-type f -print | xargs rm -f
+	@rm -rf .tmp_versions
+
+
+#Install Modules to target
+install: $(MODULE)
+	install -d $(MODULESDIR)
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(MODULE) $(MODULESDIR)
+	install -d $(BINARYDIR)/lib/modules/$(VERSION)/misc
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(MODULE) $(BINARYDIR)/lib/modules/$(VERSION)/misc
+
+
+
+#------------------------- End of Rules.Make ---------------------------

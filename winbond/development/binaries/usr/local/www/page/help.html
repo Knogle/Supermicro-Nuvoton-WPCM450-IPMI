@@ -1,0 +1,50 @@
+<html>
+
+
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/help_str.js\"><\/script>");
+	</script>
+	<script src="../impl/help_imp.js"></script>
+
+	
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body style="margin:4px">
+
+	<div id="helptitle" style="position:absolute;top:6px;left:6px">
+
+	</div>
+<table style="margin:0px;padding:0px" width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr height="20px">
+	<td id="helpbutton" align="right" valign="middle">
+	<div style="cursor:pointer;padding:0px;text-align:center;vertical-align:middle;margin:0px;width:15px;height:15px;border:1px solid black;font:12px Verdana;font-weight:bold" onclick="closeHelp()" ;>
+	X
+	</div>
+	</td>
+</tr>
+</table>
+<p>
+</p><div id="helpcontent">&nbsp;</div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+

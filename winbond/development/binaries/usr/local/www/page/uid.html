@@ -1,0 +1,53 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/uid_str.js\"><\/script>");
+	</script>
+	<script src="../impl/uid_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("uid", "STR_UID_TITLE");
+		var elmt = document.getElementById("_applyBtn");
+		elmt.setAttribute("value", eLang.getString("uid", "STR_UID_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("uid", "STR_UID_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("uid", "STR_UID_DESCRIPTION"));</script>
+</p>
+
+ <div class="subSection">
+ 	<h4 id="_uidInfo">
+ <script>document.writeln(eLang.getString("uid", "STR_UID_CURMODE"));</script> 
+</h4>
+ 	<p>
+ 		<input type="radio" id="_onMod" value="on" /> 
+<script>document.writeln(eLang.getString("uid", "STR_UID_SETON"));</script>
+<br>
+ 		<input type="radio" id="_offMod" value="off" /> 
+<script>document.writeln(eLang.getString("uid", "STR_UID_SETOFF"));</script>
+ </p>
+ </div>
+ 
+ <div class="btnTray" style="width: 360px;">
+ <input type="button" class="classicBtn" id="_applyBtn" />
+ </div>
+
+</body>
+</html>

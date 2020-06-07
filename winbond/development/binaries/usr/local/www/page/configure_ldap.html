@@ -1,0 +1,74 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <script src="../lib/eVal.js"></script>
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_ldap_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_ldap_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_ldap", "STR_CONF_LDAP_TITLE");
+		var elmt = document.getElementById("_saveBtn");
+		elmt.setAttribute("value", eLang.getString("configure_ldap", "STR_CONF_LDAP_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_DESCRIPTION"));</script>
+</p>
+
+ <div class="subSection">
+ 	<div class="subSection">
+		<table cellspacing="0" cellpadding="5" border="0" width="450">
+		<tr><td colspan="2">
+			<input type="checkbox" id="_enableLDAP" value="1" /> 
+			<strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_ENAUTH"));</script>
+</strong>
+		</td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_PORT"));</script>
+</strong></td>
+		<td><input type="text" id="_port" disabled style="width:60px;" /></td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_IPADDR"));</script>
+</strong></td>
+		<td><input type="text" id="_ipAddr" disabled style="width:110px;" /></td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_BINDPWD"));</script>
+</strong></td>
+		<td><input type="password" id="_bindPwd" disabled style="width:170px;" /></td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_BINDDN"));</script>
+</strong></td>
+		<td><input type="text" id="_bindDN" disabled style="width:170px;" /></td></tr>
+		<tr><td><strong>
+<script>document.writeln(eLang.getString("configure_ldap", "STR_CONF_LDAP_SEARCHBASE"));</script>
+</strong></td>
+		<td><input type="text" id="_searchBase" disabled style="width:170px;" /></td></tr>
+		</table>
+ 	</div>
+ </div>
+ 
+ <div class="btnTray" style="width: 360px;">
+ <input type="button" class="classicBtn" id="_saveBtn" />
+ </div>
+</body>
+</html>

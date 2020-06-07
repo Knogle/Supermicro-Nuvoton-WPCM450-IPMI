@@ -1,0 +1,37 @@
+#!/bin/sh
+# /etc/init.d/pdk: PDK Script Executer
+#
+# chkconfig: 2345 99 00
+#
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+PDK_PATH=/usr/local/pdk/scripts 
+
+
+case "$1" in
+  start)
+	if [ -x /usr/local/bin/pdkserver ]
+	then
+		/usr/local/bin/pdkserver
+	fi
+
+    if [ -x $PDK_PATH/startup.sh ]
+    then
+    	echo "Starting PDK Scripts ..."
+     	$PDK_PATH/startup.sh
+    fi
+    ;;
+  stop)
+    if [ -x $PDK_PATH/shutdown.sh ]
+    then
+	echo "Stopping PDK Scripts ..."
+     	$PDK_PATH/shutdown.sh
+    fi
+    ;;
+   *)
+    echo "Usage: /etc/init.d/pdk {start|stop}"
+    exit 1
+esac
+
+exit 0

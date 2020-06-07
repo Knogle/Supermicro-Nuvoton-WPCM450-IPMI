@@ -1,0 +1,421 @@
+/*****************************************************************
+ *****************************************************************
+ ***                                                            **
+ ***    (C)Copyright 2005-2006, American Megatrends Inc.        **
+ ***                                                            **
+ ***            All Rights Reserved.                            **
+ ***                                                            **
+ ***        6145-F, Northbelt Parkway, Norcross,                **
+ ***                                                            **
+ ***        Georgia - 30071, USA. Phone-(770)-246-8600.         **
+ ***                                                            **
+ *****************************************************************
+ *****************************************************************
+ ******************************************************************
+ *
+ * PMConfig.h
+ * Platform management configuration structures
+ *
+ *  Author: Govind Kothandapani <govindk@ami.com>
+ *          Basavaraj Astekar   <basavaraja@ami.com>
+ *          Ravinder Reddy      <bakkar@ami.com>
+ ******************************************************************/
+#ifndef PMCONFIG_H
+#define PMCONFIG_H
+#include "Types.h"
+#include "OSPort.h"
+#include "IPMI_AppDevice.h"
+#include "IPMI_ChassisDevice.h"
+#include "IPMI_PEF.h"
+#include "IPMI_LANConfig.h"
+#include "SerialModem.h"
+#include "BridgeMgmt.h"
+#include "Support.h"
+#include "IPMI_AMISmtp.h"
+#include "OEMConfigs.h"
+#if SUPPORT_OPMA == 1 
+#include "IPMI_OPMA.h"
+#endif 
+#include "Channel.h"
+
+/*** External Definitions ***/
+#define PMCONFIG_SIGNATURE                  5
+#define MAX_PRIVILEGE_TYPES                 7
+
+#define MAX_NUM_CHANNEL_USERS               NUM_USER_PER_CHANNEL
+#define NUM_LAN_DESTINATION                 15
+#define MAX_EVT_FILTER_ENTRIES              40
+#define MAX_ALERT_POLICY_ENTRIES            (15 * 4)
+//<<KAMAL>>Added to Support 20 Alert Strings in Set/Get Pef Config.Parms ../
+/* It should equal to number of Event filter entries */
+#define MAX_ALERT_STRINGS                  MAX_EVT_FILTER_ENTRIES
+#define PEF_MAX_OEM_PARAMETERS              0x20
+#define MAX_SIZE_PET_GUID                   0x11
+#define MAX_PLD_ENABLES_TYPES               4
+#define MAX_FF_CMD_CFGS                     255
+/* RMCP+ Definitions */
+#define MAX_ALGORITHMS						2
+#define MAX_PAYLOADS						3
+#define HASH_KEY_LEN						20
+
+#pragma pack( 1 )
+
+/**
+ * @struct WDTConfig_T
+ * @brief Watchdog Timer configuration information.
+**/
+typedef struct
+{
+    INT8U   TmrUse;
+    INT8U   TmrActions;
+    INT8U   PreTimeOutInterval;
+    INT8U   ExpirationFlag;
+    INT16U  InitCountDown;
+
+} PACKED  WDTConfig_T;
+
+
+
+/**
+ * @struct PEFConfig_T
+ * PEF Configuration structure.
+**/
+typedef struct
+{
+    INT8U                   SetInProgress;
+    INT8U                   PEFControl;
+    INT8U                   PEFActionGblControl;
+    INT8U                   PEFStartupDly;
+    INT8U                   PEFAlertStartupDly;
+    EvtFilterTblEntry_T     EvtFilterTblEntry [MAX_EVT_FILTER_ENTRIES];
+    AlertPolicyTblEntry_T   AlertPolicyTblEntry [MAX_ALERT_POLICY_ENTRIES];
+    INT8U                   SystemGUID [MAX_SIZE_PET_GUID];
+    AlertStringTbl_T        AlertStringEntry [MAX_ALERT_STRINGS];
+    INT8U                   OEMParams [PEF_MAX_OEM_PARAMETERS];
+    INT8U                   NumAlertPolicyEntries;
+    INT16U                  LastBMCProcessedEventID;
+    INT16U                  LastSWProcessedEventID;
+    INT16U                  LastSELRecordID;
+    INT32U                  LastProcessedTimestamp;
+    INT8U                   LastActionDone;
+
+} PACKED  PEFConfig_T;
+
+
+/**
+ * @struct ChannelUserInfo_T
+ * Structure for user information per channel.
+**/
+typedef struct
+{
+    INT32U  ID;
+    INT8U   UserId;
+    INTU    AccessLimit:4;
+    INTU    LinkAuth:1;
+    INTU    UserAccessCallback:1;
+    INTU    UserAccessCBCPCallback:1;
+    INT8U   UserCallbackCapabilities;
+    INT8U   CBCPNegOptions;
+    INT8U   CallBack1;
+    INT8U   CallBack2;
+    INT8U   CallBack3;
+    INT8U  PayloadEnables [MAX_PLD_ENABLES_TYPES];
+	
+    INT8U  IPMIMessaging;
+
+} PACKED  ChannelUserInfo_T;
+
+
+/**
+ * @struct UserInfo_T
+ * Structure for user information.
+**/
+typedef struct
+{
+    INT32U  ID;
+    INT8U   UserId;
+    INT8U   UserName [MAX_USERNAME_LEN];
+    INT8U   UserPassword [MAX_PASSWORD_LEN];
+    INT8U   MaxSession;             /**< max No of session allowed for User.    */
+    INT8U   CurrentSession;         /**< No Current session for the User.       */
+    INTU    UserStatus:1;           /**< User Enabled/Disabled Status.          */
+    INTU    FixedUser:1;            /**< Is this user name fixed                */
+
+} PACKED  UserInfo_T;
+
+
+/**
+ * @struct ChannelInfo_T
+ * Structure of channel Information.
+**/
+typedef struct
+{
+  INT32U          ID;
+  INTU            ChannelIndex;
+  INTU            ChannelNumber:4;
+  INTU            ChannelMedium:7;
+  INTU            ChannelProtocol:5;
+  INTU            SessionSupport:2;               /**< session support. */
+  INTU            ActiveSession:5;                /**< No of active session in this channel. */
+  INT8U           AuthType [MAX_PRIVILEGE_TYPES]; /**< Authentication according to privilege. */
+  INT8U           ProtocolVendorId [3];
+  INT8U           AuxiliaryInfo [2];
+  INTU            ReceiveMsgQ:1;            /**< enable/disable  message to Receive Message Queue. */
+  INTU            AccessMode:4;             /**< channel access mode - disabled/perboot/always/shared. */
+  INTU            AccessModeSupported:4;    /**< access mode supported by this channel. */
+  INTU            Alerting:1;               /**< enable/disable alerting through this channel. */
+  INTU            PerMessageAuth:1;         /**< enable/disable per message Auth through this channel. */
+  INTU            UserLevelAuth:1;          /**< enable/disable userlevel Auth through this channel. */
+  INTU            MaxPrivilege:4;           /**< max privilage level allowed by this channel. */
+  INTU            reserved:1;
+  INTU            SetUserAccess:1;          /**< set user access command not allowed. */
+  INTU            SetChPrivilege:2;
+  INTU            SessionLimit:4;
+  INTU            LoginStatusNUP:1;
+  INTU            LoginStatusNUNP:1;
+  INTU            LoginStatusNNU:1;
+  INTU            MaxUser:6;
+  INTU            NoCurrentUser:6;
+  INTU            NoFixedUser:6;
+  INTU            ChannelIndexRam:4;
+  INTU            ChannelIndexNvRam:4;
+  ChannelUserInfo_T ChannelUserInfo [MAX_NUM_CHANNEL_USERS];
+
+} PACKED  ChannelInfo_T;
+
+
+/**
+ * @struct ChassisConfig_T
+ * Chassis Configuration.
+**/
+typedef struct
+{
+   INT8U                        SysRestartCause;
+   INT8U                        PowerRestorePolicy;
+   ChassisPowerState_T          ChassisPowerState;
+   ChassisCapabilities_T        ChassisCapabilities;
+   INT8U						PowerCycleInterval;
+   AMI_BootOpt_T                OemBootOpt;  /**< AMI OEM BootOptions */
+	
+} PACKED  ChassisConfig_T;
+
+
+/**
+ * @struct VLANDestTags_T
+ * VLAN Destination Tags.
+**/
+typedef struct
+{
+    INT8U   AddressFormat;
+    INT16U  VLANTag;
+
+} PACKED  VLANDestTags_T;
+
+
+/**
+ * @struct LANConfig_T
+ * LAN Configuration.
+**/
+typedef struct {
+
+    INT8U               SetInProgress;
+    INT8U               AuthTypeSupport;
+    AuthTypeEnables_T   AuthTypeEnables;
+    INT8U               IPAddr [4];
+    INT8U               IPAddrSrc;
+    INT8U               MACAddr [6];
+    INT8U               SubNetMask [4];
+    IPv4HdrParams_T     Ipv4HdrParam;
+    INT16U              PrimaryRMCPPort;
+    INT16U              SecondaryPort;
+    INT8U               BMCGeneratedARPControl;
+    INT8U               GratitousARPInterval;
+    INT8U               DefaultGatewayIPAddr  [IP_ADDR_LEN];
+    INT8U               DefaultGatewayMACAddr [MAC_ADDR_LEN];
+    INT8U               BackupGatewayIPAddr  [IP_ADDR_LEN];
+    INT8U               BackupGatewayMACAddr [MAC_ADDR_LEN];
+    INT8U               CommunityStr [MAX_COMM_STRING_SIZE];
+    INT8U               NumDest;
+    LANDestType_T       DestType [NUM_LAN_DESTINATION];
+    LANDestAddr_T       DestAddr [NUM_LAN_DESTINATION];
+    INT16U              VLANID;
+    INT8U               VLANPriority;
+    INT8U               CipherSuitePrivLevels [MAX_NUM_CIPHER_SUITE_PRIV_LEVELS];
+    VLANDestTags_T      VLANDestTags [NUM_LAN_DESTINATION];
+
+} PACKED  LANConfig_T;
+
+
+/**
+ * @struct PayloadSupport_T
+ * Payload support.
+**/
+typedef struct
+{
+    INT8U   StandPldtype1;
+    INT8U   StandPldtype2;
+    INT8U   SessStpPldtype1;
+    INT8U   SessStpPldtype2;
+    INT8U   OemPldtype1;
+    INT8U   OemPldtype2;
+
+} PACKED  PayloadSupport_T;
+
+
+/**
+ * @struct PayloadInfo_T
+ * Payload information.
+**/
+typedef struct
+{
+    INT8U   Type;
+    INT8U   OemPldIANA [3];
+    INT8U   OemPldID [2];
+    INT8U   Version;
+
+} PACKED  PayloadInfo_T;
+
+
+/**
+ * @struct RMCPPlus_T
+ * RMCP+ information.
+**/
+typedef struct
+{
+    BOOL                LockKey [2];
+    INT8U               KGHashKey [HASH_KEY_LEN];
+    INT8U               PseudoGenKey [HASH_KEY_LEN];
+    INT8U               Algorithm [MAX_PAYLOADS] [MAX_PRIVILEGE_TYPES];
+    PayloadSupport_T    PayloadSupport;
+    PayloadInfo_T       PayloadInfo [MAX_PYLDS_SUPPORT];
+
+} PACKED  RMCPPlus_T;
+
+
+/**
+ * @struct FFCmdConfigTbl_T
+ * Firmware Firewall Command Configuration Tbl.
+**/
+typedef struct
+{
+    INT8U   NetFn;
+    INT8U   Cmd;
+    INT8U   Config;
+
+} PACKED  FFCmdConfigTbl_T;
+
+
+/**
+ * @struct SOLConfig_T
+ * SOL Configuration.
+**/
+typedef struct
+{
+    INT8U   SetInProgress;
+    INT8U   SOLEnable;
+    INT8U   SOLAuth;
+    INT16U  CharAccThresh;
+    INT8U   SOLRetryCount;
+    INT8U   SOLRetryInterval;
+    INT8U   NVBitRate;
+    INT8U   VBitRate;
+    INT8U   PayldChannel;
+    INT16U  PayldPortNum;
+
+} PACKED  SOLConfig_T;
+
+
+/**
+ * @struct SystemInfoConfig_T
+ * Get / Set System Info Parameters info.
+**/
+typedef struct
+{
+	INT8U		SysFWVersion[MAX_FW_VER_SELECTOR][MAX_BLOCK_SIZE];
+	INT8U		SysName[MAX_SYS_NAME_SELECTOR][MAX_BLOCK_SIZE];
+	INT8U		PrimaryOSName[MAX_OS_NAME_SELECTOR][MAX_BLOCK_SIZE];
+}PACKED SystemInfoConfig_T;
+
+
+/**
+ * @struct AMIConfig_T
+ * AMI Specific Configiguration information.
+**/
+typedef struct {
+
+	Smtp_Config_T SmtpConfig[MAX_LAN_CHANNELS];
+	
+} PACKED AMIConfig_T;
+
+
+/**
+ * @struct PMConfig_T
+ * PM Configiguration information.
+**/
+typedef struct
+{
+    INT8U               NVRAMSignature [PMCONFIG_SIGNATURE];
+    INT8U		Version;
+    INT32U              CheckSum;
+    INT8U               FWUpgradeFlag;
+    WDTConfig_T         WDTConfig;
+    ChannelInfo_T       ChannelInfo [MAX_NUM_CHANNELS];
+    UserInfo_T          UserInfo [MAX_NUM_USERS];
+    INT8U               CurrentNoUser;
+    INT32U              POHCounterReading;
+    PEFConfig_T         PEFConfig;
+    ChassisConfig_T     ChassisConfig;
+    LANConfig_T         LANConfig[MAX_LAN_CHANNELS];
+    SMConfig_T          SMConfig;
+    RMCPPlus_T          RMCPPlus[MAX_LAN_CHANNELS];
+ 	
+
+    /* Byte used for checking pretimeout action */
+    INT8U               PreTimeoutActionTaken;
+
+    /* Bridge Management Information */
+    BridgeMgmtSHM_T     BridgeMgmt;
+
+    /* SOL Redirection Flag  */
+    INT8U               SOLRFlag;
+
+    /* SOL Configuration  data */
+    SOLConfig_T         SOLConfig[MAX_LAN_CHANNELS];
+
+    /* Firmware firewall configurability table */
+    FFCmdConfigTbl_T    FFCmdConfigTbl [MAX_FF_CMD_CFGS];
+   /* SEL Time UTC Offset information */
+   INT16U   SELTimeUTCOffset;
+   INT32U    SDREraseTime ;
+
+   /* Get / Set System Info Parameters information */
+   SystemInfoConfig_T   SystemInfoConfig;
+
+
+#if OEM_CONFIG_DATA_SUPPORTED == 1
+    /* OEM configuration data area */
+    INT8U               OEMConfigData [MAX_OEM_CONFIG_DATA_SIZE];
+#endif
+
+     /* AMI Specific configuration information */ 	
+     AMIConfig_T   AMICfg;
+
+     /*  OEM Configuration information */ 
+     OEMConfig_T  OemConfig; 
+
+#if SUPPORT_OPMA == 1 
+     OPMA_Config_T  OPMAConfig;
+#endif 
+} PACKED  PMConfig_T;
+
+
+/**
+ * @brief Initialize PM configuration information.
+ * @return 0 if success, -1 if error.
+**/
+extern int InitPMConfig (void);
+
+#pragma pack( )
+
+#endif /* PMCONFIG_H */
+

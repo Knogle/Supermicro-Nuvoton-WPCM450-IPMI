@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+# Creating VLAN interfcae with VLANID using vconfig
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+if ! [ -x /sbin/ifup ]; then
+    exit 0
+fi
+
+VLAN_ID=`cat /conf/vlanid`
+
+if [ $VLAN_ID == 0 ]; then
+    echo "VLAN ID is zero. VLAN will not be enabled !!"
+    exit 0
+fi
+
+case "$1" in
+    start)
+        echo -n "Creating vlan interfaces.."
+	ifconfig eth0 up
+	vconfig add eth0 $VLAN_ID
+	echo "done."
+	;;
+    stop)
+        echo -n "Deleting vlan interfaces..."
+        vconfig rem eth0.$VLAN_ID
+	echo "done."
+	;;
+    force-reload|restart)
+        echo -n "Recreating  network interfaces..."
+        vconfig rem eth0.$VLAN_ID
+	vconfig add eth0 $VLAN_ID
+	echo "done."
+	;;
+    *)
+	echo "Usage: /etc/init.d/vlanconfig {start|stop|restart|force-reload}"
+	exit 1
+	;;
+esac
+
+exit 0
+

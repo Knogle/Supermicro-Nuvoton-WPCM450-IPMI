@@ -1,0 +1,72 @@
+<profile name="SSHServiceProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_SSHSettingData" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_SSHCapabilities" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_SSHProtocolEndpoint" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_TCPProtocolEndpoint" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedAccessPoint" profile="SSHServiceProfile">
+            <class name="CIM_TCPProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_SSHProtocolEndpoint" profile="SSHServiceProfile">
+            </class> 
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="SSHServiceProfile">
+            <class name="CIM_SSHCapabilities" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="SSHServiceProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="SSHServiceProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="SSHServiceProfile">
+            <class name="CIM_SSHSettingData" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_SSHProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>  
+      </association>
+      <association classname="CIM_BindsTo" profile="SSHServiceProfile">
+            <class name="CIM_SSHProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_TCPProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class> 
+      </association>
+      <association classname="CIM_ServiceAccessBySAP" profile="SSHServiceProfile">
+            <class name="CIM_TCPProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ProvidesEndpoint" profile="SSHServiceProfile">
+            <class name="CIM_SSHProtocolEndpoint" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+      </association>
+</profile>

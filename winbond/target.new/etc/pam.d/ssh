@@ -1,0 +1,22 @@
+#%PAM-1.0
+auth       required     pam_nologin.so
+auth       required     pam_unix.so
+auth       required     pam_env.so # [1]
+
+account    required     pam_unix.so
+
+session    required     pam_unix.so
+#session    optional     pam_lastlog.so # [1]
+#session    optional     pam_motd.so # [1]
+#session    optional     pam_mail.so standard noenv # [1]
+session    required     pam_limits.so
+
+password   required     pam_unix.so
+
+# Alternate strength checking for password. Note that this
+# requires the libpam-cracklib package to be installed.
+# You will need to comment out the password line above and
+# uncomment the next two in order to use this.
+#
+# password required       pam_cracklib.so retry=3 minlen=6 difok=3
+# password required       pam_unix.so use_authtok nullok md5

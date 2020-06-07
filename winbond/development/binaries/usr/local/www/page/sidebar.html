@@ -1,0 +1,70 @@
+<html>
+
+
+
+<!--  =====================================================================    -->
+
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/sidebar_str.js\"><\/script>");
+	</script>
+	<script src="../impl/sidebar_imp.js"></script>
+
+	
+	<link rel="stylesheet" type="text/css" href="../style/sidebar_style.css" />
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			doInit();
+		}
+	}
+	</script>
+</head>
+
+<!--  =====================================================================    -->
+
+<body leftmargin="4px" rightmargin="0">
+
+<!--  <span id='options'></span><br><br>   -->
+<table width="100%">
+	<tr height="30px">
+		<td id="options">
+<script>document.writeln(eLang.getString("sidebar", "STR_SIDEBAR_OPTIONS"));</script>
+</td>
+	</tr>
+	<tr valign="top">
+		<td id="_optioncontainer">
+		</td>
+	</tr>
+	<tr>
+		<td id="_refreshlinktd">
+		<hr>
+		<a id="_refreshlink" class="refreshlink" href="javascript:parent.frames.mainFrame.location.reload(1)">
+<script>document.writeln(eLang.getString("sidebar", "STR_SIDEBAR_REFRESH"));</script>
+</a>
+		<hr>
+		</td>
+	</tr>
+
+	<tr>
+		<td id="_optionlogout">
+		<a id="_disconnect" class="disconnect" href="javascript:disconnect();">
+<script>document.writeln(eLang.getString("sidebar", "STR_SIDEBAR_LOGOUT"));</script>
+</a>
+		</td>
+	</tr>
+</table>
+
+
+</body>
+
+<!--  =====================================================================    -->
+
+
+</html>
+

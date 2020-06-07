@@ -1,0 +1,77 @@
+#!/bin/sh
+
+# udhcpc script edited by Tim Riker <Tim@Rikers.org>
+
+#inlcude the dhcpcd config file here
+#this file is what we use to customize our config of settingg DNS from DHCP or not
+#the config file is actually got froma  different dhcp client package called dhcpcd
+#however since our code already eos this config file we reuse it
+#and just include it like a sheel script here
+
+. /conf/dhcpc-config
+
+[ -z "$1" ] && echo "Error: should be called from udhcpc" && exit 1
+
+RESOLV_CONF="/conf/resolv.conf"
+[ -n "$broadcast" ] && BROADCAST="broadcast $broadcast"
+[ -n "$subnet" ] && NETMASK="netmask $subnet"
+
+TMP_RESOLV_CONF_DNS="/var/resolv.conf.dns"
+TMP_RESOLV_CONF_DOMAIN="/var/resolv.conf.domain"
+
+case "$1" in
+	deconfig)
+                /sbin/ifconfig $interface 0.0.0.0
+		;;
+
+	renew|bound)
+		/sbin/ifconfig $interface $ip $BROADCAST $NETMASK
+		echo "Address   : " $ip
+		echo "Netmask   : " $subnet
+
+		if [ -n "$router" ] ; then
+			echo "Deleting routers"
+			while route del default gw 0.0.0.0 dev $interface 2>/dev/null ; do
+				:
+			done
+
+			for i in $router ; do
+				echo "Router    : " $i
+				route add default gw $i dev $interface
+			done
+		fi
+
+		#split the existing resolv conf into two to selectively
+		#be able to wreite either dns address or domain name
+		grep "search" $RESOLV_CONF > $TMP_RESOLV_CONF_DOMAIN
+		grep "nameserver" $RESOLV_CONF > $TMP_RESOLV_CONF_DNS
+
+		echo -n > $RESOLV_CONF
+
+                INTERFACE=$interface #set the interface to whatever interface we are at
+		getdnsvars #source the configuration from dhcpc-config
+
+
+                if [ "$SET_DOMAIN" == 'yes' ]; then
+		    [ -n "$domain" ] && echo search $domain >> $RESOLV_CONF
+		    [ -n "$domain" ] && echo "Domain    : " $domain
+		else
+		    echo "SET_DOMAIN is not true and it is $SET_DOMAIN"
+		    #put the old one in
+		    cat $TMP_RESOLV_CONF_DOMAIN >> $RESOLV_CONF
+		fi
+
+                if [ "$SET_DNS" == 'yes'  ]; then
+		 #   echo "SET_DNS is true"
+		    for i in $dns ; do
+			echo "DnsServer : " $i
+			echo nameserver $i >> $RESOLV_CONF
+		    done
+		else
+		    echo "SET_DNS is false and it is $SET_DNS"
+		    cat $TMP_RESOLV_CONF_DNS >> $RESOLV_CONF
+		fi
+                ;;
+esac
+
+exit 0

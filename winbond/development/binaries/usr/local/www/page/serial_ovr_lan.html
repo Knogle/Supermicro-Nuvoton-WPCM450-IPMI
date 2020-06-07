@@ -1,0 +1,56 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/serial_ovr_lan_str.js\"><\/script>");
+	</script>
+	<script src="../impl/serial_ovr_lan_imp.js"></script>
+
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_HEADING");
+		var elmt = document.getElementById("_btnSave");
+		elmt.setAttribute("value", eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_DESCRIPTION"));</script>
+</p>
+
+<div class="subSection">
+<table cellspacing="0" cellpadding="5" border="0">
+	<tr><td>
+		<strong>
+<script>document.writeln(eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_ENABLE"));</script>
+</strong>
+	</td><td>
+		<input type="checkbox" id="_enableSerial" />
+	</td></tr>
+	<tr><td>
+		<strong>
+<script>document.writeln(eLang.getString("serial_ovr_lan", "STR_SERIAL_LAN_BAUD"));</script>
+</strong>
+	</td><td>
+		<select id="_baudRate"></select>
+	</td></tr>
+</table>
+</div>
+
+<div class="btnTray" style="width: 360px;"><input type="button" class="classicBtn" id="_btnSave" /></div>
+</body>
+</html>

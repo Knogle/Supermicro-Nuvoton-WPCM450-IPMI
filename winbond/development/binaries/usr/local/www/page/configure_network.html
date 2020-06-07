@@ -1,0 +1,100 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../lib/bitset.js"></script>
+  <script type="text/javascript" src="../lib/eVal.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_network_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_network_imp.js"></script>
+
+	
+	
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_network", "CONF_NW_STR_TITLE");
+		var elmt = document.getElementById("_optDHCP");
+		elmt.setAttribute("value", eLang.getString("configure_network", "CONF_NW_STR_DHCP"));
+		var elmt = document.getElementById("_optStatic");
+		elmt.setAttribute("value", eLang.getString("configure_network", "CONF_NW_STR_STATIC"));
+		var elmt = document.getElementById("_save");
+		elmt.setAttribute("value", eLang.getString("configure_network", "CONF_NW_STR_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_PAGE_TITLE"));</script>
+</h3> 
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_PAGE_DESC"));</script>
+ <div class="subSection">
+<table cellspacing="0" cellpadding="5" border="0" width="450">
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_MAC_ADDR"));</script>
+</label></td>
+<td><input type="text" id="_macAddress" disabled /></td>
+</tr>
+<tr><td colspan="2">
+<input type="radio" name="optNW" id="_optDHCP" /> 
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_DHCP_EXP"));</script>
+<br>
+<input type="radio" name="optNW" id="_optStatic" /> 
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_STATIC_EXP"));</script>
+ </td></tr>
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_IP_ADDR"));</script>
+</label></td>
+<td><input type="text" id="_ipAddress" /></td>
+</tr>
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_MASK"));</script>
+</label></td>
+<td><input type="text" id="_subnetMask" /></td>
+</tr>
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_GATEWAY"));</script>
+</label></td>
+<td><input type="text" id="_gateway" /></td>
+</tr>
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_PRIMARY_DNS"));</script>
+</label></td>
+<td><input type="text" id="_primaryDNS" /></td>
+</tr>
+<tr>
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_SECONDARY_DNS"));</script>
+</label></td>
+<td><input type="text" id="_secondDNS" /></td>
+</tr>
+<tr colspan=2 id="_vlanenablerow"><td>
+<input type="checkbox" id="_vlanenable" />&nbsp;
+<label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_VLAN_ENABLE"));</script>
+</label>
+</td></tr>
+<tr id="_vlantagrow">
+<td><label style="font-weight:bold">
+<script>document.writeln(eLang.getString("configure_network", "CONF_NW_STR_VLAN_TAG"));</script>
+</label></td>
+<td><input type="text" id="_vlantag" maxlength="4" /></td>
+</tr>
+</table>
+<br>
+<div class="btnTray" style="width: 360px;"><input type="button" class="classicBtn" id="_save" /></div>
+</div>
+</body>
+</html>

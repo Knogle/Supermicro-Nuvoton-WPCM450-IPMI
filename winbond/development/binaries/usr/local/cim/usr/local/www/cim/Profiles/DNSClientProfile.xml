@@ -1,0 +1,88 @@
+<profile name="DNSClientProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_StaticIPAssignmentSettingData" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_IPAssignmentSettingData" profile="IPInterfaceProfile">
+      </class>  
+      <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RemoteServiceAccessPoint" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_DNSGeneralSettingData" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_DNSSettingData" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_EnabledLogicalElementCapabilities" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedAccessPoint" profile="DNSClientProfile">
+            <class name="CIM_RemoteServiceAccessPoint" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>  
+      </association>
+      <association classname="CIM_HostedAccessPoint" profile="IPInterfaceProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+      </association>
+      <association classname="CIM_SAPSAPDependency" profile="DNSClientProfile">
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+      </association>
+      <association classname="CIM_RemoteAccessAvailableToElement" profile="DNSClientProfile">
+            <class name="CIM_RemoteServiceAccessPoint" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="IPInterfaceProfile">
+            <class name="CIM_IPAssignmentSettingData" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_StaticIPAssignmentSettingData" profile="IPInterfaceProfile">
+            </class>
+</association>
+      <association classname="CIM_ElementSettingData" profile="DNSClientProfile">  
+            <class name="CIM_DNSSettingData" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_DNSGeneralSettingData" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class> 
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="DNSClientProfile">  
+            <class name="CIM_EnabledLogicalElementCapabilities" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+      </association>
+      <association classname="CIM_OrderedComponent" profile="IPInterfaceProfile">
+            <class name="CIM_IPAssignmentSettingData" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_DNSSettingData" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_StaticIPAssignmentSettingData" profile="IPInterfaceProfile">
+            </class>
+            <class name="CIM_DNSGeneralSettingData" profile="DNSClientProfile">
+            </class>         
+      </association>
+</profile>

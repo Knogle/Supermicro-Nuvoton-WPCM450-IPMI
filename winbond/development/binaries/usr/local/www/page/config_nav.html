@@ -1,0 +1,111 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/config_nav_str.js\"><\/script>");
+	</script>
+	<script src="../impl/config_nav_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_OPTIONS"));</script>
+</h3>
+
+<table cellspacing="0" cellpadding="5" border="0" width="100%">
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_alerts.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_ALERTS"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_ALERTS_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="date_time.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_DATETIME"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_DATETIME_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_ldap.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_LDAP"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_LDAP_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_active_directory.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_AD"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_AD_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_mouse_mode.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_MOUSE_MODE"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_MOUSE_MODE_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_network.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_NETWORK"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_NETWORK_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_remotesession.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_REMOTE_SESSION"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_REMOTE_SESSION_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_smtp.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_SMTP"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_SMTP_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="upload_ssl_certificate.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_SSL"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_SSL_DESC"));</script>
+</td>
+	</tr>
+	<tr><td bgcolor="#B8B89D" align="center">
+	<a href="configure_user.html" class="inputButton3X" onclick="" />
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_USERS"));</script>
+</a></td>
+	<td>
+<script>document.writeln(eLang.getString("config_nav", "STR_CFG_USERS_DESC"));</script>
+</td>
+	</tr>
+</table>
+</body>
+</html>

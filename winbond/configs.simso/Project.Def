@@ -1,0 +1,147 @@
+##################################################################
+#IMPORTANT: Don't edit this file in DOS/Windows environment
+#           This file is highly sensitive to EOL and EOF 
+#           characters. If you have edit this file in non-unix 
+#           environment do "dos2unix" before commiting the
+#           changed to source control
+##################################################################
+
+#----------------------------------------------------------------
+# The format of the entries are
+# Key=Value		#!Type
+# 	where Type can be String,Numeric,Bool
+# Each entry will be converted to header file depending upon Type
+# if no Type or invalid Type is specified, it is treated as string
+# String:
+#  #define CFG_PROJ_<Key>  "<Value>"
+# Bool:
+#  #define CFG_PROJ_<Key>_<Value> 	
+# Numeric:
+#  #define CFG_PROJ_<Key>  <Value>
+#----------------------------------------------------------------
+
+
+#----------------------------------------------------------------
+#  The following defines are Basic and mandatory 
+#----------------------------------------------------------------
+PROJECT=HERMON			#!String
+ARCH=arm			#!Bool
+ENDIAN=LITTLE			#!Bool
+CROSS_COMPILE=arm-linux-	#!String
+LINUX_VER=2.6.24		#!String
+UBOOT_VER=1.1.4			#!String
+BUSYBOX_VER=1.1.3		#!String
+BOARD=HERMON		
+
+#----------------------------------------------------------------
+# The following defines are mandatory for Ractrends
+#----------------------------------------------------------------
+FLASH_START=0x40000000		#!Numeric
+FLASH_SIZE=0x1000000		#!Numeric	
+FLASH_BANK_SIZE=0x1000000	#!Numeric	
+ERASE_BLOCK_SIZE=0x10000	#!Numeric
+FLASH_TYPE=SPI			#!Bool
+
+MEMORY_START=0x0		#!Numeric
+MEMORY_SIZE=0x7000000		#!Numeric
+
+UBOOT_ENV_START=0x40040000	#!Numeric
+UBOOT_ENV_SIZE=0x10000		#!Numeric
+
+USED_FLASH_START=0x40000000	#!Numeric
+USED_FLASH_SIZE=0x1000000	#!Numeric
+
+# On first bootup Create a default host name by prefix  
+# this string with first network MAC Address.
+# Linda modified for SMC default hostname
+HOST_PREFIX=SMC			#!String
+
+# Needed for linux command line
+CONSOLE_TTY=ttyS0		#!String
+
+# Use LUN based Mass storage devices
+LUN_BOT=1			#!Numeric
+
+# Can be 8 or 64  
+USB_EP0_MAXPKT_SZ=64		#!Numeric	
+
+# Virtual Media Authentication
+VM_AUTH_CMD=1			#!Numeric
+VM_CFG_SUPPORT=1		#!Numeric
+
+# Ethernet port to use. Valid values (ETH0, ETH1, BOTH)
+#NETWORK=ETH0			#!Bool
+NETWORK=BOOTSELECT		#!Bool
+
+# Video Source. Valid values(EXTERNAL, INTERNAL)
+VIDEOSRC=INTERNAL		#!Bool
+
+# HIFCR value. This value is used in LPC interface to program HIFCR
+HIFCR=0x4E			#!Numeric
+
+#DROPBEAR SSH
+USE_SSH=DROPBEAR			#!Bool		
+
+#----------------------------------------------------------------
+#  The following defines are SMASH-LITE Specific 
+#----------------------------------------------------------------
+#USE_SMASH=YES		#!Bool
+#SOC=PILOT_II		#!Bool
+
+
+#----------------------------------------------------------------
+#  The following defines are SMASH WSMAN Specific
+#----------------------------------------------------------------
+GOAHEAD_WSMAN=YES				#!Bool
+USE_CIM=YES
+USE_WSMAN=1234					#!Numeric
+SFCB_VER=1.2.5
+INSTALL_SFCB=YES
+PERM_CONFIG_PATH=/usr/local/cim/		#!String
+TEMP_CONFIG_PATH=/tmp				#!String
+PERSISTENT_RW_PATH=/conf/		#!String
+SMASH_INI_PATH=/conf/smash.ini 			#!String
+OEM_SFCB_INC_PATH=/usr/local/include/cmpi              #!String
+OEM_LIGHTTPD_INC_PATH=/usr/include/lighttpd   	#!String
+OEM_LIGHTTPD_LIB_PATH=/usr/local/lib		#!String
+CIM_ROOT_DIR=/usr/local/cim/			#!String
+
+#----------------------------------------------------------------
+#  The following defines are project specific
+#----------------------------------------------------------------
+USE_WEB=YES		#!Bool
+IPMI_ONLY=NO 		#!Bool
+NCSI_LAN=YES
+
+#-----------------------------------------------------------------
+# Enable the following for VLAN Support
+#-----------------------------------------------------------------
+ENABLE_VLAN_SUPPORT=YES #!Bool
+#VLAN_ID=0            #!Numeric -Now it is dynamic
+
+#-----------------------------------------------------------------
+# MTU Size for VLAN interface
+#-----------------------------------------------------------------
+VLAN_IFC_MTU_SIZE=1496	#!Numeric
+#--------------------------------------------------------------
+# This Macro hold the Session time for Web session . WE need common
+# common session Inactivity timeout for both web and IPMI web session 
+# Time Out in seccond.At present Timeout is in 30 minutes
+# -------------------------------------------------------------
+
+WEB_SESSION_TIMEOUT=1800  #!Numeric
+#-------------------------- End of File -------------------------
+
+#----------------------------------------------------------------
+# The following determines which patches to be 
+# applied for the project. It is provided here for 
+# information only
+#----------------------------------------------------------------
+#ARCH=arm
+#SUBARCH=ARMV4
+#CPU=ARM926EJ-S
+#SOC=WPCM450
+#BOARD=HERMON
+#AMI_EXT=1
+#BUG_FIX=1
+#----------------------------------------------------------------

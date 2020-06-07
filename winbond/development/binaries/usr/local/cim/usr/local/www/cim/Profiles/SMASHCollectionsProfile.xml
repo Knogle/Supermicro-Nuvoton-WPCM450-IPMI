@@ -1,0 +1,28 @@
+<profile name="SMASHCollectionsProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_ManagedElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_OwningCollectionElement" profile="SMASHCollectionsProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+            </class>
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="SMASHCollectionsProfile">
+            <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+            </class>
+            <class name="CIM_ManagedElement" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>          
+      </association>
+</profile>

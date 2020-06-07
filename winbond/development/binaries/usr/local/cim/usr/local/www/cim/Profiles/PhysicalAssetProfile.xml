@@ -1,0 +1,100 @@
+<profile name="PhysicalAssetProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_PhysicalAssetCapabilities" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Chassis" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalComponent" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Chip" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalMemory" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalElement" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Slot" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Rack" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Card" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalFrame" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalConnector" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_ConfigurationCapacity" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_System" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_ElementCapabilities" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalAssetCapabilities" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_PhysicalElement" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_ComputerSystemPackage" profile="PhysicalAssetProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemPackaging" profile="PhysicalAssetProfile">
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_PackageInConnector" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_PhysicalConnector" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapacity" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_Container" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_PhysicalElement" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_Realizes" profile="PhysicalAssetProfile">
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_PhysicalElement" profile="PhysicalAssetProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemDevice" profile="ReferencingProfile">
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+      </association> 
+      <association classname="CIM_ReferencedProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="PhysicalAssetProfile">
+            <class name="CIM_System" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class> 
+      </association>
+</profile>

@@ -1,0 +1,73 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Check if we want to install SFCB 
+if [ "$INSTALL_SFCB" != "YES" ]
+then
+	exit 0
+fi
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+echo -n "Extracting sblim-sfcb $SFCB_VER ..."
+tar xjf $TOPDIR/pristine/sblim-sfcb/sblim-sfcb-$SFCB_VER.tar.bz2
+
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+CUR_USER=`whoami`
+echo -n "Changing Ownership of SFCB to current user ..."
+chown $CUR_USER:$CUR_USER sblim-sfcb-$SFCB_VER  -R
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+echo -n "Renaming sblim-sfcb-$SFCB_VER to sblim-sfcb ..."
+mv sblim-sfcb-$SFCB_VER sblim-sfcb
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+cd $TOPDIR/$BUILD_DIR/sblim-sfcb
+echo -n "Applying sblim-sfcb Patches ..."
+for i in  $TOPDIR/patches/sblim-sfcb/PATCH*/*
+do
+	if ! [ -e $i ]
+	then 
+		continue
+	fi
+	patch  < $i > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "Failed to patch $i"
+		exit 1
+	fi
+done
+echo "Done"
+
+
+
+exit 0

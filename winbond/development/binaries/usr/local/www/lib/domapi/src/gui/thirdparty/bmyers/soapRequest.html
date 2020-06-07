@@ -1,0 +1,620 @@
+
+<html>
+<head>
+<title>DumbSOAP HTML interface</title>
+</head>
+
+<body>
+<script type="text/javascript">
+
+xmlRequest=new ActiveXObject("Microsoft.XMLHTTP");
+xmlSchemaURI="http://www.w3.org/2001/XMLSchema";
+xmlSchemaIURI="http://www.w3.org/2001/XMLSchema-instance";
+wsilURI="http://schemas.xmlsoap.org/ws/2001/10/inspection/";
+wsdlURI="http://schemas.xmlsoap.org/wsdl/";
+wsdlSoapURI="http://schemas.xmlsoap.org/wsdl/soap/";
+soapEnvelopeURI="http://schemas.xmlsoap.org/soap/envelope/";
+nameSpaces=[];
+nameSpaces[xmlSchemaURI]=[];nameSpaces[xmlSchemaURI][0]="xsd";
+nameSpaces[xmlSchemaIURI]=[];nameSpaces[xmlSchemaIURI][0]="xsi";
+nameSpaces[wsdlSoapURI]=[];
+nameSpaces[soapEnvelopeURI]=[];nameSpaces[soapEnvelopeURI][0]="soap";
+nameSpaces[wsdlURI]=[];nameSpaces[wsdlURI][0]="wsdl";
+
+hoverBG="lightblue";
+clickBG="navyblue";
+
+
+spaceNames=[];
+for(var i in nameSpaces)
+    spaceNames[nameSpaces[i]]=i;
+
+usedNS={
+    "xsd":xmlSchemaURI,
+    "xsi":xmlSchemaIURI,
+    "soap":soapEnvelopeURI
+};
+
+// Custom types is:
+//    customTypes[NAMESPACE][TYPENAME];
+customTypes=[];
+
+onload=function(){
+    document.all.namespace.setExpression("innerHTML","document.soap.xmlns.value");
+    document.all.soapPacket.setExpression("innerHTML","'<pre>'+generateSoapRequest().split('&').join('&amp;').split('<').join('&lt;')+'</pre>'");
+};
+
+function basicSoapHeader() {
+// Some standard NS that we KNOW we have to use in the header
+    var soapNS=(nameSpaces[soapEnvelopeURI][0]);
+    var targetNS="";
+    var retValue="<"+soapNS+":Envelope\n";
+    for (var i in usedNS)
+        retValue+="  xmlns:"+i+"=\""+usedNS[i]+"\"\n";
+    retValue+="<"+soapNS+":Body>\n";
+    return retValue;
+};
+
+function basicSoapFooter() {
+    var soapNS=(nameSpaces[soapEnvelopeURI][0]);
+    var wsdlNS=(nameSpaces[wsdlURI][0]);
+    var xsiNS=(nameSpaces[xmlSchemaIURI][0]);
+    var xsdNS=(nameSpaces[xmlSchemaURI][0]);
+    var wsdlNS=(nameSpaces[wsdlURI][0]);
+    var targetNS="";
+    soapNS+=(soapNS==""?"":":");
+    wsdlNS+=(wsdlNS==""?"":":");
+    return (
+        "</"+soapNS+"Body>\n"+
+        "</"+soapNS+"Envelope>");
+};
+function addSoapParameter(name,value,type) {
+    var tr=document.createElement("<tr sid='"+name+"'>");
+    var td=document.createElement("td");
+    td.innerHTML=name;
+    tr.appendChild(td);
+    td.style.cursor="hand";
+    tr.attachEvent("onclick",function(){
+        var src=event.srcElement.parentElement;
+        var form=document.forms.soap;
+        form.paramID.value=src.getAttribute("sid");
+        form.paramTag.value=src.innerText;
+        form.paramValue.value=src.parentElement.cells[1].innerText;
+        form.paramType.value=src.parentElement.cells[2].innerText;
+        form.addParam.disabled=true;
+        form.setParam.disabled=false;
+        form.paramValue.focus();
+        setTimeout('var src=document.all['+src.tagIndex+'];src.style.backgroundColor=(src.hoverTimer?hoverBG:"");',250);
+    });
+    tr.attachEvent("onmouseover",function(){
+        var src=event.srcElement.parentElement;
+        src.hoverTimer=1;
+        src.style.backgroundColor=hoverBG;
+    });
+    tr.attachEvent("onmouseout",function(){
+        var src=event.srcElement.parentElement;
+        src.hoverTimer=null;
+        src.style.backgroundColor="";
+    });
+    td=document.createElement("td");
+    td.innerHTML=value;
+    tr.appendChild(td);
+    td=document.createElement("td");
+    td.innerHTML=type;
+    tr.appendChild(td);
+    soapParams.tBodies[0].appendChild(tr);
+};
+
+function addCustomSoapParameter(ns,name,value,type) {
+    var tr=document.createElement("<tr sid='"+name+"' ctype='"+type+"' cns='"+ns+"'>");
+    var td=document.createElement("td");
+    td.innerHTML=name;
+    tr.appendChild(td);
+    td.style.cursor="hand";
+    tr.attachEvent("onclick",function(){
+        var src=event.srcElement.parentElement;
+        var form=document.forms.soap;
+        src.customObj=getValuesForSchema(src.getAttribute("cns"),src.getAttribute("type"));
+        src.style.backgroundColor=clickBG;
+        setTimeout('var src=document.all['+src.tagIndex+'];src.style.backgroundColor=(src.hoverTimer?hoverBG:"");',250);
+    });
+    tr.attachEvent("onmouseover",function(){
+        var src=event.srcElement.parentElement;
+        src.hoverTimer=setTimeout("showTypeToolTip('"+src.tagIndex+"',"+event.x+","+event.y+");",1000);
+        src.style.backgroundColor=hoverBG;
+    });
+    tr.attachEvent("onmouseout",function(){
+        var src=event.srcElement.parentElement;
+        if(src.hoverTimer)
+            cancelTimeout(src.hoverTimer);
+        src.hoverTimer=null;
+        src.style.backgroundColor="";
+    });
+    td=document.createElement("td");
+    td.innerHTML=value;
+    tr.appendChild(td);
+    td=document.createElement("td");
+    td.innerHTML=type;
+    tr.appendChild(td);
+    soapParams.tBodies[0].appendChild(tr);
+};
+
+function setSoapParameter(id,name,type,value) {
+    var tr=document.body;
+    var form=document.forms.soap;
+    var i=0;
+    while(tr.getAttribute("sid")!=id&&i<soapParams.tBodies[0].rows.length)
+        tr=soapParams.tBodies[0].rows[i++];
+    if (i>soapParams.tBodies[0].rows.length) {
+        alert("Couldn't find row w/ID: "+id);
+        return;
+    }
+    tr.setAttribute("sid",id);
+    tr.cells[0].innerHTML=name;
+    tr.cells[1].innerHTML=value;
+    tr.cells[2].innerHTML=type;
+    form.addParam.disabled=false;
+    form.setParam.disabled=true;
+};
+
+function delSoapParameter(id) {
+    var param=document.body;
+    var i=0;
+    while(param.getAttribute("sid")!=id&&i<soapParams.tBodies[0].rows.length)
+        param=soapParams.tBodies[0].rows[i++];
+
+    if (i>soapParams.tBodies[0].rows.length) {
+        alert("Couldn't find row w/ID: "+id);
+        return;
+    }
+    param.parentElement.removeNode(param);
+    form.addParam.disabled=false;
+    form.setParam.disabled=true;
+};
+
+function clearAllParameters() {
+    while(soapParams.tBodies[0].rows.length>0)
+        soapParams.tBodies[0].deleteRow(0);
+};
+
+function generateSoapRequest() {
+    var soapBody="";
+    var form=document.forms.soap;
+    var xmlns="";
+    var soapNS=(nameSpaces[soapEnvelopeURI][nameSpaces[soapEnvelopeURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    var xsiNS=(nameSpaces[xmlSchemaIURI][nameSpaces[xmlSchemaIURI].length-1]);
+    var xsdNS=(nameSpaces[xmlSchemaURI][nameSpaces[xmlSchemaURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    var targetNS="";
+    soapNS+=(soapNS==""?"":":");
+    wsdlNS+=(wsdlNS==""?"":":");
+    xsiNS+=(soapNS==""?"":":");
+    xsdNS+=(wsdlNS==""?"":":");
+    targetNS+=(targetNS==""?"":":");
+    var encodingStyle="";
+    if (form.use.checked)
+        encodingStyle=" "+soapNS+"encodingStyle=\""+form.encodingStyle.value+"\"";
+    if (form.xmlns.value!="") {
+        xmlns=form.xmlns.value+":";
+        soapBody="<"+xmlns+form.method[0].value+" xmlns:"+form.xmlns.value+"=\""+form.urn.value+"\""+encodingStyle+">\n";
+    } else
+        soapBody="<"+form.method[0].value+encodingStyle+">\n";
+    var params=soapParams.tBodies[0].rows;
+    if (params!=null||params.length>0) {
+        var i=0;
+        for(i=0;i<params.length;i++) {
+            soapBody+="<"+(form.useNS.checked?xmlns:"")+params[i].cells[0].innerText+
+                      " "+xsiNS+"type=\""+params[i].cells[2].innerText+"\">"+
+                      params[i].cells[1].innerText;
+            // process a custom type.
+            if (customTypes[params[i].cells[2].innerText]) {
+            }
+            soapBody+="</"+(form.useNS.checked?xmlns:"")+params[i].cells[0].innerText+">\n";
+
+        }
+    }
+    soapBody+="</"+xmlns+form.method[0].value+">\n";
+    return basicSoapHeader()+soapBody+basicSoapFooter();
+};
+
+function doRequest(service,soapPacket){
+
+    getXML(service,"POST",soapPacket,false);
+
+    return xmlRequest;
+};
+onerror=function(e) {
+    alert("global error: "+e);
+};
+
+function getWSDL() {
+
+    wsdlPacket=xmlRequest.responseXML;
+//    alert(xmlRequest.responseText);
+    var i;
+    var attr;
+    // First let's try and get the name spaces in use here.
+    try  {
+        for(i=0;i<wsdlPacket.documentElement.attributes.length;i++) {
+            if (wsdlPacket.documentElement.attributes[i].prefix.toLowerCase()!="xmlns") continue;
+            attr=wsdlPacket.documentElement.attributes[i];
+            if (nameSpaces[attr.value]==null)
+                nameSpaces[attr.value]=[];
+            nameSpaces[attr.value][nameSpaces[attr.value].length]=((attr.name.split(":")[1])||"");
+            spaceNames[(attr.name.split(":")[1])||"default"]=attr.value;
+        }
+    } catch (e) {
+        var s="";
+        alert("Caught Exception: "+e.message);
+        return;
+    }
+    // Now we get the associated names of the known namespaces.
+    var soapNS=nameSpaces[wsdlSoapURI][nameSpaces[wsdlSoapURI].length-1];
+    var wsdlNS;//=nameSpaces[wsdlURI];
+    soapNS+=(soapNS==""?"":":");
+
+    targetNS="";
+    targetNS+=(targetNS==""?"":":");
+    if (wsdlPacket.documentElement.getAttribute("targetNamespace")!=null)
+        targetNS=nameSpaces[wsdlPacket.documentElement.getAttribute("targetNamespace")];
+    for (var ns=0;ns<nameSpaces[wsdlURI].length;ns++) {
+        wsdlNS=nameSpaces[wsdlURI][ns];
+        wsdlNS+=(wsdlNS==""?"":":");
+        parseSchemaTypes(wsdlPacket.selectSingleNode("//"+wsdlNS+"types/"));
+        serviceList=wsdlPacket.selectNodes("//"+wsdlNS+"definitions/"+wsdlNS+"service");
+        if (serviceList.length>0) {
+            var wsdlServices=document.forms.soap.wsdlService;
+            wsdlServices.options.length=1;
+            var opt;
+            var i,text;
+            for (i=0;i<serviceList.length;i++) {
+                opt=document.createElement("option");
+                opt.value=serviceList[i].getAttribute("name");
+                text=(serviceList[i].getElementsByTagName(wsdlNS+"documentation").length>0?serviceList[i].getElementsByTagName(wsdlNS+"documentation")[0].text:"");
+                text=(text==""?(serviceList[i].getElementsByTagName(wsdlNS+"abstract").length>0?serviceList[i].getElementsByTagName(wsdlNS+"abstract").text:serviceList[i].getAttribute("name")):text);
+                opt.text=text;
+                wsdlServices.options.add(opt);
+            }
+            wsdlServices.options[0].selected=true;
+            wsdlServices.selectedIndex=0;
+            document.all.wsdlSelect.style.visibility="visible";
+        }
+    }
+};
+
+function populateSoapPacket(serviceName) {
+    var err="";
+    wsdlNS=nameSpaces[wsdlURI][ns];
+    var soapNS=(nameSpaces[wsdlSoapURI][nameSpaces[wsdlSoapURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    var xsiNS=(nameSpaces[xmlSchemaIURI][nameSpaces[xmlSchemaIURI].length-1]);
+    var xsdNS=(nameSpaces[xmlSchemaURI][nameSpaces[xmlSchemaURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    soapNS+=(soapNS==""?"":":");
+    for (var ns=0;ns<nameSpaces[wsdlURI].length;ns++) {
+        wsdlNS=nameSpaces[wsdlURI][ns];
+        wsdlNS+=(wsdlNS==""?"":":");
+        var service=wsdlPacket.selectSingleNode("//"+wsdlNS+"service[@name='"+serviceName+"']");
+        var i;
+        var form=document.forms.soap;
+        if (service==null) {
+            err="Bad Service name";
+            continue;
+        }
+        var port,tmpNode;
+        var i=0;
+        while(service.getElementsByTagName(wsdlNS+"port")[i]) {
+            port=service.getElementsByTagName(wsdlNS+"port")[i++];
+            tmpNode=port.getElementsByTagName(soapNS+"address")[0];
+            if (tmpNode) break;
+        }
+        if (tmpNode==null) {
+            err="No usable SOAP port.";
+            continue;
+        }
+        var serviceURL=tmpNode.getAttribute("location");
+        var binding=port.getAttribute("binding").split(":")[1]||port.getAttribute("binding");
+        binding=wsdlPacket.selectSingleNode("//"+wsdlNS+"binding[@name='"+binding+"']");
+        tmpNode=binding.getElementsByTagName(soapNS+"binding")[0];
+        // Check the SOAP binding protocol..
+    /*
+        if (tmpNode!=null) {
+            if (tmpNode.getAttribute("style")!="rpc") {
+                alert("I only support RPC bindings.");
+                return false;
+            }
+        }
+    */
+        tmpNode=binding.getElementsByTagName(wsdlNS+"operation");
+        if (tmpNode==null||tmpNode.length==0) {
+            err="There are no operations defined.";
+            continue;
+        }
+        document.all.operation.style.display="none";
+        document.all.operationList.style.display="";
+        var opt;
+        form.method[1].options.length=0;
+        for (i=0;i<tmpNode.length;i++) {
+            opt=document.createElement("option");
+            opt.value=tmpNode[i].getAttribute("name");
+            opt.text=tmpNode[i].getAttribute("name");
+            form.method[1].options.add(opt);
+        }
+        form.method[1].options[0].selected=true;
+        form.method[1].selectedIndex=0;
+        form.service.value=serviceURL;
+        form.binding.value=binding.getAttribute("name");
+        return updateOperation(form.method[1].options[0].value);
+    }
+    if (err!="")alert(err);
+    return false;
+};
+
+function updateOperation(method) {
+    var tmpNode;
+    var form=document.forms.soap;
+    form.method[0].value=method;
+    var soapNS=(nameSpaces[wsdlSoapURI][nameSpaces[wsdlSoapURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    var xsiNS=(nameSpaces[xmlSchemaIURI][nameSpaces[xmlSchemaIURI].length-1]);
+    var xsdNS=(nameSpaces[xmlSchemaURI][nameSpaces[xmlSchemaURI].length-1]);
+    var wsdlNS=(nameSpaces[wsdlURI][nameSpaces[wsdlURI].length-1]);
+    soapNS+=(soapNS==""?"":":");
+    var err="";
+    for (var ns=0;ns<nameSpaces[wsdlURI].length;ns++) {
+        wsdlNS=nameSpaces[wsdlURI][ns];
+        wsdlNS+=(wsdlNS==""?"":":");
+        tmpNode=wsdlPacket.selectSingleNode("//"+wsdlNS+"binding[@name='"+form.binding.value+"']");
+        if (!tmpNode) continue;
+        var portType=(tmpNode.getAttribute("type").split(":")[1]||tmpNode.getAttribute("type"));
+        tmpNode=wsdlPacket.selectSingleNode("//"+wsdlNS+"binding[@name='"+form.binding.value+"']/"+wsdlNS+"operation[@name='"+method+"']");
+        var soapAction=tmpNode.getElementsByTagName(soapNS+"operation");
+        if (soapAction.length==0) soapAction="";
+        else soapAction=soapAction[0].getAttribute("soapAction");
+        tmpNode=wsdlPacket.selectSingleNode("//"+wsdlNS+"binding[@name='"+form.binding.value+"']/"+wsdlNS+"operation[@name='"+method+"']/"+wsdlNS+"input");
+        var namespace="";
+        var use="";
+        var encodingStyle="";
+        if ((tmpNode=(tmpNode.getElementsByTagName(soapNS+"body"))[0])!=null){
+            use=tmpNode.getAttribute("use")||"";
+            encodingStyle=(tmpNode.getAttribute("encodingStyle")||"");
+            namespace=tmpNode.getAttribute("namespace")||"";
+        }
+        message=wsdlPacket.selectSingleNode("//"+wsdlNS+"portType[@name='"+portType+"']/"+wsdlNS+"operation[@name='"+method+"']/"+wsdlNS+"input");
+        if (message==null) {
+            err=("Cannot find input message definition name");
+            continue;
+        }
+        message=(message.getAttribute("message").split(":")[1]||message.getAttribute("message"));
+        form.urn.value=namespace;
+        if (namespace=="")
+            form.xmlns.value="";
+        else
+            form.xmlns.value="ns1";
+        if (use=="encoded"){
+            form.encodingStyle.value=encodingStyle;
+            form.use.checked=true;
+            form.encodingStyle.disabled=false;
+        } else {
+            form.encodingStyle.value="";
+            form.use.checked=false;
+            form.encodingStyle.disabled=true;
+        }
+        form.SOAPAction.value=soapAction;
+        var parts=wsdlPacket.selectNodes("//"+wsdlNS+"message[@name='"+message+"']/"+wsdlNS+"part");
+        clearAllParameters();
+        if (parts.length>0) {
+            var i;
+            var tmp,ns,type;
+            for(i=0;i<parts.length;i++) {
+                    type=parts[i].getAttribute("type")||parts[i].getAttribute("element")
+                    ns=type.split(":")[0]||null;
+                    if (ns!=null) {
+                        if (!usedNS[nameSpaces[spaceNames[ns]][0]] && !usedNS[ns]) {
+                            usedNS[ns]=spaceNames[ns];
+                        }
+                        // Translate the namespace to a currently used NS.
+                        type=nameSpaces[spaceNames[ns]][0]+":"+type.split(":")[1];
+                        if (customTypes[spaceNames[ns]])
+                            addCustomSoapParameter(ns,parts[i].getAttribute("name"),"",type);
+                        else
+                            addSoapParameter(parts[i].getAttribute("name"),"",type);
+                    } else {
+                        addSoapParameter(parts[i].getAttribute("name"),"",type);
+                    }
+            }
+        }
+        return true;
+    }
+    if (err!="")alert(err);
+    return false;
+};
+
+function parseSchemaTypes(typeNode) {
+    if (!typeNode||!typeNode.getAttribute) return;
+    var xsdNS;
+    if (typeNode.getAttribute("xmlns")==xmlSchemaURI)
+        xsdNS="";
+    else
+        xsdNS=typeNode.firstChild.prefix+":";
+    // Get the XML name spaces defined here.
+    var localNS=[];
+    var localSN=[];
+    var attr;
+    for(i=0;i<typeNode.documentElement.attributes.length;i++) {
+        if (typeNode.documentElement.attributes[i].prefix.toLowerCase()!="xmlns") continue;
+        attr=typeNode.documentElement.attributes[i];
+        //alert(attr.value+"="+nameSpaces[attr.value]+":"+((attr.name.split(":")[1])||""));
+        localNS[attr.value]=((attr.split(":")[1])||"");
+        localSN[(attr.name.split(":")[1])||"default"]=attr.value;
+    }
+
+    var targetNS=typeNode.getAttribute("targetNamespace")||"";
+    if (nameSpaces[targetNS]) targetNS=nameSpaces[targetNS]||"";
+    var elements=typeNode.getElementsByTagName(xsdNS+"elements");
+    if (elements.length==0) return;
+    if (!customTypes[targetNS]) customTypes[targetNS]=[];
+    var types=customTypes[targetNS];
+    for (var i=0;i<elements.length;i++) {
+        types[elements.getAttribute(name)]={};
+    }
+};
+
+function getValuesForSchema(type){
+    if (!customTypes[type]) {
+        alert("Type '"+type+"' is not defined by service's WSDL.");
+        return null;
+    }
+    var tNode=customTypes[type];
+    if (tNode.tagName=="simpleType") {
+    } else
+    if (tNode.tagName=="complexType") {
+    } else {
+        alert("How do I handle a '"+tNode.tagName+"' schema type?");
+    }
+};
+
+checkID=0;
+function getXML(url,method,body,sync,callBack,requestTimeout) {
+    xmlRequest.open(method,url,sync);
+    if (checkID) clearInterval(checkID);
+    if (body) {
+        xmlRequest.setRequestHeader("Content-Type","text/xml");
+        xmlRequest.setRequestHeader("SOAPAction",'"'+document.forms.soap.SOAPAction.value+'"');
+    }
+    xmlRequest.setRequestHeader("Content-Length",soapPacket.length);
+    xmlRequest.setRequestHeader("User-Agent","SOAP Shavings");
+    xmlRequest.setRequestHeader("Referer"," ");
+    xmlRequest.setRequestHeader("Connection","close");
+
+    if (body)
+        xmlRequest.send(body);
+    else xmlRequest.send();
+    responseTimeout=0;
+    if (sync)
+        checkID=setInterval("checkStatus('"+callBack+"',"+requestTimeout+")",250);
+};
+
+function checkStatus(callback,timeout) {
+    responseTimeout+=250;
+    window.status="Time: "+responseTimeout;
+    if (xmlRequest.readyState==4||responseTimeout>=timeout) {
+        clearInterval(checkID);
+        checkID=0;
+        if (responseTimeout>=timeout)
+            alert("Request timed out");
+        else {
+            //alert(callback+"()");
+            eval(callback+"()");
+        }
+    }
+};
+
+function queryXMethodsInterfaces() {
+    var wsilPackage=xmlRequest.responseXML.documentElement;
+    var localNS=[];
+    var localSN=[];
+    var ns;
+    for(i=0;i<wsilPackage.attributes.length;i++) {
+        if (wsilPackage.attributes[i].prefix.toLowerCase()!="xmlns") continue;
+        ns=(wsilPackage.attributes[i].name.split(":")[1])||"";
+        localNS[wsilPackage.attributes[i].value]=ns;
+        localSN[ns]=wsilPackage.attributes[i].value;
+    }
+
+    var wsilNS=localNS[wsilURI];
+    wsilNS+=(wsilNS==""?"":":");
+    var wsdlServiceList=document.forms.wsdl.wsdlServiceList;
+    var serviceList=wsilPackage.selectNodes("//"+wsilNS+"service");
+    wsdlServiceList.options.length=1;
+    if (serviceList.length==0) return;
+    var opt;
+    var i,text,j;
+    for (i=0;i<serviceList.length;i++) {
+        text=serviceList[i].getElementsByTagName(wsilNS+"description");
+        j=0;
+        while(j<text.length&&text[j].getAttribute("referencedNamespace")!=wsdlURI)
+            j++;
+        if(j==text.length) continue;
+        j=text[j].getAttribute("location");
+        if (!j) continue;
+        opt=document.createElement("option");
+        opt.value=j;
+        text=(serviceList[i].getElementsByTagName(wsilNS+"documentation").length>0?serviceList[i].getElementsByTagName(wsilNS+"documentation")[0].text:"");
+        text=(text==""?(serviceList[i].getElementsByTagName(wsilNS+"abstract").length>0?serviceList[i].getElementsByTagName(wsilNS+"abstract")[0].text:serviceList[i].getAttribute("name")):text);
+        opt.text=text;
+        wsdlServiceList.options.add(opt);
+    }
+    wsdlServiceList.options[0].selected=true;
+    wsdlServiceList.selectedIndex=0;
+    document.all.wsdlServices.style.visibility="visible";
+
+};
+
+</script>
+<form name="wsdl" action="#" onsubmit="false">
+WSDL document: <input type="text" name="wsdl" value=""><br>
+<span id="wsdlServices" style="visibility:hidden">WSDL Services: <select name="wsdlServiceList" onchange="this.form.wsdl.value=this.options[this.selectedIndex].value;this.form.getDef.click()"></select></span>
+
+<input type="button" value="Get Service definition" name="getDef" onclick="getXML(this.form.wsdl.value,'GET',null,true,'getWSDL',1000*30)">
+<input type="button" value="Get Service List" name="getIf" onclick="getXML('http://www.xmethods.net/inspection.wsil','GET',null,true,'queryXMethodsInterfaces',1000*30)">
+</form>
+SOAP Packet definition:<br>
+<form name="soap" action="#" onsubmit="false">
+<span id="wsdlSelect" style="visibility:hidden">Service from WSDL: <select name="wsdlService" onchange="return populateSoapPacket(this.options[this.selectedIndex].value)"></select></span><br>
+Service URL:<input name="service" type=text value=""><br>
+<br>
+SOAP Action: <input type="text" name="SOAPAction" value=""><BR>
+<br>
+SOAP request name space declarations...<br>
+Soap XMLNS: <input name="xmlns" type=text value=""><br>
+Soap NS-URN: <input name="urn" type=text value=""><br>
+Soap Encoding Style: <input disabled name="encodingStyle" type=text value=""> <input name="use" type="checkbox" onclick="this.form.encodingStyle.disabled=!this.checked"><br>
+
+SOAP Request...<BR>
+<input type="hidden" name="binding" value="">
+Soap operation: <span id="namespace"></span>:<span id="operation"><input name="method" type=text value=""></span>
+                    <span id="operationList" style="display:none"><select name="method" onchange="updateOperation(this.options[this.selectedIndex].value)"></select></span><br>
+
+Soap parameter: <input type="checkbox" name="useNS"> Uses Request Namespace.
+<input type="hidden" name="paramID" value="">
+<blockquote>Tag <input type="text" name="paramTag" value=""><BR>
+            type="
+                <select name="paramType">
+                    <option selected value="xsd:string">xsd:string</option>
+                    <option value="xsd:integer">xsd:integer</option>
+                    <option value="xsd:float">xsd:float</option>
+                    <option value="xsd:date">xsd:date</option>
+                </select>"<br>
+            Value <input name="paramValue" type=text value="">
+<br>
+<input type="button" value="Add" name="addParam" onclick="addSoapParameter(form.paramTag.value,form.paramValue.value,form.paramType.options[form.paramType.selectedIndex].text);form.paramTag.value='';form.paramValue.value='';">
+<input type="button" value="Set Selected" name="setParam" disabled onclick="setSoapParameter(form.paramID.value,form.paramTag.value,form.paramType.options[form.paramType.selectedIndex].text,form.paramValue.value);form.paramTag.value='';form.paramValue.value='';form.paramID.value='';form.addParam.disabled=false;this.disabled=true;">
+<input type="button" value="Remove Selected" name="delParam" onclick="delSoapParameter(form.paramID.value);">
+<BR>
+SOAP Parameters:
+<div id="soapParameterList">
+<table border=0 cellspacing=0 cellpadding=2 id="soapParams">
+<col>
+<col>
+<col>
+<thead>
+<th><b>Name</b></th>
+<th><b>Value</b></th>
+<th><b>Type</b></th>
+</thead>
+<tbody id="params">
+</tbody>
+</table>
+</div>
+</blockquote>
+<input type="button" value="Send request" onclick="alert(doRequest(this.form.service.value,generateSoapRequest()).responseText)">
+<input type="button" value="Reset Form" onclick="location.reload();">
+</form>
+<BR>
+Full SOAP packet to be sent:
+<div id="soapPacket">
+</div>
+
+</body>

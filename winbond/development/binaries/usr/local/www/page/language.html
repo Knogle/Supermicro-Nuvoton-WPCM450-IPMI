@@ -1,0 +1,48 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/language_str.js\"><\/script>");
+	</script>
+	<script src="../impl/language_imp.js"></script>
+
+  <script language="javascript" src="../str/title_str.js"></script>
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("language", "STR_LAND_HEADING");
+		var elmt = document.getElementById("_btnApply");
+		elmt.setAttribute("value", eLang.getString("language", "STR_LANG_APPLY"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("language", "STR_LAND_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("language", "STR_LANG_DESCRIPTION"));</script>
+</p>
+
+<div class="subSection">
+	<div class="subSection" style="border:2px solid #B8B89D; background:#E5E5D9; width:180px;">
+		<div style="padding:10px; font-weight:bold; text-align:center;">
+			 <strong>
+<script>document.writeln(eLang.getString("language", "STR_LANG_AVAIL"));</script>
+</strong><br>
+			 <select id="_listLang" size="10"></select>
+		</div>
+	</div>
+</div>
+
+<div class="btnTray" style="width: 360px;"><input type="button" class="classicBtn" id="_btnApply" /></div>
+</body>
+</html>

@@ -1,0 +1,105 @@
+#!/bin/sh
+
+DEF_H_FILE=$TOPDIR/$BUILD_DIR/projdef.h
+DEF_MK_FILE=$TOPDIR/$BUILD_DIR/projdef.mk
+
+# -----------------------------------------------------------
+# This function will tell us if files.* files have a comment 
+# or blank line and need to be skipped
+#
+# $1 is the line in the file
+# Return code of 1  indicates the file should be skipped 
+#-----------------------------------------------------------
+ShouldBeSkipped()
+{
+    echo $i | grep "^#" > /dev/null
+    if [ $? == 0 ]
+    then
+        return 1
+    fi
+    if [ "$i" == "" ]
+    then
+    	return 1
+    fi
+
+    return 0
+}
+
+
+#
+echo -n "Converting $DEF_FILE to $DEF_H_FILE ..."
+>$DEF_H_FILE
+while read i
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line removes everything after a #
+    read REQ << HERE
+	$(echo $i | awk -F# '{print $1}')
+HERE
+#this piece of line separates $i into variables
+    read KEY VALUE << HERE
+        $(echo $REQ | awk -F= '{print $1,$2}')
+HERE
+    echo $i | grep "#!Numeric" >/dev/null
+    if [ $? == 0 ]
+    then 
+    	echo -e "#define CFG_PROJ_$KEY $VALUE " >> $DEF_H_FILE
+	continue
+    fi
+    echo $i | grep "#!Bool" >/dev/null
+    if [ $? == 0 ]
+    then 
+    	echo -e "#define CFG_PROJ_$KEY"_"$VALUE " >> $DEF_H_FILE
+	continue
+    fi
+    # Defualt is string
+    echo -e "#define CFG_PROJ_$KEY \"$VALUE\" " >> $DEF_H_FILE
+
+done < $TOPDIR/$DEF_FILE
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+else
+	echo " Done"
+fi
+
+echo -n "Copying $TOPDIR/$DEF_FILE to $DEF_MK_FILE ..."
+if [ -e $DEF_MK_FILE ]
+then
+	rm -f $DEF_MK_FILE
+	if [ $? != 0 ]
+	then
+		echo "Failed. Unable to remove old $DEF_MK_FILE"
+		exit 1
+	fi
+fi
+
+while read i
+do
+    ShouldBeSkipped $i
+    if [ $? == 1 ]
+    then
+        continue
+    fi
+#this piece of line removes everything after a #
+    read REQ << HERE
+	$(echo $i | awk -F# '{print $1}')
+HERE
+    echo $REQ >> $DEF_MK_FILE
+done < $TOPDIR/$DEF_FILE
+
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+else
+	echo " Done"
+fi
+
+
+exit 0

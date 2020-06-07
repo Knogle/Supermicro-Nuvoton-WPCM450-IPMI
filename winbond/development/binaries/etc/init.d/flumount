@@ -1,0 +1,34 @@
+#! /bin/sh
+#
+# flumount	Unmounts all filesystem as needed by flasher.
+#
+# Version:      @(#)umountfs  2.78  05-Jun-2000  miquels@cistron.nl
+#
+# chkconfig: 06 40 0
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+
+echo -n "Deactivating swap... "
+swapoff -a
+echo "done."
+
+echo -n "Unmounting filesystems not relevant to flasher... "
+echo "Unmounting conf directory...."
+umount /conf
+echo "done."
+echo "unmounting www directory.."
+umount /usr/local/www
+echo "done."
+echo "unmounting /dev/shm.."
+umount /dev/shm
+echo "done."
+echo "umounting pdk directory"
+umount /usr/local/pdk
+echo "done."
+
+echo "remounting root as readonly...."
+mount -n -o remount,ro /
+echo "done."
+

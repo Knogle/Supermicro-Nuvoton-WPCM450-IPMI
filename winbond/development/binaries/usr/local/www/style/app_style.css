@@ -1,0 +1,181 @@
+/* Filename: app_style.css                 
+ * Project: Aviator via MDS
+ * Team: MegaRAC
+ */
+
+
+body{
+  font-family: Arial, Verdana, Geneva,  Helvetica, sans-serif;
+  font-size: 12px;
+  background: url(../res/background.gif) #deded3;
+  margin:0px;
+  padding:5px;
+}
+
+table{
+  font-family: Arial, Verdana, Geneva,  Helvetica, sans-serif;
+  font-size: 12px;
+}
+
+.pagetitle{
+  background:#B8B89D;
+  font-size: 15px;
+  padding:3px;
+  margin-top:0px;
+}
+
+.sysInfoBox{
+  width: 400px;
+  height: 300px;
+  padding-left: 25px;
+}
+
+.sysInfoBox label{
+  font-weight:bold;
+}
+
+.inputButton, .inputButton2X, .inputButton3X{
+  font-weight:bold;
+  width:125px;
+  display:block;
+  text-align:center;
+  border-left:1px solid #DDDDDD;
+  border-top:1px solid #DDDDDD;
+  border-right:1px solid #555555;
+  border-bottom:1px solid #555555;
+  background:#E9E9DC;
+  text-decoration:none;
+  color:#000000;
+  font-size:12px;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.inputButton2X{
+  width:175px;
+}
+
+.inputButton3X{
+  width:210px;
+}
+
+.inputButton:hover, .inputButton2X:hover, .inputButton3X:hover{
+  background:#FFFFE1;
+}
+
+.inputButton:active, .inputButton2X:active, .inputButton3X:active{
+  background:#FFFFE1;
+  border-left:1px solid #555555;
+  border-top:1px solid #555555;
+  border-right:1px solid #DDDDDD;
+  border-bottom:1px solid #DDDDDD;
+}
+
+.btnTray{
+  background:#B8B89D;
+  padding:3px;
+}
+
+
+.classicBtn{
+  background:#D4D0C8;
+  border:1px solid #555555;
+  border-left:1px solid #DDDDEE;
+  border-top:1px solid #DDDDEE;
+  margin-left:10px;
+  font-size:12px;
+  font-family:Arial;
+  font-weight:bold;
+  padding:3px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+html>body .classicBtn{
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.floatRight{
+  display:block;
+  float:right;
+}
+
+#wait{
+  font-family:Arial, Verdana, Helvetica, sans-serif;
+  color:#FFFFFF;
+  text-transform:uppercase;
+  letter-spacing:.3em;
+  font-size:.9em;
+}
+
+.highlightInfo{
+  background:#C0C0C0;
+  font-weight:bold;
+  font-size:12px;
+  padding:3px;
+  line-height:12px;
+  width:100%;
+}
+
+.subSection{
+  padding:10px;
+  line-height:22px;
+}
+
+.lblHeader{
+  font-weight:bold;
+  display:block;
+  padding:5px;
+  width:250px;
+  font-size:1.1em;
+  margin:5px;
+  text-align:right;
+}
+
+.floatRight{
+  display:block;
+  float:right;
+}
+
+.grid{
+  background:#9A9A9A;
+}
+
+.grid tbody tr{
+  background:#fff;
+}
+
+.gridHead{
+	font-weight:bold;
+	color:#000;
+	background:#999;
+}
+
+.errDisplay{
+	color:#900;
+	font-weight:bold;
+}
+
+.Adv_Btn{
+  font-weight:bold;
+  width:125px;
+  text-align:center;
+  text-decoration:none;
+  color:#000000;
+  font-size:12px;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+
+.Adv_Btn{
+  width:125px;
+}
+
+.Adv_Btn:hover{
+  background:#FFFFE1;
+}
+
+.Adv_Btn:active{
+  background:#FFFFE1;
+}

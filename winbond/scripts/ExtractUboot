@@ -1,0 +1,64 @@
+#!/bin/sh
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Change directory to project directory
+cd $TOPDIR/$BUILD_DIR
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+echo -n "Extracting u-boot $UBOOT_VER ..."
+tar xjf $TOPDIR/pristine/u-boot/u-boot-$UBOOT_VER.tar.bz2
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+CUR_USER=`whoami`
+echo -n "Changing Ownership of uboot to current user ..."
+chown $CUR_USER:$CUR_USER u-boot-$UBOOT_VER -R
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+echo -n "Renaming u-boot-$UBOOT_VER to uboot ..."
+mv u-boot-$UBOOT_VER uboot
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+cd uboot
+echo -n "Applying u-boot Patches ..."
+for i in  $TOPDIR/patches/u-boot/PATCH*/*
+do
+	if ! [ -e $i ]
+	then 
+		continue
+	fi
+	patch -p1 < $i > /dev/null
+	if [ $? != 0 ]
+	then
+		echo "Failed to patch $i"
+		exit 1
+	fi
+done
+echo "Done"
+
+exit 0

@@ -1,0 +1,21 @@
+#! /bin/sh
+# /usr/local/bin/makeminime: Make ram area for flasher work in $1
+#
+#
+
+# @Section: /usr/local/www
+#no need to copy the www files
+#instead we do this
+# www is already unmounted
+# now dd /dev/mtdblock3(www) into /dev/ram3
+# now /dev/ram3 has a cramfs filesystem
+# now mount this into the regulat /usr/local/www
+dd if=/dev/mtdblock3 of=/dev/ram3
+mount -t cramfs /dev/ram3 /usr/local/www
+
+# directories for config files
+cd $1
+mkdir oldconf
+mkdir newconf
+cd $CUR_DIR
+exit 0

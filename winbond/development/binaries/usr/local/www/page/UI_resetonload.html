@@ -1,0 +1,40 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/UI_resetonload_str.js\"><\/script>");
+	</script>
+	<script src="../impl/UI_resetonload_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("UI_resetonload", "STR_UI_RESET_TITLE");
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("UI_resetonload", "STR_UI_RESET_HEADING"));</script>
+</h3>
+
+<div class="subSection">
+<strong> 
+<script>document.writeln(eLang.getString("UI_resetonload", "STR_UI_RESET_DESC1"));</script>
+<br> 
+<script>document.writeln(eLang.getString("UI_resetonload", "STR_UI_RESET_DESC2"));</script>
+ <br> 
+<script>document.writeln(eLang.getString("UI_resetonload", "STR_UI_RESET_DESC3"));</script>
+ </strong>
+</div>
+
+</body>
+</html>

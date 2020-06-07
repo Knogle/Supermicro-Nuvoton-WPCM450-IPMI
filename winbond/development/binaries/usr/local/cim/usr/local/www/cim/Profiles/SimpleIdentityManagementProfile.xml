@@ -1,0 +1,104 @@
+<profile name="SimpleIdentityManagementProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_AccountManagementCapabilities" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_EnabledLogicalElementCapabilities" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_AccountSettingData" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_AccountManagementService" profile="AccountManagementProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_UserContact" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_Group" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_Account" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_ManagedElement" profile="ReferencingProfile">
+      </class>  
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_ServiceAffectsElement" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_OwningCollectionElement" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_Group" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_IdentityContext" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ManagedElement" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteDependency" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ManagedElement" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>  
+      <association classname="CIM_AccountOnSystem" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_Account" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_Group" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>  
+      <association classname="CIM_AssignedIdentity" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_UserContact" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Group" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_SettingsDefineCapabilities" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_AccountManagementCapabilities" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_AccountSettingData" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_EnabledLogicalElementCapabilities" profile="SimpleIdentityManagementProfile">
+            </class>  
+      </association>
+      <association classname="CIM_ElementSettingData" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_AccountSettingData" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="SimpleIdentityManagementProfile">
+            <class name="CIM_AccountManagementCapabilities" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Account" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_EnabledLogicalElementCapabilities" profile="SimpleIdentityManagementProfile">
+            </class>          
+      </association>
+</profile>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>DomAPI AJAX Debugger</title>
+  <link rel="stylesheet" type="text/css" href="ajaxdebugger.css" />
+  <script type="text/javascript">
+    domapi = {};
+    domapi.isGecko = !document.all;
+    if(domapi.isGecko)
+      document.writeln('<script type="text\/javascript" src="../core/mozillaext.js"><\/script>');
+    onload = function(){
+      divConsoleOuter  = document.getElementById("consoleOuter");
+      divConsoleInner  = document.getElementById("consoleInner");
+      domapi = opener.domapi;
+      D = domapi.ajaxDebug;
+      D._consoleMain  = divConsoleInner;
+      onresize();
+      D._onload();
+    };
+    onresize = function(){
+      var _w, _h;
+      var w = parseInt(document.all?document.body.clientWidth :window.innerWidth);
+      var h = parseInt(document.all?document.body.clientHeight:window.innerHeight);
+      
+      _h = h - divConsoleOuter.offsetTop   -  2;if(_h > 10)divConsoleOuter.style.height  = _h + "px";
+      
+      _h = h - divConsoleInner.offsetTop   - 25;if(_h > 10)divConsoleInner.style.height  = _h + "px";
+      _w = w - divConsoleInner.offsetLeft  - 10;if(_w > 10)divConsoleInner.style.width   = _w + "px";
+      
+      if(divConsoleOuter.style.display == "none"){
+        h-=10;
+      }
+    };
+  </script>
+</head>
+<body>
+  <div id="consoleOuter">
+    <div id="consoleToolbar">
+      <button onclick="D.clearConsole()">clear</button>
+    </div>
+    <div id="consoleInner"></div>
+  </div>
+</body>
+</html>

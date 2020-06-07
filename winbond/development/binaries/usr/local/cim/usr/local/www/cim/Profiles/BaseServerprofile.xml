@@ -1,0 +1,140 @@
+<profile name="BaseServerProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_TimeService" profile="BaseServerProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+      </class>
+      <class name="CIM_TextRedirectionService" profile="TextConsoleRedirectionProfile">
+      </class>
+      <class name="CIM_EnabledLogicalElementCapabilities" profile="BaseServerProfile">
+      </class>
+      <class name="CIM_PowerSupply" profile="PowerSupplyProfile">
+      </class>
+      <class name="CIM_PowerManagementService" profile="PowerStateManagementProfile">
+      </class>
+      <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+      </class>
+      <class name="CIM_SoftwareInstallationService" profile="SoftwareUpdateProfile">
+      </class>
+      <class name="CIM_BootService" profile="BootControlProfile">
+      </class>
+      <class name="CIM_Fan" profile="FanProfile">
+      </class>
+      <class name="CIM_Processor" profile="CPUProfile">
+      </class>
+      <class name="CIM_Memory" profile="SystemMemoryProfile">
+      </class>
+      <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+      </class>
+      <class name="CIM_Sensor" profile="SensorProfile">
+      </class>
+      <class name="CIM_RecordLog" profile="RecordLogProfile">
+      </class>
+      <class name="CIM_EthernetPort" profile="EthernetPortProfile">
+      </class>
+      <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+      </class>
+      <class name="CIM_DHCPProtocolEndpoint" profile="DHCPClientProfile">
+      </class>
+      <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+      </class>
+      <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="CLPServiceProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+      </class>
+      <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_HostedService" profile="ReferencingProfile">
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+            <class name="CIM_TimeService" profile="PowerRelatedProperties">
+            </class>
+            <class name="CIM_SoftwareInstallationService" profile="SoftwareUpdateProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="CLPServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="TelnetServiceProfile">
+            </class>
+            <class name="CIM_ProtocolService" profile="SSHServiceProfile">
+            </class>
+            <class name="CIM_PowerManagementService" profile="PowerStateManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedAccessPoint" profile="ReferencingProfile">
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+            <class name="CIM_DNSProtocolEndpoint" profile="DNSClientProfile">
+            </class>
+            <class name="CIM_DHCPProtocolEndpoint" profile="DHCPClientProfile">
+            </class>
+            <class name="CIM_IPProtocolEndpoint" profile="IPInterfaceProfile">
+            </class>
+      </association>
+      <association classname="CIM_SystemDevice" profile="ReferencingProfile">
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+            <class name="CIM_Sensor" profile="SensorProfile">
+            </class>
+            <class name="CIM_EthernetPort" profile="EthernetPortProfile">
+            </class>
+            <class name="CIM_Fan" profile="FanProfile">
+            </class>
+            <class name="CIM_Processor" profile="CPUProfile">
+            </class>
+            <class name="CIM_Memory" profile="SystemMemoryProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ProfileRegistrationProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="BaseServerProfile">
+            <class name="CIM_EnabledLogicalElementCapabilities" profile="BaseServerProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_AssociatedPowerManagement" profile="PowerStateManagementProfile">
+            <class name="CIM_PowerManagementService" profile="PowerStateManagementProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ComputerSystemPackage" profile="PhysicalAssetProfile">
+            <class name="CIM_PhysicalPackage" profile="PhysicalAssetProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_OwningCollectionElement" profile="SMASHCollectionsProfile">
+            <class name="CIM_ConcreteCollection" profile="SMASHCollectionsProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_UseOfLog" profile="RecordLogProfile">
+            <class name="CIM_RecordLog" profile="RecordLogProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_InstalledSoftwareIdentity" profile="SoftwareInventoryProfile">
+            <class name="CIM_SoftwareIdentity" profile="SoftwareInventoryProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="BaseServerProfile">
+            <class name="CIM_ComputerSystem" profile="BaseServerProfile">
+            </class>
+            <class name="CIM_TimeService" profile="BaseServerProfile">
+            </class>           
+      </association>
+</profile>

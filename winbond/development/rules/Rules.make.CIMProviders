@@ -1,0 +1,71 @@
+#----------------------------------------------------------------------
+# 			Rules.make for CIM Providers
+# 		   Copyright (c) 2007 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+#----------------------------------------------------------------------
+#               TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif
+
+
+
+INSTALLDIR = $(TOPDIR)/$(BUILD_DIR)/target/$(CIM_ROOT_DIR)
+BINARYDIR = $(TOPDIR)/development/binaries/$(CIM_ROOT_DIR)
+FILES_CP_CIM = $(TOPDIR)/development/oem/cim/files.cp.cimproviders
+FILES_LN_CIM = $(TOPDIR)/development/oem/cim/files.ln.cimproviders
+FILES_CONF_CIM = $(TOPDIR)/development/oem/cim/files.conf.cimproviders
+include $(TOPDIR)/development/rules/Rules.global
+include $(TOPDIR)/development/oem/cim/Config.Profiles
+include $(TOPDIR)/development/rules/Rules.def.Profiles
+#----------------------------------------------------------------------
+#           Include Oem Rules
+#----------------------------------------------------------------------
+
+
+INI_PATH = ../INI_Includes
+ETC_PROVIDERS = etc/Providers
+TAR_ETC_PROVIDERS = Providers/
+CFLAGS += -I$(TOPDIR)/development/common/include/CIMProviders 
+CFLAGS += -I$(TOPDIR)/development/common/include/CIMPermission
+CFLAGS += -I$(OEM_SFCB_INC_PATH)
+CFLAGS += -I$(TARGETDIR)/usr/local/include/cmpi
+CFLAGS += -I$(TOPDIR)/development/common/include/global
+CFLAGS += -I$(TOPDIR)/development/common/include/userm
+#CFLAGS += -I$(TOPDIR)/development/common/include/ipmi_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/libipmi_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/network
+CFLAGS += -I$(TOPDIR)/development/common/include/iniparser
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/libipmi_inc_oem
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/CIMProviders
+
+CFLAGS += -I$(TOPDIR)/development/common/include/smbios_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/ceds_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/eventmgr_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/cel
+CFLAGS += -I$(TOPDIR)/development/common/include/PetToPem
+CFLAGS += -I$(TOPDIR)/development/common/include/ipmi_inc
+CFLAGS += -I$(TOPDIR)/development/proprietary/firmware/libs/libCIMProviders/CIMPorting/includes
+
+INCL_IPMI_LIB = -lipmi -L$(TOPDIR)/development/proprietary/firmware/libs/libipmi/src/local
+INCL_IPMI_LIB += -lami -L$(TOPDIR)/development/proprietary/firmware/libs/libami
+INCL_IPMI_LIB += -liniparser -L$(TOPDIR)/development/proprietary/firmware/libs/libiniparser
+INCL_IPMI_LIB +=  $(AMIAPPS_COMMON_LIBPATH_FULL)
+INCL_IPMI_LIB += -lproviderUtility -L$(TOPDIR)/development/proprietary/firmware/libs/libCIMProviders/Utility
+INCL_IPMI_LIB += -lCIMServerUtility -L$(TOPDIR)/development/proprietary/firmware/libs/libCIMProviders/CIMUtility
+INCL_IPMI_LIB += -lCimPermission -L$(TOPDIR)/development/proprietary/firmware/libs/libCimPermission
+INCL_IPMI_LIB += -lCIMPorting -L$(TOPDIR)/development/proprietary/firmware/libs/libCIMProviders/CIMPorting
+INCL_INILIB =
+
+cimtarget:	cimconfig
+ifneq ("$(LIB_COMMON_LIBNAME)", "")
+	@echo  ".$(PERM_CONFIG_PATH)/usr/local/lib/$(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR).$(LIB_VER_MINOR) 1 P3" >> $(FILES_CP_CIM)
+	@echo  ".$(PERM_CONFIG_PATH)/usr/local/lib/$(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR) -> $(PERM_CONFIG_PATH)/usr/local/lib/$(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR).$(LIB_VER_MINOR) 1 P3" >> $(FILES_LN_CIM)
+	@echo  ".$(PERM_CONFIG_PATH)/usr/local/lib/$(LIB_COMMON_LIBNAME) -> $(PERM_CONFIG_PATH)/usr/local/lib/$(LIB_COMMON_LIBNAME).$(LIB_VER_MAJOR).$(LIB_VER_MINOR) 1 P3" >> $(FILES_LN_CIM)
+endif
+	
+
+#------------------------- End of Rules.Make ---------------------------
+

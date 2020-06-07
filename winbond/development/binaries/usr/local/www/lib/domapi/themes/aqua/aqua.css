@@ -1,0 +1,137 @@
+.DA_SKINNED .DA_BUTTON{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 11px;
+  margin:0px;
+  background:url("button/norm_left.gif") no-repeat left top;
+}
+.DA_SKINNED .DA_BUTTON_OVER{background-color: transparent !important}
+.DA_SKINNED .DA_BUTTON div{padding:0px 15px 0px 3px;background:url("button/norm_right.gif") no-repeat right top}
+.DA_SKINNED .DA_BUTTON.DA_INACTIVEBUTTONFACE{background:url("button/disabled_left.gif") no-repeat left top}
+.DA_SKINNED .DA_BUTTON.DA_INACTIVEBUTTONFACE div{background:url("button/disabled_right.gif") no-repeat right top}
+.DA_SKINNED .DA_BUTTON_DEPRESS{background:url("button/depressed_left.gif") no-repeat left top}
+.DA_SKINNED .DA_BUTTON_DEPRESS div{background:url("button/depressed_right.gif") no-repeat right top}
+/*----------------------------------------------------------------------------*/
+.DA_LISTGRID_HEADER{
+  background-color: white;
+  border-color: Black;
+  border-top-width:0px;
+}
+.DA_LISTGRID_UPPERLEFT_SPACE{
+  background-color: White;
+}
+.DA_LISTGRID_ROWBAR{
+  background-color: White;
+}
+.DA_SKINNED .DA_LISTGRID_HEADER_COL{
+  background:url("outlookbar/selected.jpg")repeat left top  
+}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_MENUBAR                            {background: url("menubar/background.jpg" )}
+.DA_SKINNED .DA_MENUBUTTON,
+.DA_SKINNED .DA_MENUBUTTON_DISABLED,
+.DA_SKINNED a.DA_MENUBUTTON_ACTIVE,
+.DA_SKINNED a.DA_MENUBUTTON:hover                  {border-style:none}
+.DA_SKINNED a.DA_MENUBUTTON_ACTIVE                 {color:white;background-color:#2D61AF}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED  .DA_NOTEBOOK{background: url("appworkspace.jpg");border-color:#9B9B9B !important}
+/*----------------------------------------------------------------------------*/
+.DA_OB_TAB_OVER{background-color:#D4D4D4 !important}
+.DA_SKINNED .DA_OUTLOOKBAR{border-color:#808080 !important}
+.DA_SKINNED .DA_OB_TAB{background: url("outlookbar/normal.jpg" );border-color:#808080 !important}
+.DA_SKINNED .DA_OB_TAB_DEPRESS{background: url("outlookbar/depressed.jpg");color:#2963BD}
+.DA_SKINNED .DA_OB_TAB_SELECTED{background: url("outlookbar/selected.jpg");color:buttontext !important}
+.DA_SKINNED .DA_OB_TAB_OVER{background: url("outlookbar/over.jpg")}
+/*----------------------------------------------------------------------------*/
+.DA_PROGRESSBAR .DA_BAR{
+  background-color: #5A9CDE !important;
+}
+.DA_SKINNED .DA_PROGRESSBAR.DA_HORZ{
+  background: url("progressbar/horizontal_background.gif") left top; !important;
+  background-repeat: repeat-x;
+  border-style: none;
+  padding:0px;
+}
+.DA_SKINNED .DA_PROGRESSBAR.DA_VERT{
+  background: url("progressbar/vertical_background.gif") left bottom; !important;
+  background-repeat: repeat-y;
+  border-style: none;
+  padding:0px;
+}
+.DA_SKINNED .DA_PROGRESSBAR.DA_HORZ .DA_BAR{
+  background-image: url("progressbar/horizontal.gif");
+  background-position: left top;
+  background-repeat: repeat-x;
+  background-color: transparent;
+  
+}
+.DA_SKINNED .DA_PROGRESSBAR.DA_VERT .DA_BAR{
+  background-image: url("progressbar/vertical.gif");
+  background-position: left bottom;
+  background-repeat: repeat-y;
+  background-color: transparent;
+}
+/*----------------------------------------------------------------------------*/
+.DA_POPUPMENU                                      {background-color:#EFEFEF;}
+.DA_SKINNED .DA_POPUPMENU                          {background: url("popupmenu/normal.gif" )}
+.DA_SKINNED .DA_POPUPMENU tr.DA_HIGHLIGHT td       {background: url("popupmenu/focus.gif"  )}
+.DA_SKINNED .DA_POPUPMENU                          {border: 1px solid #838383;}
+.DA_SKINNED div.DA_MENUITEMSEP {border: 1px solid #a6a6a6;border-bottom-style:none;margin: 4px 0px 4px 0px;}
+.DA_SKINNED a.DA_MENUITEM:hover                    {background: url("popupmenu/focus.gif"  )}
+.DA_MENUITEM_CHEVRON                               {color:#59595A;}
+a.DA_MENUITEM:hover .DA_MENUITEM_CHEVRON           {color:white;}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_SIDEBAR{background-color: white}
+.DA_SKINNED .DA_SIDEBAR_PANELBODY{
+  background-color: #ECECEC;
+  border-style:solid;
+  border-color:gray;
+  border-width:0px 1px 1px;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 4px;
+  margin:0px;
+  background:url("sidebar/left.gif") no-repeat left top;
+  height :25px;
+  border-bottom:1px solid black;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER div{
+  height :25px;
+  padding:0px 8px 0px 11px;
+  background:url("sidebar/right.gif") no-repeat right top;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER td{
+  color:black;
+  line-height:25px;
+  vertical-align: middle;
+}
+.DA_SKINNED .DA_SIDEBAR_PANELHEADER td div{background-image: none !important}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER{background:url("sidebar/left_disabled.gif") no-repeat left top !important}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER div{background:url("sidebar/right_disabled.gif") no-repeat right top !important}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER td{color:white}
+.DA_SKINNED .DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELBODY{background-color:silver;color:gray;border-color:#B5B5B5}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_TABSET .DA_ROW{text-align: center}
+.DA_SKINNED .DA_TABSET .DA_TAB{
+  border-style:none;
+  border-width:0px;
+  padding:0px 0px 0px 5px !important;
+  margin:0px;
+  background:url("tab/top_norm_left.gif") no-repeat left top;
+  top:0px;
+}
+.DA_SKINNED .DA_TABSET .DA_OVER{background-color: transparent !important;}
+.DA_SKINNED .DA_TABSET .DA_TAB span{padding:4px 15px 3px 11px !important;background:url("tab/top_norm_right.gif") no-repeat right top}
+.DA_SKINNED .DA_TABSET .DA_TAB_LEFTEND{background:url("tab/top_norm_left_end.gif") no-repeat left top}
+.DA_SKINNED .DA_TABSET .DA_TAB_RIGHTEND span{background:url("tab/top_norm_right_end.gif") no-repeat right top}
+.DA_SKINNED .DA_TAB_SELECTED_LEFTEND{background:url("tab/top_sel_left_end.gif") no-repeat left top !important}
+.DA_SKINNED .DA_TAB_SELECTED_RIGHTEND span{background:url("tab/top_sel_right_end.gif") no-repeat right top !important}
+.DA_SKINNED .DA_TABSET .DA_TAB_SELECTED{background:url("tab/top_sel_left.gif") no-repeat left top;}
+.DA_SKINNED .DA_TABSET .DA_TAB_SELECTED span{background:url("tab/top_sel_right.gif") no-repeat right top;}
+/*****************************/
+.DA_SKINNED .DA_TABSET_DOWN .DA_TAB{top:0px !important}
+/*----------------------------------------------------------------------------*/
+.DA_SKINNED .DA_TOOLBAR{background: url("toolbar/background.jpg" );background-color:#FFFCF7;border-style:none;}
+/*----------------------------------------------------------------------------*/

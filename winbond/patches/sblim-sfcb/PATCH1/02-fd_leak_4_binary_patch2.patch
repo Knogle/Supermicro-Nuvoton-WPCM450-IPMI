@@ -1,0 +1,27 @@
+#This patches moves from SFCB 1.2.3 to 1.2.5 
+#Origin: Vinodhini J (vinodhinij@amiindia.co.in) 100% American Megatrends Inc 
+#Acked-by: Venkatesh Ramamurthy <Venkateshr@ami.com>
+diff -ru sblim-sfcb-1.2.3/cimcClientSfcbLocal.c sblim-sfcb-1.2.3.new/cimcClientSfcbLocal.c
+--- sblim-sfcb-1.2.3/cimcClientSfcbLocal.c	2007-06-22 14:52:21.000000000 +0530
++++ sblim-sfcb-1.2.3.new/cimcClientSfcbLocal.c	2008-03-10 15:43:15.000000000 +0530
+@@ -1556,6 +1556,7 @@
+ static void* release(ClientEnv* ce)
+ {
+    void *lib=ce->hdl;
++   close(sfcbSockets.send);
+    free(ce);
+    uninitGarbageCollector();
+    return lib;
+diff -ru sblim-sfcb-1.2.3/providerMgr.c sblim-sfcb-1.2.3.new/providerMgr.c
+--- sblim-sfcb-1.2.3/providerMgr.c	2007-06-22 15:58:19.000000000 +0530
++++ sblim-sfcb-1.2.3.new/providerMgr.c	2008-03-10 15:46:59.000000000 +0530
+@@ -1273,6 +1273,9 @@
+    unlockUpCall(Broker);
+ 
+    free(resp);
++   if(!localMode){
++  	close(binCtx.provA.socket);
++   }
+    closeProviderContext(&binCtx);
+ 
+    _SFCB_RETURN(ccl);

@@ -1,0 +1,87 @@
+#! /bin/sh
+#
+# stunnel init.d file
+#
+#       Based on the skeleton init.d file 
+#       written by Miquel van Smoorenburg <miquels@cistron.nl>.
+#       Modified for Debian GNU/Linux
+#       by Julien LEMOINE <speedblue@debian.org>.
+#
+# 	Modified by AMI for SP Stack
+
+DAEMON=/usr/sbin/stunnel4
+NAME=stunnel
+DESC="SSL tunnels"
+FILES="/etc/stunnel/*.stunnel.conf"
+OPTIONS=""
+ENABLED=1
+
+startdaemons() {
+  for file in $FILES; do 
+    if test -f $file; then
+      ARGS="$file $OPTIONS"
+      $DAEMON $ARGS
+      echo -n "[started: $file] "
+    fi
+  done;
+}
+
+killdaemons()
+{
+  for file in $FILES; do
+   if test -f $file; then
+     CHROOT=`grep "^chroot" $file|sed "s;.*= *;;"`
+     PIDFILE=`grep "^pid" $file|sed "s;.*= *;;"`
+     if [ "$PIDFILE" = "" ]; then
+       PIDFILE=/var/run/stunnel4/stunnel.pid
+     fi
+     if test -f $CHROOT/$PIDFILE; then
+       PROCLIST=`cat $CHROOT/$PIDFILE`
+       if [ "$PROCLIST" ]; then
+         kill $PROCLIST
+         echo -n "[stopped: $file] "
+       fi
+     fi
+   fi
+ done
+}
+
+if [ "x$OPTIONS" != "x" ]; then
+  OPTIONS="-- $OPTIONS"
+fi
+
+#test -f /etc/default/stunnel4 && . /etc/default/stunnel4
+test "$ENABLED" != "0" || exit 0
+
+test -x $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+  start)
+        echo -n "Starting $DESC: "
+        startdaemons
+        echo "$NAME."
+        ;;
+  stop)
+        echo -n "Stopping $DESC: "
+        killdaemons
+        echo "$NAME."
+        ;;
+#force-reload does not send a SIGHUP, since SIGHUP is interpreted as a 
+#quit signal by stunnel. I reported this problem to upstream authors.
+  force-reload|restart)
+        echo -n "Restarting $DESC: "
+        killdaemons
+        sleep 5
+        startdaemons
+        echo "$NAME."
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|force-reload|restart}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

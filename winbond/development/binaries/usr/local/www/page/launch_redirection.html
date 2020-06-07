@@ -1,0 +1,45 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/launch_redirection_str.js\"><\/script>");
+	</script>
+	<script src="../impl/launch_redirection_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("launch_redirection", "STR_LNCH_REDIR_TITLE");
+		var elmt = document.getElementById("_launchJava");
+		elmt.setAttribute("value", eLang.getString("launch_redirection", "STR_LNCH_REDIR_BTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("launch_redirection", "STR_LNCH_REDIR_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("launch_redirection", "STR_LNCH_REDIR_DESC"));</script>
+</p>
+
+<div class="subSection">
+	<div class="subSection" style="border:2px solid #B8B89D; background:#E5E5D9; width:380px;">
+
+		<div style="padding-top:30px; padding-bottom:20px; text-align:center;">
+			<input type="button" class="classicBtn" id="_launchJava" />
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

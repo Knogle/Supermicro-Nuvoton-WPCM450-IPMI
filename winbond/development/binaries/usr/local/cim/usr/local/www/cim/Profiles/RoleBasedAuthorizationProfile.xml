@@ -1,0 +1,80 @@
+<profile name="RoleBasedAuthorizationProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_Privilege" profile="RoleBasedAuthorizationProfile">
+      </class>
+      <class name="CIM_RoleBasedManagementCapabilities" profile="RoleBasedAuthorizationProfile">
+      </class>
+      <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_ManagedElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+      </class>
+      <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+      </class>  
+      <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+      </class>
+      <association classname="CIM_ElementCapabilities" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_RoleBasedManagementCapabilities" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+      </association>
+      <association classname="CIM_OwningCollectionElement" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+            </class>
+      </association>
+      <association classname="CIM_RoleLimitedToTarget" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_ManagedElement" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Privilege" profile="RoleBasedAuthorizationProfile">
+            </class>  
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="SimpleIdentityManagementProfile">   
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteDependency" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Privilege" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>          
+      </association>
+      <association classname="CIM_MemberOfCollection" profile="RoleBasedAuthorizationProfile">
+            <class name="CIM_Privilege" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Role" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_Identity" profile="SimpleIdentityManagementProfile">
+            </class>          
+      </association>
+      <association classname="CIM_ServiceServiceDependency" profile="IPInterfaceProfile">
+            <class name="CIM_RoleBasedAuthorizationService" profile="RoleBasedAuthorizationProfile">
+            </class>
+            <class name="CIM_AccountManagementService" profile="SimpleIdentityManagementProfile">
+            </class>
+      </association>  
+</profile>

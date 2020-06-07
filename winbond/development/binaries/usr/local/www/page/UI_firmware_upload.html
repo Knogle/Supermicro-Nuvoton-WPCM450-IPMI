@@ -1,0 +1,62 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/UI_firmware_upload_str.js\"><\/script>");
+	</script>
+	<script src="../impl/UI_firmware_upload_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("UI_firmware_upload", "STR_FW_UPLD_HEADING");
+		var elmt = document.getElementById("_uploadBtn");
+		elmt.setAttribute("value", eLang.getString("UI_firmware_upload", "STR_FW_UPLD_BTN"));
+		var elmt = document.getElementById("_cancelBtn");
+		elmt.setAttribute("value", eLang.getString("UI_firmware_upload", "STR_FW_UPLOAD_CANCEL"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_HEADING"));</script>
+</h3>
+<div class="subSection">
+<p><strong>
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_DESC1"));</script>
+<br> 
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_DESC2"));</script>
+ <br> 
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_DESC3"));</script>
+ <br> 
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_DESC4"));</script>
+ <br> 
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_DESC5"));</script>
+<strong></p>
+
+<div class="subSection">
+<strong id="_statusMsg"></strong>
+<br><br>
+<form method="POST" enctype="multipart/form-data"> 
+<script>document.writeln(eLang.getString("UI_firmware_upload", "STR_FW_UPLD_SELECT"));</script>
+<br>
+<input type="file" id="_brwsUpld" style="width:218px" />
+<br><br>
+<div class="btnTray" style="width: 310px;">
+<input type="button" class="classicBtn" id="_uploadBtn" />
+&nbsp;&nbsp;
+<input type="button" class="classicBtn" id="_cancelBtn" />
+</div>
+</form>
+</div>
+</div>
+</body>
+</html>

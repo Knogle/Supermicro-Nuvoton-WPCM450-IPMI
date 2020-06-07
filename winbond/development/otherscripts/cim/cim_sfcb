@@ -1,0 +1,36 @@
+#!/bin/sh
+# /etc/init.d/cim_sfcb: start cimdiscovery and sfcb
+#
+# chkconfig: 2345 10 90
+#
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+test -x /usr/local/cim/usr/local/bin/cimdiscovery || exit 0
+test -x /usr/local/cim/usr/local/sbin/sfcbd || exit 0
+
+if [ "$1" = "start" ]
+then
+	cd /conf
+	mkdir -p /tmp/etc/Providers
+	echo -n "Starting CIM Discovery : cimdisovery "
+	/usr/local/cim/usr/local/bin/cimdiscovery 
+	cp /tmp/INI_Includes/* /tmp/etc/Providers	
+	echo "."
+	echo -n
+	echo -n "Starting SFCB : sfcbd "
+	/usr/local/cim/usr/local/sbin/sfcbd -c  /usr/local/cim/usr/local/etc/sfcb/sfcb.cfg -d
+	echo "."
+	echo -n
+elif [ "$1" = "stop" ]
+then
+	echo -n "Stopping SFCB : sfcb  "
+	killall -9 sfcbd
+	echo "."
+	echo -n
+else
+	echo "Usage: /etc/init.d/cim_sfcb {start|stop}"
+  	echo "."
+   	echo -n
+   	exit 1	
+fi   
+exit 0

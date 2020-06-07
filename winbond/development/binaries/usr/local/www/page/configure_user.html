@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <link href="../lib/listgrid.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/bitset.js"></script>
+  <script type="text/javascript" src="../lib/listgrid.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/configure_user_str.js\"><\/script>");
+	</script>
+	<script src="../impl/configure_user_imp.js"></script>
+
+	
+	
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("configure_user", "STR_USR_MGMT_CFG_USR");
+		var elmt = document.getElementById("_addUser");
+		elmt.setAttribute("value", eLang.getString("configure_user", "STR_USR_MGMT_ADD"));
+		var elmt = document.getElementById("_modUser");
+		elmt.setAttribute("value", eLang.getString("configure_user", "STR_USR_MGMT_MOD"));
+		var elmt = document.getElementById("_delUser");
+		elmt.setAttribute("value", eLang.getString("configure_user", "STR_USR_MGMT_DEL"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("configure_user", "STR_USR_MGMT_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("configure_user", "STR_USR_MGMT_DESC"));</script>
+</p>
+
+<div align="right">
+<label id="_lblHeader" class="lblHeader"></label>
+</div>
+
+<br style="clear:both" />
+<div id="_usrListHolder"></div>
+<br>
+<div class="btnTray">
+<input type="button" class="classicBtn" id="_addUser" />
+<input type="button" class="classicBtn" id="_modUser" />
+<input type="button" class="classicBtn" id="_delUser" /> 
+</div>
+
+
+</body>
+</html>

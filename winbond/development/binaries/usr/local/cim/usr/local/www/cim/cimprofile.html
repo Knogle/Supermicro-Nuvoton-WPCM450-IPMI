@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!-- Style sheet Link -->
+<link href="styles/style.css" rel=stylesheet type=text/css>
+<title>CIM Profile</title>
+</head>
+
+<body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0" onload="addTree()">
+<div id="WaitDiv" style="visibility:hidden; position:absolute; left:90px; top:100px; width:700px; height:69px; z-index:2; background-color: #FFFFFF; layer-background-color: #FFFFFF; border: 1px none #000000;">
+  <table width="100%" height="68"  border="2" cellpadding="0" cellspacing="0" bordercolor="#666666">
+	<tr>
+	  <td><div align="center"><img src="../res/loader.gif" align="absmiddle"><span id="WaitMsg"></span></div></td>
+	</tr>
+  </table>
+</div>
+<table cellpadding=2 cellspacing=4 width=100%>
+<tr>
+<td align="left" valign="top">
+<img src="images/top_banner_green.gif">
+</td>
+</tr>
+<tr>
+<td colspan=2>
+	<table cellpadding=2 cellspacing=2 width=95%>
+	<tr>
+	<td align="left">
+	<p class="uiHeader">Enter WSMAN URI: &nbsp;&nbsp;&nbsp;
+	<input type="text" id="txtWSMANURI" size="40" value=""/></p>
+	</td>
+	<td align="left">
+	<p class="uiHeader">Select Profile: &nbsp;&nbsp;&nbsp;
+	<SELECT class=InputBoxSmall id="" name=profileName
+	 onchange = "loadProfile(profiles[this.options[this.selectedIndex].text])">
+		<OPTION selected="selected">Sensor</OPTION>
+		<OPTION>Log</OPTION>
+		<OPTION>Network</OPTION>
+		<OPTION>Fan</OPTION>
+		<OPTION>Power</OPTION>
+		<OPTION>BaseServerprofile</OPTION>
+		<OPTION>BootControlProfile</OPTION>
+		<OPTION>ChassisManagerProfile</OPTION>
+		<OPTION>DHCPClient</OPTION>
+		<OPTION>DNSClientProfile</OPTION>
+		<OPTION>IndicationsProfile</OPTION>
+		<OPTION>IndicatorLED</OPTION>
+		<OPTION>IPInterface</OPTION>
+		<OPTION>PhysicalAssetProfile</OPTION>
+		<OPTION>PlatformWatchdogServiceProfile</OPTION>
+		<OPTION>powersupply</OPTION>
+		<OPTION>RoleBasedAuthorizationProfile</OPTION>
+		<OPTION>SimpleIdentityManagementProfile</OPTION>
+		<OPTION>SMASHCollectionsProfile</OPTION>
+		<OPTION>SoftwareInventoryProfile</OPTION>
+		<OPTION>SoftwareUpdateProfile</OPTION>
+		<OPTION>SSHServiceProfile</OPTION>
+		<OPTION>TelnetServiceProfile</OPTION>
+		<OPTION>TextConsoleRedirectionProfile</OPTION>
+	</SELECT>
+	</td>
+
+		<td class="uiHeader1" align="left" id="lblProfileName">Profile Name: "Select Profile name"</td>
+
+	</tr>
+	</table>
+</td>
+</tr>
+<tr>
+<!-- TREE VIEW TABLE BEGINS -->
+<td width=25% class="tableborder" valign="top">
+	<table cellpadding=2 cellspacing=0 border=0 valign="top" width=100%>
+	<tr>
+	<td class="tddatadark"> Profile Explorer</td>
+	</tr>
+	<tr>
+	<td class="description">
+		<table border=0 valign="top" width=100%>
+		<tr>
+		<td id="treeParent"><br/></td>
+		</tr>
+		</table>
+	</td>
+	</tr>
+	</table>
+</td>
+<!-- TREE VIEW TABLE ENDS -->
+
+<!-- FORMS TABLE BEGINS -->
+<td width=75% valign="top">
+	<table cellpadding=2 cellspacing=0 border=0 width=100%>
+	<!-- Input/Output parameter Table begins-->
+	<tr>
+	<td align="center" valign="top" width=100% class="tableborder">
+		<table border=0 cellPadding=0 cellSpacing=0 width=100%>
+		<tr><td align=left valign="top" class="tddatadark"><b> &#160; &#160;  &#160;  Properties View</b></td></tr>
+		<tr>
+		<td align=center valign="top" >
+		<!-- Curved Inner table down here-->
+			<table border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" width=100%>
+			<tr>
+			<td><img src="images/corner_ul.gif" alt="" height="10" width="10" /></td>
+			<td background="images/border_top.gif"></td>
+			<td><img src="images/corner_ur.gif" alt="" height="10" width="10" /></td>
+			</tr>
+
+			<!-- BEGIN CONTENT ROW -->
+			<tr >
+			<td valign="top" width="10" background="images/border_left.gif">&nbsp;</td>
+			<td valign="top" align=right style="padding: 0px" width=100%>
+
+			<!-- Begin main content area -->
+
+				<!-- innermost table down here-->
+				<table bgcolor = "#ffffff" align=right width=100% cellpadding=4 cellspacing=1>
+	<tr>
+	<td class="description">CIM Instance Name: <input type="text" id="txtInstName" size="40" value="" align="left"/><br/>
+	</td>
+	</tr>
+				<tr>
+				<td colspan=2>
+					<table id="tblProperties" border=0 width=100% height=100% valign="top" align="center" cellpadding="4" cellspacing="1" bgcolor="#ffffff" class="tableborder">
+					<tr>
+					<td valign="top" class="tddatadark" width=190px height=6px> Property Name</td><td valign="top" class="tddatadark" height=6px> Value</td><td valign="top" class="tddatadark" height=6px> Data Type</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> aaa</td><td valign="top" class="tddatalight" height=6px> 1</td><td valign="top" class="tddatalight" height=6px> 1</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> bbb</td><td valign="top" class="tddatalight" height=6px> 2</td><td valign="top" class="tddatalight" height=6px> 2</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> ccc</td><td valign="top" class="tddatalight" height=6px> 3</td><td valign="top" class="tddatalight" height=6px> 3</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> ddd</td><td valign="top" class="tddatalight" height=6px> 4</td><td valign="top" class="tddatalight" height=6px> 4</td></tr>
+					</tr>
+					</table>
+				</td>
+				</tr>
+				<!--tr>
+				<td colspan=2>
+					<table id="" border=0 width=100% height=100% valign="top" align="center" cellpadding="2" cellspacing="1" bgcolor="#ffffff" class="tableborder">
+					<tr>
+					<td valign="top" class="tddatadark" width=190px height=5px> Qualifier Name</td><td valign="top" class="tddatadark" height=6px> Value</td></td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=5px> aaa</td><td valign="top" class="tddatalight" height=6px> 1</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=5px> bbb</td><td valign="top" class="tddatalight" height=6px> 2</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=5px> ccc</td><td valign="top" class="tddatalight" height=6px> 3</td></tr>
+					</tr>
+					</table>
+				</td>
+				</tr-->
+				</table>
+				<!-- innermost table up there -->
+			</td>
+			<td valign="top" width="10" background="images/border_right.gif">&nbsp;</td>
+			</tr>
+			<!-- END CONTENT ROW -->
+			<tr>
+			<td><img src="images/corner_ll.gif" alt="" height="10" width="10" /></td>
+			<td background="images/border_bottom.gif"></td>
+			<td><img src="images/corner_lr.gif" alt="" height="10" width="10" /></td>
+			</tr>
+			</table>
+			<!-- Inner table top there -->
+		</td>
+		</tr>
+		</table>
+	<!-- Input/Output parameter Table ends-->
+	</td>
+	</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+	<!-- Input/Output parameter Table begins-->
+	<tr>
+	<td align="center" valign="top" width=100% class="tableborder">
+		<table border=0 cellPadding=0 cellSpacing=0 width=100%>
+		<tr><td align=left valign="top" class="tddatadark"><b> &#160; &#160;  &#160;  Methods View</b></td></tr>
+		<tr>
+		<td align=center valign="top" >
+		<!-- Curved Inner table down here-->
+			<table border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff" width=100%>
+			<tr>
+			<td><img src="images/corner_ul.gif" alt="" height="10" width="10" /></td>
+			<td background="images/border_top.gif"></td>
+			<td><img src="images/corner_ur.gif" alt="" height="10" width="10" /></td>
+			</tr>
+
+			<!-- BEGIN CONTENT ROW -->
+			<tr >
+			<td valign="top" width="10" background="images/border_left.gif">&nbsp;</td>
+			<td valign="top" align=right style="padding: 0px" width=100%>
+
+			<!-- Begin main content area -->
+
+				<!-- innermost table down here-->
+				<table bgcolor = "#ffffff" align=right width=100% cellpadding=3 cellspacing=1>
+				<tr>
+				<td class="description" colspan=2>Selected Instance:&nbsp;
+				<input type="text" id="txtResURI" size="20" value="Sensor1"/></td>
+				</tr>
+				<tr>
+				<td class="description">Selected Method:&nbsp;&nbsp;&nbsp;
+				<input type="text" id="txtResURI" size="20" value="RequestStateChange"/></td>
+				<td align="center">
+				<input type="button" id="" class="InputButton" onClick="invokeService()" value=" Execute ">
+				</td>
+				</tr>
+				<tr>
+				<td>
+					<table id="" border=0 width=100% height=100% valign="top" align="center" cellpadding="4" cellspacing="1" bgcolor="#ffffff" class="tableborder">
+					<tr>
+					<td valign="top" class="tddatadark" width=190px height=6px> Method Name</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> aaa</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> bbb</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> ccc</td></tr>
+					</tr>
+					</table>
+				</td>
+				<td>
+					<table id="" border=0 width=100% height=100% valign="top" align="center" cellpadding="4" cellspacing="1" bgcolor="#ffffff" class="tableborder">
+					<tr>
+					<td valign="top" class="tddatadark" width=190px height=6px> Parameter Name</td><td valign="top" class="tddatadark" height=6px> Parameter Type</td><td valign="top" class="tddatadark" height=6px> IN / OUT</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> aaa</td><td valign="top" class="tddatalight" height=6px> 1</td><td valign="top" class="tddatalight" height=6px> IN</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> bbb</td><td valign="top" class="tddatalight" height=6px> 2</td><td valign="top" class="tddatalight" height=6px> OUT</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> ccc</td><td valign="top" class="tddatalight" height=6px> 3</td><td valign="top" class="tddatalight" height=6px> IN</td></tr>
+					</tr>
+					</table>
+				</td>
+				</tr>
+				<!--tr>
+				<td colspan=2>
+					<table id="" border=0 width=100% height=100% valign="top" align="center" cellpadding="2" cellspacing="1" bgcolor="#ffffff" class="tableborder">
+					<tr>
+					<td valign="top" class="tddatadark" width=190px height=4px> Qualifier Name</td><td valign="top" class="tddatadark" height=6px> Value</td></td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> aaa</td><td valign="top" class="tddatalight" height=6px> 1</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> bbb</td><td valign="top" class="tddatalight" height=6px> 2</td></tr>
+					</tr>
+					<tr>
+					<td valign="top" class="tddatalight" width=190px height=4px> ccc</td><td valign="top" class="tddatalight" height=6px> 3</td></tr>
+					</tr>
+					</table>
+				</td>
+				</tr-->
+				</table>
+				<!-- innermost table up there -->
+			</td>
+			<td valign="top" width="10" background="images/border_right.gif">&nbsp;</td>
+			</tr>
+			<!-- END CONTENT ROW -->
+			<tr>
+			<td><img src="images/corner_ll.gif" alt="" height="10" width="10" /></td>
+			<td background="images/border_bottom.gif"></td>
+			<td><img src="images/corner_lr.gif" alt="" height="10" width="10" /></td>
+			</tr>
+			</table>
+			<!-- Inner table top there -->
+		</td>
+		</tr>
+		</table>
+	<!-- Input/Output parameter Table ends-->
+	</td>
+	</tr>
+	</table>
+</td>
+<!-- FORMS TABLE ENDS -->
+</tr>
+</table>
+
+<!-- Include scripts just before body so that page is rendered -->
+<script type="text/javascript" src="../lib/domapi/src/domapi.js"></script>
+<script type="text/javascript" src="wsman/wsman.js"></script>
+<script type="text/javascript" src="cimprofile.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+#this script stops garbage collection on mtd
+#called when entering runlevel7 for flasher
+
+killall -SIGSTOP jffs2_gcd_mtd1
+killall -SIGSTOP jffs2_gcd_mtd2

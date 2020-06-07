@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# Change directory to project directory
+cd $TOPDIR
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+# Check if Build directory is present
+if ! [ -d $TOPDIR/$BUILD_DIR ]
+then
+	echo "Nothing to clean in Core !"
+	exit 0
+fi
+
+echo -n "Cleaning linux ..."
+if [ -d $TOPDIR/$BUILD_DIR/linux ]
+then
+	cd $TOPDIR/$BUILD_DIR/linux
+	make clean && make distclean
+	if [ $? == 0 ]
+	then
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+echo -n "Cleaning uboot ..."
+if [ -d $TOPDIR/$BUILD_DIR/uboot ]
+then
+	cd  $TOPDIR/$BUILD_DIR/uboot
+	SAVED_BUILD_DIR=$BUILD_DIR
+	export BUILD_DIR=
+	make clean && make distclean
+	if [ $? == 0 ]
+	then
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+	export BUILD_DIR=$SAVED_BUILD_DIR
+	SAVED_BUILD_DIR=
+fi
+
+echo -n "Cleaning busybox ..."
+if [ -d $TOPDIR/$BUILD_DIR/busybox ]
+then
+	cd $TOPDIR/$BUILD_DIR/busybox
+	make clean && make distclean
+	if [ $? == 0 ]
+	then
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+echo -n "Cleaning SFCB ..."
+if [ -d $TOPDIR/$BUILD_DIR/sblim-sfcb ]
+then
+	cd $TOPDIR/$BUILD_DIR/sblim-sfcb
+	make clean 
+	if [ $? == 0 ]
+	then
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+
+
+# How to clean target and target.new file system ???
+#echo -n "Removing target ..."
+#rm -r -f $TOPDIR/$BUILD_DIR/target
+#if [ $? == 0 ]
+#then
+#	echo "Done"
+#else
+#	echo "Failed"
+#	exit 1
+#fi
+
+exit 0

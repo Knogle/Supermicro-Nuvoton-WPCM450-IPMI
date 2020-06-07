@@ -1,0 +1,100 @@
+<profile name="BootControlProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+      </class>
+      <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+      </class>
+      <class name="CIM_SettingData" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_BootSettingData" profile="BootControlProfile">
+      </class>
+      <class name="CIM_BootService" profile="BootControlProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_BootServiceCapabilities" profile="BootControlProfile">
+      </class>
+      <class name="CIM_ManagedElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+      </class>
+      <association classname="CIM_ConcreteComponent" profile="BootControlProfile">
+            <class name="CIM_SettingData" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteComponent" profile="BootControlProfile">
+            <class name="CIM_BootSettingData" profile="BootControlProfile">
+            </class>
+            <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteComponent" profile="BootControlProfile">
+            <class name="CIM_BootSettingData" profile="BootControlProfile">
+            </class>
+            <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteComponent" profile="BootControlProfile">
+            <class name="CIM_SettingData" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="ReferencingProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ConcreteDependency" profile="BootControlProfile">
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="BootControlProfile">
+            <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+            </class>
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementSettingData" profile="ReferencingProfile">
+            <class name="CIM_ManagedElement" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_SettingData" profile="ReferencingProfile">
+            </class>
+      </association>
+      <association classname="CIM_LogicalIdentity" profile="BootControlProfile">
+            <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+            </class>
+            <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_OrderedComponent" profile="BootControlProfile">
+            <class name="CIM_BootSourceSetting" profile="BootControlProfile">
+            </class>
+            <class name="CIM_BootConfigSetting" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_HostedService" profile="BootControlProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="BootControlProfile">
+            <class name="CIM_BootServiceCapabilities" profile="BootControlProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="BootControlProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_BootService" profile="BootControlProfile">
+            </class>
+      </association>
+</profile>

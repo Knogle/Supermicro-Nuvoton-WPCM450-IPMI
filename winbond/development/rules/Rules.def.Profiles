@@ -1,0 +1,131 @@
+#Rules for Enabling and Disabling Profile support
+# DMTF Profiles YES/NO
+ifeq ($(DMTF_AdminDomain), YES)
+CFLAGS += -DDMTF_AdminDomain
+endif
+
+ifeq ($(DMTF_BootControl), YES)
+CFLAGS += -DDMTF_BootControl
+endif
+
+ifeq ($(DMTF_CLPService), YES)
+CFLAGS += -DDMTF_CLPService
+endif
+
+ifeq ($(DMTF_DHCPClient), YES)
+CFLAGS += -DDMTF_DHCPClient
+endif
+
+ifeq ($(DMTF_DNSClient), YES)
+CFLAGS += -DDMTF_DNSClient
+endif
+
+ifeq ($(DMTF_Ethernet), YES)
+CFLAGS += -DDMTF_Ethernet
+endif
+
+ifeq ($(DMTF_HostLANNetwork), YES)
+CFLAGS += -DDMTF_HostLANNetwork
+endif
+
+ifeq ($(DMTF_Fan), YES)
+CFLAGS += -DDMTF_Fan
+endif
+
+ifeq ($(DMTF_Indications), YES)
+CFLAGS += -DDMTF_Indications
+endif
+
+ifeq ($(DMTF_IndicatorLED), YES)
+CFLAGS += -DDMTF_IndicatorLED
+endif
+
+ifeq ($(DMTF_IPInterface), YES)
+CFLAGS += -DDMTF_IPInterface
+endif
+
+ifeq ($(DMTF_Recordlog), YES)
+CFLAGS += -DDMTF_Recordlog
+endif
+
+ifeq ($(DMTF_CPU), YES)
+CFLAGS += -DDMTF_CPU
+endif
+
+ifeq ($(DMTF_Sensor), YES)
+CFLAGS += -DDMTF_Sensor
+endif
+
+ifeq ($(DMTF_OSStatus), YES)
+CFLAGS += -DDMTF_OSStatus
+endif
+
+ifeq ($(DMTF_PhysicalAsset), YES)
+CFLAGS += -DDMTF_PhysicalAsset
+endif
+
+ifeq ($(DMTF_PowerManagement), YES)
+CFLAGS += -DDMTF_PowerManagement
+endif
+
+ifeq ($(DMTF_PowerSupply), YES)
+CFLAGS += -DDMTF_PowerSupply
+endif
+
+ifeq ($(DMTF_ProfileReg), YES)
+CFLAGS += -DDMTF_ProfileReg
+endif
+
+ifeq ($(DMTF_RoleBasedAuth), YES)
+CFLAGS += -DDMTF_RoleBasedAuth
+endif
+
+ifeq ($(DMTF_SimpleIdentity), YES)
+CFLAGS += -DDMTF_SimpleIdentity
+endif
+
+ifeq ($(DMTF_SoftwareInventory), YES)
+CFLAGS += -DDMTF_SoftwareInventory
+endif
+
+ifeq ($(DMTF_SoftwareUpdate), YES)
+CFLAGS += -DDMTF_SoftwareUpdate
+endif
+
+ifeq ($(DMTF_SSH), YES)
+CFLAGS += -DDMTF_SSH
+endif
+
+ifeq ($(DMTF_Telnet), YES)
+CFLAGS += -DDMTF_Telnet
+endif
+
+ifeq ($(DMTF_TextConsoleRedirection), YES)
+CFLAGS += -DDMTF_TextConsoleRedirection
+endif
+
+ifeq ($(DMTF_WatchDog), YES)
+CFLAGS += -DDMTF_WatchDog
+endif
+
+ifeq ($(DMTF_EnabledLogicalElement), YES)
+CFLAGS += -DDMTF_EnabledLogicalElement
+endif
+
+ifeq ($(DMTF_BaseServer), YES)
+CFLAGS += -DDMTF_BaseServer
+endif
+
+ifeq ($(DMTF_ServiceProcessor), YES)
+CFLAGS += -DDMTF_ServiceProcessor
+endif
+
+ifeq ($(DMTF_SMASHCollections), YES)
+CFLAGS += -DDMTF_SMASHCollections
+endif
+
+ifeq ($(DMTF_SystemMemory), YES)
+CFLAGS += -DDMTF_SystemMemory
+endif
+
+

@@ -1,0 +1,38 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/UI_flashcomplete_str.js\"><\/script>");
+	</script>
+	<script src="../impl/UI_flashcomplete_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("UI_flashcomplete", "STR_FW_COMP_HEADING");
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("UI_flashcomplete", "STR_FW_COMP_HEADING"));</script>
+</h3>
+<p><strong>
+<script>document.writeln(eLang.getString("UI_flashcomplete", "STR_FW_COMP_DESC1"));</script>
+<br><br><br> 
+<script>document.writeln(eLang.getString("UI_flashcomplete", "STR_FW_COMP_DESC2"));</script>
+<br> 
+<script>document.writeln(eLang.getString("UI_flashcomplete", "STR_FW_COMP_DESC3"));</script>
+<br> 
+<script>document.writeln(eLang.getString("UI_flashcomplete", "STR_FW_COMP_DESC4"));</script>
+<br></strong></p>
+</body>
+</html>

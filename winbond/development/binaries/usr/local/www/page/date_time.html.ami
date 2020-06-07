@@ -1,0 +1,85 @@
+<html>
+<head>
+    <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="../lib/bitset.js"></script>
+	<script type="text/javascript" src="../lib/eVal.js"></script>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/date_time_str.js\"><\/script>");
+	</script>
+	<script src="../impl/date_time_imp.js"></script>
+
+  	
+	
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("date_time", "STR_DATE_TIME_TITLE");
+		var elmt = document.getElementById("_refreshBtn");
+		elmt.setAttribute("value", eLang.getString("date_time", "STR_DATE_TIME_REFRESH"));
+		var elmt = document.getElementById("_saveBtn");
+		elmt.setAttribute("value", eLang.getString("date_time", "STR_DATE_TIME_SAVE"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+	<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_HEADING"));</script>
+</h3>
+	<p>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_DESC"));</script>
+</p>
+	<div class="subSection">
+	<div class="errDisplay" id="_ntpError"></div>
+	<table cellspacing="2" cellpadding="5" border="0" width="500">
+	<tr>
+		<td><b>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_DATE"));</script>
+</b></td>
+		<td>
+			<select id="_fMonth"></select> &nbsp;&nbsp;
+			<select id="_fDate"></select> &nbsp;&nbsp;
+			<select id="_fYear"></select>
+		</td>
+	</tr>
+	<tr>
+		<td><b>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_TIME"));</script>
+</b><br><em>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_TM_FMT"));</script>
+</em></td>
+		<td>
+			<input type="text" maxlength="2" style="text-align:center;" id="_fHour" size="1" /> &nbsp;&nbsp;
+			<input type="text" maxlength="2" style="text-align:center;" id="_fMin" size="1" /> &nbsp;&nbsp;
+			<input type="text" maxlength="2" style="text-align:center;" id="_fSec" size="1" />
+		</td>
+	</tr>
+	<tr>
+		<td><b>
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_NTP"));</script>
+</b></td>
+		<td><input type="text" id="_ntpServer" /> &nbsp;&nbsp;<select id="_utcOffset"></select> 
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_HOURS"));</script>
+</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			<input type="checkbox" id="_optNTP" value="1" /> 
+<script>document.writeln(eLang.getString("date_time", "STR_DATE_TIME_NTPOPT"));</script>
+ </td>
+	</tr>
+	</table>
+	<br>
+	<div class="btnTray">
+		<input type="button" class="classicBtn" id="_refreshBtn" /> &nbsp;&nbsp;
+		<input type="button" class="classicBtn" id="_saveBtn" />
+	</div>
+	</div>
+</body>
+</html>

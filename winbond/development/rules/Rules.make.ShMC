@@ -1,0 +1,118 @@
+#----------------------------------------------------------------------
+# 			Rules.make for ShMC stack
+# 		   Copyright (c) 2003 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif 
+
+#----------------------------------------------------------------------
+#			Include Global Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.global
+
+INCLUDEDIR = .
+#------------------------------------------------------------------------
+# ShMC Root directory is where Rules.make is
+#------------------------------------------------------------------------
+SHMC_ROOT := $(TOPDIR)/development/proprietary/firmware/ShMC
+SHMC_OEM_ROOT := $(TOPDIR)/development/oem/firmware/ShMC/
+include $(SHMC_OEM_ROOT)Configs.make.ShMC
+
+
+#------------------------------------------------------------------------
+# Soft Processor flags
+#------------------------------------------------------------------------
+SOFTPROC_FLAGS = -DLINUX -DUSE16 -DHOST_LITTLE_ENDIAN -DALERT_AS_PRINTF=1
+
+#------------------------------------------------------------------------
+# Other build flags
+#------------------------------------------------------------------------
+SHMC_CFLAGS += $(FW_CONFIG_FLAGS)
+SHMC_CFLAGS += $(SOFTPROC_FLAGS)
+
+#------------------------------------------------------------------------
+# Include directories for ShMC
+#------------------------------------------------------------------------
+SHMCINCDIRS  = -I$(TARGETDIR)/usr/include/
+SHMCINCDIRS += -I$(TOPDIR)/development/common/include/crypto
+SHMCINCDIRS += -I$(SHMC_ROOT)/core/SoftProc
+SHMCINCDIRS += -I$(SHMC_ROOT)/core/PDK/API
+SHMCINCDIRS += -I$(SHMC_ROOT)/core/HAL/api
+SHMCINCDIRS += -I$(SHMC_ROOT)/core/HAL/hw
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/$(PDK_PLATFORM_DIR)
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/common
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/common/inc
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/common/cmds
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)
+SHMCINCDIRS += -I$(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/Porting/$(PDK_PLATFORM_DIR)/cfg
+
+
+#------------------------------------------------------------------------
+# ShMC internal libraries
+#------------------------------------------------------------------------
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/PDK/libPDKAPI.so
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/STACKLib/libSTACKCommon.a
+SHMC_INTERNAL_LIB += $(SHMC_OEM_ROOT)/oem/$(PDK_DIR)/libPDK.so
+#SHMC_INTERNAL_LIB += $(TOPDIR)/development/oem/firmware/ShMC/oem/$(PDK_DIR)/common/cmds/libPDKCmd.so
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/PDK/libPDKAPI.so
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/HAL/api/libipmihalapi.so
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/HAL/hw/libipmihalhw.so
+
+ifeq ($(USE_SOFTPROC),1)
+SHMC_INTERNAL_LIB += $(TOPDIR)/development/proprietary/firmware/ShMC/core/SoftProc/libSoftProc.so
+endif
+
+#------------------------------------------------------------------------
+# Linking flags
+#------------------------------------------------------------------------
+#SHMCLIBS = $(SHMC_INTERNAL_LIB)
+SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libi2c/libi2c.so
+SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libgpio/libgpio.so
+SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libsmtp/libsmtp.so
+#SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libpwmtach/libpwmtach.so
+#SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libadc/libadc.so
+#SHMCLIBS += $(TOPDIR)/development/proprietary/firmware/libs/libpeci/libpeci.so
+SHMCLIBS +=  -lpthread -ldl 
+SHMCLIBS += $(TARGETDIR)/usr/lib/libcrypto.so
+SHMCLIBS +=  $(TOPDIR)/development/proprietary/firmware/libs/libfpga/libfpga_gpio/libfpga_gpio.so
+
+#--------------------------------------------------------------------------------
+
+SHMC_DEBUG_FLAGS = -D_DEBUG_ #-DSP_DEBUG -DSP_SERIAL_DEBUG
+
+CFLAGS += $(SHMCINCDIRS) $(SHMC_CFLAGS) $(SHMC_DEBUG_FLAGS)
+LIBS +=  $(SHMCLIBS) $(SHMC_INTERNAL_LIB) 
+# -Wl,--start-group $(SHMC_INTERNAL_LIB) --end-group
+
+CFLAGS += -I$(TOPDIR)/development/common/include/i2c
+CFLAGS += -I$(TOPDIR)/development/common/include/network
+CFLAGS += -I$(TOPDIR)/development/common/include/fmh
+CFLAGS += -I$(TOPDIR)/development/common/include/webifc
+CFLAGS += -I$(TOPDIR)/development/common/include/gpio
+CFLAGS += -I$(TOPDIR)/development/common/include/smtp
+CFLAGS += -I$(TOPDIR)/development/common/include/soc
+CFLAGS += -I$(TOPDIR)/development/common/include/flash
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/ipmi_inc_oem
+CFLAGS += -I$(TOPDIR)/development/oem/common/include/pwmtach
+CFLAGS += -I$(TOPDIR)/development/common/include/libipmi_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/pwmtach
+CFLAGS += -I$(TOPDIR)/development/common/include/adc
+CFLAGS += -I$(TOPDIR)/development/common/include/peci
+CFLAGS += -I$(TOPDIR)/development/common/include/ssl
+CFLAGS += -I$(TOPDIR)/development/common/include/LPC
+CFLAGS += -I$(TOPDIR)/development/common/include/fpga
+CFLAGS += -I$(TOPDIR)/development/common/include/shmc_inc
+CFLAGS += -I$(TOPDIR)/development/common/include/ipmc_inc
+
+#.c.o:
+#	@echo "Compiling   $< ..."
+#	@$(CC) -c $(CFLAGS) -o $@ $<
+
+
+#------------------------------------ End of Rules.Make ---------------------------

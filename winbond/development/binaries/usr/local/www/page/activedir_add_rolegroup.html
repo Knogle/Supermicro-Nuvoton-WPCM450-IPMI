@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/eVal.js"></script>
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/activedir_add_rolegroup_str.js\"><\/script>");
+	</script>
+	<script src="../impl/activedir_add_rolegroup_imp.js"></script>
+
+  
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_TITLE");
+		var elmt = document.getElementById("_addBtn");
+		elmt.setAttribute("value", eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_ADDBTN"));
+		var elmt = document.getElementById("_cancelBtn");
+		elmt.setAttribute("value", eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_CANCELBTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_HEADING"));</script>
+</h3>
+<p>
+<script>document.writeln(eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_DESC"));</script>
+</p>
+
+<div class="subSection">
+	<div class="subSection">
+	<table cellspacing="0" cellpadding="5" border="0" width="450">
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_RGNAME"));</script>
+</strong></td>
+		<td><input type="text" id="_rgName" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_RGDOMAIN"));</script>
+</strong></td>
+		<td><input type="text" id="_rgDomain" /></td>
+	</tr>
+	<tr>
+		<td><strong>
+<script>document.writeln(eLang.getString("activedir_add_rolegroup", "STR_RG_ADD_RGPRIV"));</script>
+</strong></td>
+		<td><select id="_rgPriv"></select></td>
+	</tr>
+	</table>
+	</div>
+</div>
+<div class="btnTray" style="width: 380px;">
+	<input type="button" class="classicBtn" id="_addBtn" />
+	<input type="button" class="classicBtn" id="_cancelBtn" />
+</div>
+</body>
+</html> 

@@ -1,0 +1,49 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <script src="../lib/eVal.js"></script>
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/unit_reset_str.js\"><\/script>");
+	</script>
+	<script src="../impl/unit_reset_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("unit_reset", "STR_UNIT_RESET_TITLE");
+		var elmt = document.getElementById("_resetBtn");
+		elmt.setAttribute("value", eLang.getString("unit_reset", "STR_UNIT_RESET_BTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("unit_reset", "STR_UNIT_RESET_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("unit_reset", "STR_UNIT_RESET_DESCRIPTION"));</script>
+</p>
+
+<div class="subSection">
+ 	<div class="subSection">
+		<table cellspacing="0" cellpadding="5" border="0" width="450">
+			<tr><td><strong id="_statusMsg"></strong></td></tr>
+		</table>
+ 	</div>
+ 	<br>
+	<div class="btnTray" style="width: 360px;">
+		<input type="button" class="classicBtn" id="_resetBtn" />
+	</div>
+</div>
+</body>
+</html>

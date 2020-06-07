@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# This is a dummy fsck. Many scripts uses fsck calls during 
+# system startup while mounting file systems. Since we use
+# JFFS2 file system, it does not have (need) a fsck.
+# Removing the fsck utility, causes the startup problems.
+# Having the orginal fsck, needs lots of space (fsck,
+# fsck.ext2, libext2.so,libcom_err.so ....)
+#
+#
+exit 0

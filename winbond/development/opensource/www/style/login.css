@@ -1,0 +1,54 @@
+body{
+  background: url(../res/background.gif) #deded3;
+  margin:0px;
+  padding:0px;
+}
+
+
+
+.shadow{
+  width:400px;
+  height:150px;
+  text-align:left;
+}
+
+.shadow h3{
+  font-family:Arial;
+  font-size:1.1em;
+}
+
+.loginBox{
+  height:147px;
+  border:1px solid #888888;
+  color:#000000;
+  font-family:Arial;
+  font-size:12px;
+  background:#DEDED3;
+  padding:10px;
+  text-align:center;
+}
+
+.loginBox form{
+	margin:0px;
+	padding:0px;
+}
+
+label{
+  font-weight:bold;
+  padding-right:5px;
+  font-size:1.2em;
+  width:85px;
+  text-align:right;
+}
+
+#msglbl{
+  font-family:Tahoma;
+  font-size:11px;
+}
+
+.credits{
+  display:block;
+  float:right;
+  width:155px;
+}
+

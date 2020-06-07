@@ -1,0 +1,10 @@
+#!/bin/sh
+if [ ! -f "/usr/local/etc/ssh_host_rsa_key" ]
+then 
+	echo "SSH Host Key files don't exist. Creating..."
+	/usr/local/bin/ssh-keygen -q -t rsa -f /usr/local/etc/ssh_host_rsa_key -N ""
+	/usr/local/bin/ssh-keygen -q -t dsa -f /usr/local/etc/ssh_host_dsa_key -N ""
+else
+	echo "SSH Host Key Files already exist. Skipping..."
+fi
+

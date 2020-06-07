@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "INTERFACE is $IFACE"
+
+if [ $IFACE != "eth0" ]; then
+    exit 0;
+fi
+
+echo "Interface eth0 has gone down"
+

@@ -1,0 +1,60 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />	
+  <script src="../lib/eVal.js"></script>
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/post_snooping_str.js\"><\/script>");
+	</script>
+	<script src="../impl/post_snooping_imp.js"></script>
+
+  
+	<script>
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+		document.title = eLang.getString("post_snooping", "STR_POST_SNOOPING_TITLE");
+		var elmt = document.getElementById("_refreshBtn");
+		elmt.setAttribute("value", eLang.getString("post_snooping", "STR_POST_SNOOPING_REFRESH_BTN"));
+			doInit();
+		}
+	}
+	</script>
+</head>
+<body>
+<h3 class="pagetitle"><div class="floatRight" id="wait"></div>
+<script>document.writeln(eLang.getString("post_snooping", "STR_POST_SNOOPING_HEADING"));</script>
+</h3>
+
+<p>
+<script>document.writeln(eLang.getString("post_snooping", "STR_POST_SNOOPING_DESCRIPTION"));</script>
+</p>
+
+<div class="subSection">
+ 	<div class="subSection">
+		<table cellspacing="0" cellpadding="5" border="0" width="450">
+			<tr>
+				<td>
+					<script>document.writeln(eLang.getString("post_snooping", "STR_POST_SNOOPING_SNOOP_BYTE"));</script>
+					<span id="_snoopByte"></span><br>
+	 			</td>
+
+			</tr>
+			
+			<tr>
+				<h4 id="_msgNotice"></h4>
+			</tr>
+
+		</table>
+ 	</div>
+ 	<br>
+	<div class="btnTray" style="width: 360px;">
+		<input type="button" class="classicBtn" id="_refreshBtn" />
+	</div>
+</div>
+</body>
+</html>

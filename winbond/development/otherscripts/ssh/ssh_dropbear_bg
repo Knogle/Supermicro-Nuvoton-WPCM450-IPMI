@@ -1,0 +1,124 @@
+#! /bin/sh
+set -e
+
+# /etc/init.d/ssh: start and stop the dropbear "secure shell(tm)" daemon
+
+test -x /usr/sbin/dropbear || exit 0
+
+
+if test -f /etc/default/ssh; then
+    . /etc/default/ssh
+fi
+
+check_for_no_start() {
+    # forget it if we're trying to start, and /etc/ssh/sshd_not_to_be_run exists
+    if [ -e /etc/ssh/sshd_not_to_be_run ]; then 
+	echo "dropbear Secure Shell server not in use (/etc/ssh/sshd_not_to_be_run)"
+	exit 0
+    fi
+}
+
+check_for_no_start_ami() 
+{
+     if [ -e /conf/portcfg_ssh ]; then
+	sshenabled=`cat /conf/portcfg_ssh | grep "enabled" | grep -o "[0-9]*$"`
+	if [ $? != 0 ];then
+	    echo "setting default ssh enabled to 1"
+    	sshenabled=1;
+	fi
+    else
+    	sshenabled=1;
+    fi
+    
+    if [ $sshenabled == "0" ];then
+    	echo "sshdd not enabled .read from portcfg_ssh in conf"
+    	exit 0
+    fi
+}
+
+get_ssh_port()
+{
+       echo "finding port number"
+     if [ -e /conf/portcfg_ssh ]; then
+	sshport=`cat /conf/portcfg_ssh | grep "portnum" | grep -o "[0-9]*$"`
+	if [ $? != 0 ]; then
+	    sshport=22
+	fi
+    else
+    	sshport=22
+    fi
+    
+}
+
+
+
+check_privsep_dir() {
+    # Create the PrivSep empty dir if necessary
+    if [ ! -d /var/run/dropbear ]; then
+	mkdir /var/run/dropbear
+	chmod 0755 /var/run/dropbear
+    fi
+}
+
+check_config() {
+    if [ ! -e /etc/ssh/sshd_not_to_be_run ]; then
+	/usr/sbin/dropbear -t || exit 1
+    fi
+}
+
+check_keys(){
+	if [ ! -f "/etc/dropbear/dropbear_rsa_host_key" ]
+	then 
+#		echo "SSH Host Key files don't exist. Creating..."
+		/usr/bin/dropbearkey  -t rsa -f /conf/dropbear_rsa_host_key
+		
+#	else
+#		echo "SSH Host Key Files already exist. Skipping..."
+	fi
+}
+
+export PATH="${PATH:+$PATH:}/usr/sbin:/sbin"
+
+case "$1" in
+  start)
+	check_for_no_start_ami
+	check_privsep_dir
+	check_keys
+	get_ssh_port
+        echo -n "Starting dropbear Secure Shell server: dropbear"
+	start-stop-daemon --start --quiet --pidfile /var/run/dropbear.pid --exec /usr/sbin/dropbear -- $SSHD_OPTS -p $sshport
+        echo "."
+	;;
+  stop)
+        echo -n "Stopping dropbear Secure Shell server: dropbear"
+	#start-stop-daemon --stop --quiet --oknodo --pidfile /var/run/dropbear.pid
+	start-stop-daemon --stop --quiet --oknodo --exec /usr/sbin/dropbear
+        echo "."
+	;;
+
+  reload|force-reload)
+	check_for_no_start_ami
+	check_config
+        echo -n "Reloading dropbear Secure Shell server's configuration"
+	start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile /var/run/dropbear.pid --exec /usr/sbin/dropbear
+	echo "."
+	;;
+
+  restart)
+	check_config
+        echo -n "Restarting dropbear Secure Shell server: dropbear"
+	#start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile /var/run/dropbear.pid
+	start-stop-daemon --stop --quiet --oknodo --retry 30 --exec /usr/sbin/dropbear
+	check_for_no_start_ami
+	check_privsep_dir
+	get_ssh_port
+	start-stop-daemon --start --quiet --pidfile /var/run/dropbear.pid --exec /usr/sbin/dropbear -- $SSHD_OPTS -p $sshport
+	echo "."
+	;;
+
+  *)
+	echo "Usage: /etc/init.d/ssh {start|stop|reload|force-reload|restart}"
+	exit 1
+esac
+
+exit 0

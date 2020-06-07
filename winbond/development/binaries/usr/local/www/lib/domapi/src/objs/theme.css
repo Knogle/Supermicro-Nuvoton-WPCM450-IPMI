@@ -1,0 +1,549 @@
+.DA_COMPONENT, .DA_COMPONENT TD, .DA_COMPONENT TH{
+  font: 9pt arial,sans-serif;
+  -moz-user-focus:normal;
+  /*-moz-user-input:enabled;
+  -moz-user-select:none;
+  -moz-user-modify:read-only;*/
+}
+/*----------------------------------------------------------------------------*/
+/* font classes */
+.DA_WINDOW{                      color: windowtext;              background-color: window}
+.DA_BUTTONFACE{                  color: buttontext;              background-color: buttonface !important}
+.DA_INACTIVEBUTTONFACE{          color: graytext;                background-color: buttonface}
+.DA_APPLICATION{                 color: buttontext;              background-color: appworkspace}
+.DA_SELECTION{                   color: highlighttext !important;background-color: highlight !important}
+.DA_HIGHLIGHT{                   color: buttontext !important;   background-color: #C6D3EF !important}
+.DA_MENU{                        color: menutext;                background-color: menu}
+.DA_DESKTOP{                     color: highlighttext;           background-color: background}
+.DA_ACTIVECAPTION{               color: captiontext;             background-color: activecaption}
+.DA_INACTIVECAPION{              color: inactivecaptiontext;     background-color: inactivecaption}
+
+.DA_KONQ .DA_INACTIVEBUTTONFACE{ color: #808080;                 background-color: buttonface}
+.DA_KONQ .DA_APPLICATION{        color: buttontext;              background-color: #808080}
+.DA_KONQ .DA_SELECTION{          color: highlighttext !important;background-color: #0A246A !important}
+.DA_KONQ .DA_HIGHLIGHT{          color: buttontext !important;   background-color: #C6D3EF !important}
+.DA_KONQ .DA_MENU{               color: buttontext;              background-color: buttonface}
+.DA_KONQ .DA_DESKTOP{            color: highlighttext;           background-color: #3A6EA5}
+.DA_KONQ .DA_ACTIVECAPTION{      color: #FFFFFF;                 background-color: #0A246A}
+.DA_KONQ .DA_INACTIVECAPION{     color: inactivecaptiontext;     background-color: #808080}
+/*----------------------------------------------------------------------------*/
+.DA_BUTTON{
+  margin:0;
+  padding:0 0 0 0px;
+  position:relative;
+  background: buttonface;
+  border-style:solid;
+  border-width:1px 1px 1px 1px;
+  border-color:threedhighlight threedshadow threedshadow threedhighlight;
+  vertical-align:middle;
+  line-height:21px;
+  text-align: center;
+}
+.DA_BUTTON_OVER{background-color: #C6D3EF !important}
+.DA_BUTTON_DEPRESS{border-color:threedshadow threedhighlight threedhighlight threedshadow}
+.DA_BUTTON_DEPRESS div{margin:1px -1px 0px 1px}
+.DA_SKINNED .DA_BUTTON_DEPRESS div{margin:0px;}
+.DA_BUTTONINNER{padding:1px}
+.DA_FOCUSED .DA_BUTTONINNER{padding:0px;border:1px dotted buttonshadow}
+.DA_KONQ .DA_BUTTON{border-color:#FFFFFF #848284 #848284 #FFFFFF}
+.DA_KONQ .DA_BUTTON_DEPRESS{border-color:#848284 #FFFFFF #FFFFFF #848284}
+.DA_KONQ .DA_FOCUSED .DA_BUTTONINNER{border:1px dotted #848284}
+/*----------------------------------------------------------------------------*/
+.DA_CALENDAR_COL{
+  position:absolute;
+  margin: 0px;
+  padding: 0px;
+  border-right:1px solid threedshadow;  
+  border-bottom:1px solid threedshadow;
+}
+.DA_IE .DA_CALENDAR_COL{border-left:1px solid threedshadow}
+.DA_KONQ .DA_CALENDAR_COL{border-right-color:#808080; border-bottom-color:#808080;}
+.DA_CALENDAR_COL div{
+  border-top:1px solid threedshadow;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+}
+.DA_KONQ .DA_CALENDAR_COL div{border-top-color:#808080}
+.DA_CALENDAR_NORM{color: windowtext;background: window}
+.DA_CALENDAR_HEADER{
+  border-style: solid;
+  border-color: threedlightshadow;
+  border-width: 1px 0px 0px 1px;
+  color: captiontext;
+  background: activecaption;
+  text-align: center;
+  vertical-align:middle;
+  overflow: hidden;
+  font-size:smaller;
+  height:13px;
+  line-height:13px;
+}
+.DA_IE .DA_CALENDAR_HEADER{border-left-width:0px}
+.DA_KONQ .DA_CALENDAR_HEADER{color: #FFFFFF; background: #0A246A;}
+.DA_CALENDAR_OVER{color: buttontext !important;background: #C6D3EF !important}
+.DA_CALENDAR_SEL{color: highlighttext !important;background: highlight !important}
+.DA_KONQ .DA_CALENDAR_SEL{background:#0A246A !important}
+.DA_CALENDAR_EMPTY{background: buttonface !important}
+.DA_CALENDAR_TITLE, .DA_CALENDAR_TITLE TD{color: captiontext;background: activecaption;font-weight: bold !important;padding:0px 3px}
+.DA_KONQ .DA_CALENDAR_TITLE, .DA_KONQ .DA_CALENDAR_TITLE TD{color: #FFFFFF; background-color: #0A246A}
+.DA_CALENDAR_TODAY{color: red !important;background: window}
+.DA_CALENDAR_HOLIDAY{color: highlighttext !important;background: #C6D3EF !important}
+.DA_GECKO .DA_CALENDAR_NORM, 
+.DA_GECKO .DA_CALENDAR_TODAY, 
+.DA_GECKO .DA_CALENDAR_HOLIDAY, 
+.DA_GECKO .DA_CALENDAR_EMPTY{border-left:1px solid threedshadow}
+.DA_KONQ .DA_CALENDAR_NORM, 
+.DA_KONQ .DA_CALENDAR_TODAY, 
+.DA_KONQ .DA_CALENDAR_HOLIDAY, 
+.DA_KONQ .DA_CALENDAR_EMPTY{border-left:1px solid #808080}
+/*----------------------------------------------------------------------------*/
+.DA_COLORPANE_BTNOK, .DA_COLORPANE_BTNCANCEL{
+  padding:2px 10px;
+}
+.DA_COLORPANE_BTNOK:hover, .DA_COLORPANE_BTNCANCEL:hover{
+  padding:1px 9px;
+  border: 1px solid black;
+  border-color:buttonshadow buttonhighlight buttonhighlight buttonshadow;
+}
+.DA_COLORPANE_CURTAIN, .DA_COLORPANE_SWATCH, .DA_COLORPANE_FADER, .DA_COLORPANE_EDIT{
+  border:1px solid black;
+  border-color:buttonshadow buttonhighlight buttonhighlight buttonshadow;
+}
+/*----------------------------------------------------------------------------*/
+.DA_ICON_OVER{background-color:#C6D3EF;}
+.DA_ICON_DOWN{background-color:#C6D3EF;border:1px solid #0a2464}
+.DA_ICON_FOCUS div{color: highlighttext !important;background-color: highlight !important}
+.DA_ICON_FOCUS .DA_IMAGELISTLITE{}
+/*----------------------------------------------------------------------------*/
+.DA_IMAGECHECKBOX{padding:1px}
+.DA_IMAGECHECKBOX.DA_FOCUSED{padding:0px;border:1px dotted buttonshadow}
+/*----------------------------------------------------------------------------*/
+.DA_IMAGERADIOBUTTON_DISABLED{color: #808080 !important}
+.DA_IMAGERADIOBUTTON_CAPTION{
+  padding:0px 6px;
+  position:relative;
+  top:-1px;
+  line-height: 100%;
+  vertical-align: middle;
+}
+.DA_GECKO .DA_IMAGERADIOBUTTON_CAPTION{
+  top:-3px;
+}
+.DA_IMAGERADIOBUTTON{padding:1px}
+.DA_IMAGERADIOBUTTON.DA_FOCUSED{padding:0px;border:1px dotted buttonshadow}
+/*----------------------------------------------------------------------------*/
+.DA_IMAGETABSET_TAB.DA_FOCUSED{border:1px dotted buttonshadow}
+/*----------------------------------------------------------------------------*/
+.DA_LABEL_DISABLED{color: graytext !important; background-color: buttonface}
+/*----------------------------------------------------------------------------*/
+.DA_LISTBOX div{
+  border-style:solid;
+  padding:0px 5px 0px 5px;
+  cursor:default;
+  color:windowtext;
+  background-color:window;
+  border-width:0px 0px 1px 0px;
+  border-color:window;
+  white-space: :nowrap;
+  position:relative;
+}
+.DA_LISTBOX.DA_LINED div{
+  border-style:solid;
+  padding:0px 5px 0px 5px;
+  cursor:default;
+  color:windowtext;
+  background-color:window;
+  border-width:0px 0px 1px 0px;
+  border-color:buttonface;
+}
+.DA_LISTBOX.DA_LEDGER div.LEDGER1{background-color:#FFFFDB}
+.DA_LISTBOX.DA_LEDGER div.LEDGER2{background-color:#EFFFEF}
+.DA_LISTBOX .DA_LISTBOX_INNER{
+  padding:0px !important;
+  border-style:none;
+  overflow:hidden;
+  white-space: :nowrap;
+}
+.DA_LISTBOX .DA_SELECTION{
+  color: buttontext !important;    background-color: buttonface !important;
+}
+.DA_LISTBOX.DA_FOCUSED .DA_SELECTION{
+  color: highlighttext !important; background-color: highlight !important;
+}
+.DA_KONQ .DA_LISTBOX.DA_FOCUSED .DA_SELECTION{background-color: #0A246A !important}
+/*----------------------------------------------------------------------------*/
+.DA_LISTGRID{
+  background: window;
+  overflow: hidden;
+  /*-moz-user-focus:normal !important;
+  -moz-user-input:enabled !important;
+  -moz-user-modify:Read-write;*/
+}
+.DA_LISTGRID .DA_SELECTION{color: buttontext !important;background-color: buttonface !important}
+.DA_LISTGRID.DA_FOCUSED .DA_SELECTION{color: highlighttext !important; background-color: highlight !important}
+.DA_LISTGRID_HEADER{
+  border-width: 1px 0px;
+  border-style: solid;
+  border-color: buttonhighlight buttonhighlight buttonshadow;
+  white-space: nowrap;
+  background: buttonface;
+  position: absolute;
+  top: 0px;
+  overflow: hidden;
+  z-index: 6;
+}
+.DA_LISTGRID_GHOST{
+  background-color:buttonshadow;
+  color:buttonhighlight;
+  border:1px solid buttonshadow;
+  cursor:default;
+}
+.DA_LISTGRID_UPPERLEFT_SPACE{
+  background: buttonface;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index:7;
+}
+.DA_LISTGRID_ROWBAR{
+  border-width: 1px 1px 0px;
+  border-style: solid;
+  border-color: buttonhighlight buttonshadow buttonhighlight buttonhighlight;
+  background: buttonface;
+  position: absolute;
+  left: 0px;
+  z-index:5;
+}
+.DA_LISTGRID_ROWBAR_CELL{
+  height: 18px !important;
+  line-height: 18px !important;
+  overflow:hidden;
+  cursor:default;
+  text-align:center;
+  vertical-align:bottom !important;
+  padding:1px 0px 0px; /* lines up rows when no horz gridline */
+}
+.DA_LISTGRID_ROWBAR_CELL img{
+  vertical-align:bottom !important;
+}
+.DA_LISTGRID_COL{
+  position:absolute;
+/*  white-space:nowrap;*/
+  overflow: hidden;
+}
+.DA_LISTGRID_CELL{
+  padding: 0px 1px 0px 5px;
+  height: 18px;
+  vertical-align: middle;
+  cursor: default;
+  line-height: 19px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  /*width:100% needed for ellipsis, but is screwy */
+}
+
+.DA_LISTGRID_HEADER_COL{
+  border-width: 0px 1px;
+  border-style: solid;
+  border-color: buttonhighlight buttonshadow buttonhighlight buttonhighlight;
+  padding: 0px 1px 0px 5px;
+  position:absolute;
+  top:0px;
+  height: 100%;
+  vertical-align: top;
+  cursor: default;
+  /*text-overflow: ellipsis;*/
+  overflow: hidden;
+}
+.DA_LISTGRID_HEADER_COL_OVER{
+  color:buttonhighlight;
+  border-top-width:0px;
+  background-color: buttonshadow;
+  border-color: buttonshadow buttonshadow buttonhighlight buttonshadow;
+}
+.DA_LISTGRID_HEADER_COL_DOWN{  
+  border-color: buttonhighlight buttonshadow buttonhighlight buttonhighlight;
+  border-top-width:1px;
+  padding: 0px 0px 0px 6px;
+}
+.DA_LISTGRID_DATA{
+  position: absolute;
+  z-index: 6;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+.DA_LISTGRID_GOBO_CONTAINER{
+  width: 100%;
+  padding: 0px;
+  overflow: auto;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100%;
+  z-index: 5;
+  background-color:transparent;
+}
+.DA_LISTGRID_LEDGER .DA_LISTGRID_ROW_ODD{background-color:#FFFFDB}
+.DA_LISTGRID_LEDGER .DA_LISTGRID_ROW_EVEN{background-color:#EFFFEF}
+/*- - - - - - - - - - - - - - -*/
+.GRIDLINES_VERT .DA_LISTGRID_COL{   border-right:1px solid threedlightshadow !important;}
+.GRIDLINES_HORZ .DA_LISTGRID_CELL{  border-bottom:1px solid threedlightshadow;}
+.GRIDLINES_HORZ .DA_LISTGRID_ROWBAR_CELL{
+  border-width: 1px 0px 1px 0px;
+  border-style: solid;
+  border-color: buttonhighlight buttonshadow buttonshadow;
+  padding:0px; /* removes no-horz correction */
+}
+.GRIDLINES_HORZ .DA_LISTGRID_ROWBAR{border-top-width: 0px;}
+/*- - - - - - - - - - - - - - -*/
+.DA_GECKO .DA_LISTGRID_HEADER, 
+.DA_GECKO .DA_LISTGRID_HEADER_COL, .DA_GECKO .DA_LISTGRID_ROWBAR,
+.DA_GECKO .DA_LISTGRID_ROWBAR_CELL{  -moz-box-sizing: border-box}
+.DA_GECKO .DA_LISTGRID_CELL{  padding-right: 4px;  overflow:hidden;height: 18px !important}
+.DA_GECKO .DA_LISTGRID_ROW{  height: 20px}
+.DA_GECKO .DA_LISTGRID_ROWBAR_CELL{  height:19px !important; line-height:19px}
+.DA_GECKO .DA_LISTGRID_COL{  overflow:visible !important}
+/*- - - - - - - - - - - - - - -*/
+.DA_IE.DA_STRICT .DA_LISTGRID_ROWBAR_CELL{  height: 14px}
+.DA_IE .DA_LISTGRID_ROWBAR_CELL{height:17px !important}
+.DA_IE .DA_RELATIVE .DA_LISTGRID_CELL{height: 18px !important}
+/*- - - - - - - - - - - - - - -*/
+.DA_KONQ .DA_LISTGRID_HEADER{border-color: #FFFFFF #FFFFFF #808080}
+.DA_KONQ .DA_LISTGRID_CELL{  padding-right: 4px;  overflow:hidden;height: 18px !important}
+.DA_KONQ .DA_LISTGRID_ROW{  height: 20px}
+.DA_KONQ .DA_LISTGRID_ROWBAR_CELL{  height:17px !important; line-height:17px;}
+.DA_KONQ .DA_LISTGRID_COL{  overflow:visible !important}
+.DA_KONQ .DA_LISTGRID.DA_FOCUSED .DA_SELECTION{color: buttontext !important; background-color: #C6D3EF !important}
+.DA_KONQ .DA_LISTGRID_ROWBAR{border-color: #FFFFFF #808080 #808080 #FFFFFF !important}
+.DA_KONQ .DA_LISTGRID_HEADER_COL{border-color: #FFFFFF #808080 #808080 #FFFFFF !important}
+.DA_KONQ .DA_LISTGRID_HEADER_COL_OVER{
+  color:#FFFFFF;
+  background-color: #808080;
+  border-color: #808080 #808080 #FFFFFF #808080;
+}
+.DA_KONQ .DA_LISTGRID_HEADER_COL_DOWN{border-color: #FFFFFF #808080 #FFFFFF #FFFFFF}
+.DA_KONQ .DA_LISTGRID_GHOST{background-color:#808080; color:#FFFFFF; border-color: #808080}
+/*- - - - - - - - - - - - - - -*/
+.DA_KONQ .GRIDLINES_VERT .DA_LISTGRID_COL{   border-right:1px solid buttonface !important}
+.DA_KONQ .GRIDLINES_HORZ .DA_LISTGRID_CELL{  border-bottom:1px solid buttonface}
+.DA_KONQ .GRIDLINES_HORZ .DA_LISTGRID_ROWBAR_CELL{border-color: #FFFFFF #808080 #808080}
+/*----------------------------------------------------------------------------*/
+.DA_MENUBAR{
+  background-color: buttonface;
+  border: 1px solid;
+  border-color: threedhighlight threedshadow threedshadow threedhighlight;
+  padding: 3px 2px 0px 2px;
+  text-align: left;
+  overflow:hidden:
+}
+.DA_KONQ .DA_MENUBAR{border-color:#FFFFFF #808080 #808080 #FFFFFF !important}
+a.DA_MENUBUTTON, a.DA_MENUBUTTON_DISABLED, a.DA_MENUBUTTON_ACTIVE {
+  background-color: transparent;
+  border: 1px solid buttonface;
+  color: #000000;
+  cursor: default;
+  left: 0px;
+  margin: 1px;
+  padding: 2px 6px 2px 6px;
+  position: relative;
+  text-decoration: none;
+  top: 0px;
+  z-index: 100;
+}
+a.DA_MENUBUTTON:hover {background-color: transparent;border-color: threedhighlight threedshadow threedshadow threedhighlight}
+.DA_KONQ a.DA_MENUBUTTON:hover {border-color: #FFFFFF #808080 #808080 #FFFFFF !important}
+a.DA_MENUBUTTON_DISABLED{color:graytext !important}
+.DA_KONQ a.DA_MENUBUTTON_DISABLED{color:gray !important}
+a.DA_MENUBUTTON_ACTIVE,
+a.DA_MENUBUTTON_ACTIVE:hover {border-color: threedshadow threedhighlight threedhighlight threedshadow}
+.DA_KONQ a.DA_MENUBUTTON_ACTIVE:hover {border-color: #808080 #FFFFFF #FFFFFF #808080 !important}
+.DA_MENUITEM_CHEVRON                    {color:#59595A}
+a.DA_MENUITEM:hover .DA_MENUITEM_CHEVRON{color:white}
+/*----------------------------------------------------------------------------*/
+.DA_NOTEBOOKPAGE{margin:5px}
+/*----------------------------------------------------------------------------*/
+.DA_OUTLOOKBAR{overflow: hidden;background: Window;}
+.DA_OUTLOOKBAR .DA_OB_TAB{
+  background-color:buttonface;
+  position: relative;
+  height:25px;
+  line-height: 25px;
+  font-weight:bold;
+  padding-left:10px;
+  vertical-align: middle;
+  border-style: solid;
+  border-width: 0px 0px 1px 0px;
+  border-color: threedshadow;
+}
+.DA_OB_PAGE{overflow: auto !important}
+.DA_OB_TAB_BOTHLINES{
+  border-top-width: 1px !important;
+}
+.DA_OB_TAB_DISABLED{color:gray !important}
+.DA_OB_TAB_DEPRESS{border-color: threedhighlight !important}
+.DA_OB_TAB_OVER{background-color: #C6D3EF !important}
+.DA_OB_TAB_SELECTED{background-color: #D4D5D8 !important}
+/*----------------------------------------------------------------------------*/
+.DA_POPUPMENU{
+  overflow: hidden;
+  border: 1px solid;
+  border-color: threedhighlight threedshadow threedshadow threedhighlight;
+  background-color:buttonface;
+}
+.DA_KONQ .DA_POPUPMENU{border-color:#FFFFFF #808080 #808080 #FFFFFF !important}
+a.DA_MENUITEM, a.DA_MENUITEM_DISABLED{
+  display: block;
+  padding: 1px 3px;
+  color: #000000;
+  cursor: default;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.DA_POPUPMENU .DA_IMAGELISTLITE{margin-right:10px;border-style:none;}
+.DA_MENUITEM_CHEVRON{vertical-align: middle;}
+a.DA_MENUITEM:hover{background-color: #000080;color: #ffffff !important;}
+a.DA_MENUITEM_DISABLED{color:graytext !important;}
+.DA_KONQ a.DA_MENUITEM_DISABLED{color:gray !important}
+div.DA_MENUITEMSEP {border-top: 1px solid #909090;border-bottom: 1px solid #f0f0f0;margin: 4px 2px;}
+.DA_MENUITEMIMG{width:20px;position:relative;}
+/*----------------------------------------------------------------------------*/
+.DA_PROGRESSBAR{
+  border :1px solid black;
+  border-color: #808080 #FFFFFF #FFFFFF #808080;
+  padding:2px;
+  position:relative;
+  overflow:hidden;
+}
+.DA_PROGRESSBAR DIV.DA_BAR{
+  background-color: highlight;
+  position:absolute;
+  overflow:hidden;
+  line-height:1px;
+  width:100%;
+  height:100%;
+  background-repeat: repeat;
+}
+.DA_KONQ .DA_PROGRESSBAR DIV.DA_BAR{background-color: #0A246A !important}
+/*----------------------------------------------------------------------------*/
+.DA_SIDEBAR{}
+.DA_SIDEBAR_PANEL{margin:15px}
+.DA_SIDEBAR_PANELHEADER{
+  border : 1px solid black;
+  padding:2px 2px 2px 5px;
+  background-color:gray;
+}
+.DA_SIDEBAR_PANELHEADER td{
+  font-weight:bold;
+  color:white;
+  cursor :default;
+}
+.DA_SIDEBAR_PANELBODY{border : 1px solid black;border-width:0px 1px 1px;padding:5px;background-color:#DEDEDE}
+.DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER{background-color:#DEDEDE}
+.DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELHEADER td{color:gray}
+.DA_SIDEBAR_DISABLED .DA_SIDEBAR_PANELBODY{color:gray}
+/*----------------------------------------------------------------------------*/
+.DA_SIMPLEGRID thead tr{       /* IE, but not MZ nor NS */ 
+  top:expression(parentNode.parentNode.parentNode.scrollTop);
+}
+/*----------------------------------------------------------------------------*/
+.DA_SPEEDBUTTON{              background-color:transparent;padding:3px;text-align:center;vertical-align: middle;display:inline}
+.DA_SPEEDBUTTON.DA_HIGHLIGHT{ border:1px solid #0A246A;padding:2px}
+.DA_SPEEDBUTTON_DEPRESS{      margin-top:1px;margin-left:1px;border:1px solid #0A246A;padding:2px;background-color:#C6D3EF}
+.DA_SPEEDBUTTON_DOWN{}
+.DA_SPEEDBUTTON_DISABLED{color:#808080}
+/*----------------------------------------------------------------------------*/
+.DA_TABSET{line-height:normal}
+.DA_TABSET .DA_OVER{color: buttontext !important;   background-color: #C6D3EF !important}
+.DA_TABSET .DA_ROW{
+  margin:0;
+  list-style:none;
+  padding:0px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.DA_TABSET .DA_TAB{
+  float:left;
+  margin:0;
+  padding:0 0 0 4px;
+  position:relative;
+  top:2px;
+  background: buttonface;
+}
+.DA_TABSET .DA_TAB{
+  border-style:solid;
+  border-width:1px 1px 0px 1px;
+  border-color:threedhighlight threedshadow threedshadow threedhighlight;
+  vertical-align:middle;
+}
+.DA_KONQ .DA_TABSET .DA_TAB{border-color:#FFFFFF #808080 #808080 #FFFFFF}
+.DA_TABSET span{
+  display:block;
+  padding:4px 15px 0px 11px;
+  cursor:default;
+  color:buttontext;
+  text-decoration:none;
+  text-align:center;
+}
+/*.DA_TABSET.DA_FOCUSED SPAN{border:1px dotted buttonshadow}*/
+.DA_TAB.DA_TAB_SELECTED{top:0px !important}
+.DA_TAB_SELECTED span{padding-bottom:5px !important;font-weight: bold}
+.DA_TAB_DISABLED span{color:graytext !important}
+.DA_KONQ .DA_TAB_DISABLED span{color:gray !important}
+/***************************/
+.DA_TABSET_DOWN span{padding:2px 15px 1px 11px;}
+.DA_TABSET_DOWN .DA_TAB{top:3px !important;border-width:0px 1px 1px 1px}
+.DA_TABSET_DOWN .DA_TAB_SELECTED{top:2px !important;}
+.DA_TABSET_DOWN .DA_TAB_SELECTED span{padding-bottom:2px !important;padding-top:3px;}
+/*----------------------------------------------------------------------------*/
+.DA_TOOLBARSPACER{
+  position:relative;
+  width:0px !important;
+  padding:0px !important;
+  overflow:hidden;
+  border-left: 1px solid #909090;
+  border-right: 1px solid #f0f0f0;
+  margin: 0px 4px;
+}
+.DA_GECKO .DA_TOOLBARSPACER, .DA_KONQ .DA_TOOLBARSPACER{width:0px}
+/*----------------------------------------------------------------------------*/
+.DA_TREE_TEXT{          padding:0px 2px;white-space:nowrap;}
+.DA_TREE_NODE_LASTCHILD{padding:0px 4px;white-space:nowrap}
+.DA_TREE_IMAGES{padding-right:3px}
+.DA_TREE_NODE{}
+.DA_TREE_NORMAL{}
+.DA_TREE{cursor:default}
+.DA_TREE td.DA_SELECTION{border-style:none !important}
+.DA_TREE td.DA_TREE_TEXT{border-style:none !important}
+.DA_TREE .DA_SELECTION{
+  color: buttontext !important;    background-color: buttonface !important;
+}
+.DA_TREE.DA_FOCUSED .DA_SELECTION{
+  color: highlighttext !important; background-color: highlight !important;
+}
+/*----------------------------------------------------------------------------*/
+.DA_VIEWBAR_ITEM{border-style : solid;border-width : 0px 0px 1px 0px;padding : 1px 0px 1px 5px}
+.DA_VIEWBAR_HEADER{   
+  cursor:default;
+  border-color: threedhighlight threedshadow threedshadow threedhighlight;
+  border-width:1px;
+  padding:2px 0px 3px 5px;
+  border-style:solid;
+}
+.DA_KONQ .DA_VIEWBAR_HEADER{border-color:#FFFFFF #808080 #808080 #FFFFFF;}
+.DA_VIEWBAR_DEPRESS_H{
+  cursor:default;
+  border-color:threeddarkshadow threedhighlight threedhighlight threeddarkshadow;
+  border-width:1px;
+  padding:2px 0px 3px 5px;
+  border-style:solid;
+}
+.DA_KONQ .DA_VIEWBAR_DEPRESS_H{border-color:#808080 #FFFFFF #FFFFFF #808080;}
+.DA_VIEWBAR_DEPRESS{border-style : solid;border-width : 0px 0px 1px 0px;padding : 2px 0px 0px 6px}
+/*----------------------------------------------------------------------------*/
+.DA_WINDOW_RESIZEBOX{border : 2px dotted #5B5B5B}
+.DA_WINDOW_SHIELD{background-color :#8FBC8F}
+.DA_WINDOW{overflow:hidden !important}
+/*----------------------------------------------------------------------------*/

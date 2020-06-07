@@ -1,0 +1,446 @@
+#!/bin/sh
+
+# -----------------------------------------------------------
+# This function will tell us if files.* files have a comment 
+# or blank line and need to be skipped
+#
+# $1 is the line in the file
+# Return code of 1  indicates the file should be skipped 
+#-----------------------------------------------------------
+ShouldBeSkipped()
+{
+    echo $i | grep "^#" > /dev/null
+    if [ $? == 0 ]
+    then
+        return 1
+    fi
+    if [ "$i" == "" ]
+    then
+    	return 1
+    fi
+
+    return 0
+}
+
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/tools/findsize:$TOPDIR/tools/genimage:$TOPDIR/misctools:$PATH
+
+# Set the file system directoies and output file names
+export PARAMSDIR=$TOPDIR/$BUILD_DIR/Output/Params		# Conf FileSystem Directory
+export ROOTDIR=$TOPDIR/$BUILD_DIR/Output/root		# Root FileSystem Directory
+
+# WWW  FileSystem Directory
+if [ -d $TOPDIR/development/oem ]
+then
+	if [ "$WEBSRC" == "" ]
+	then
+		export WWWDIR=$TOPDIR/development/oem/www
+	else
+		if  [ -d $TOPDIR/development/oem/$WEBSRC ]
+		then 
+			export WWWDIR=$TOPDIR/development/oem/$WEBSRC
+		else
+			export WWWDIR=$TOPDIR/development/oem/www
+		fi	
+	fi
+else
+	export WWWDIR=$TOPDIR/development/opensource/www
+fi
+
+
+export PARAMSFILE=$TOPDIR/$BUILD_DIR/Output/Config.bin		# Output Conf FS image
+export ROOTFILE=$TOPDIR/$BUILD_DIR/Output/Root.bin			# Output Root FS image
+export WWWFILE=$TOPDIR/$BUILD_DIR/Output/Www.bin			# Output Www  FS image
+export OUTPUTDIR=$TOPDIR/$BUILD_DIR/Output
+
+GENIMAGE_FILE=$TOPDIR/$CONF_DIR/config.genimage
+
+
+# Check if Build directory is present
+if  [ -d $TOPDIR/$BUILD_DIR/Output ]
+then
+	echo -n "Cleaning $TOPDIR/$BUILD_DIR/Output ..."
+	rm -r -f $TOPDIR/$BUILD_DIR/Output
+	if [ $? == 0 ]
+	then	
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+echo -n "Creating $TOPDIR/$BUILD_DIR/Output ..."
+mkdir -p $TOPDIR/$BUILD_DIR/Output/www
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+#Create Necessary tools
+if ! [ -d $TOPDIR/tools/genimage ]
+then
+	echo "Unable to find genimage source"
+	exit 1
+fi
+
+if ! [ -d $TOPDIR/tools/findsize ]
+then
+	echo "Unable to find findsize source"
+	exit 1
+fi
+
+echo "Creating genimage tool ..."
+cd $TOPDIR/tools/genimage
+make -s clean && make -s
+if [ $? == 0 ]
+then	
+	echo "genimage tool creation : Done"
+else
+	echo "genimage tool creation : Failed"
+	exit 1
+fi
+
+	
+echo "Creating findsize tool ..."
+cd $TOPDIR/tools/findsize
+make -s clean && make -s
+if [ $? == 0 ]
+then	
+	echo "findsize tool creation : Done"
+else
+	echo "findsize tool creation : Failed"
+	exit 1
+fi
+
+if [ "$ARCH" == "powerpc" ]
+then
+    UIMAGE_PATH=arch/ppc/boot/images
+else
+    UIMAGE_PATH=arch/$ARCH/boot
+fi
+
+# Copy linux image 
+if ! [ -e $TOPDIR/$BUILD_DIR/linux/$UIMAGE_PATH/uImage ]
+then
+	echo "Unable to find Linux Image. Aborting"
+	exit 1
+fi
+
+echo -n "Copying Linux Image to Output Directory ..."
+cp  $TOPDIR/$BUILD_DIR/linux/$UIMAGE_PATH/uImage $TOPDIR/$BUILD_DIR/Output
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+if ! [ -e $TOPDIR/$BUILD_DIR/uboot/u-boot.bin ]
+then
+	echo "Unable to find U-Boot Image. Aborting"
+	exit
+fi
+
+# Copy u-boot  image 
+echo -n "Copying U-Boot Image to Output Directory ..."
+cp  $TOPDIR/$BUILD_DIR/uboot/u-boot.bin  $TOPDIR/$BUILD_DIR/Output
+if [ $? == 0 ]
+then	
+	echo "Done"
+else
+	echo "Failed"
+	exit 1
+fi
+
+# Copy root and conf filesystem trees
+if ! [ -e $TOPDIR/scripts/CreateRoot ]
+then
+	echo "Unable to Find Script to create root file system"
+	exit 1
+fi
+sh $TOPDIR/scripts/CreateRoot
+if [ $? != 0 ]
+then
+   exit 1
+fi
+
+# Find out the tool's option for Endian 
+if [ "$ENDIAN" == "LITTLE" ]
+then
+   E_OPTION="l"
+fi
+
+if [ "$ENDIAN" == "BIG" ]
+then
+   E_OPTION="b"
+fi
+if [ "$E_OPTION" == "" ]
+then
+   echo "ENDIAN option not specified in $DEF_FILE file. Aborting"
+   exit 1
+fi
+
+# Create Root filesystem as cramfs
+echo -n "Building Root File system as CRAMFS ..."
+mkcramfs -r$E_OPTION $ROOTDIR $OUTPUTDIR/RootCRAMFS.bin > /dev/null 2>&1
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+IMAGE_ARCH=$ARCH
+if [ "$ARCH" == "powerpc" ]
+then
+     IMAGE_ARCH=ppc
+fi
+
+echo -n "Converting CRAMFS to Initrd for $IMAGE_ARCH ..."
+	
+mkimage -A $IMAGE_ARCH -O linux -T ramdisk -C none -d $OUTPUTDIR/RootCRAMFS.bin $ROOTFILE > /dev/null
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+# Create Exrta root if any
+if [ "$EXTRAROOT" != "" ]
+then 
+	LOOP=0
+	while [ $LOOP != $EXTRAROOT ]
+	do
+		LOOP=`expr $LOOP + 1`
+		echo -n "Building Root.$LOOP File system as CRAMFS ..."
+		mkcramfs -r$E_OPTION $ROOTDIR$LOOP $OUTPUTDIR/Root"$LOOP"CRAMFS.bin > /dev/null 2>&1
+		if [ $? != 0 ]
+		then
+			echo "Failed"
+			exit 1
+		fi
+		echo "Done"
+	done
+fi
+
+
+# Copy WWW Dir to Output and remove the .svn entries
+echo -n "Copying WWW file system to output ..."
+cp -R $WWWDIR/* $OUTPUTDIR/www
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+# Copy any other web to be merged
+if [ "$WEBMERGE" != "" ]
+then
+        if [ -d $TOPDIR/development/oem/$WEBMERGE ]
+        then
+		echo -n "Copying WWW Merge file system to output ..."
+  		cp -rf $TOPDIR/development/oem/$WEBMERGE/* $OUTPUTDIR/www
+		if [ $? != 0 ]
+		then
+			echo "Failed"
+			exit 1
+		fi
+		echo "Done"
+	fi
+fi
+
+echo -n "Removing .svn entries ..."
+for i in `find $OUTPUTDIR/www | grep "\.svn"`
+do
+    	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done
+echo "Done"
+
+echo -n "Removing any file with .keep in its filename ..."
+for i in `find $OUTPUTDIR/www | grep "\.keep"`
+do
+    	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done
+echo "Done"
+
+if [ -d $OUTPUTDIR/www/Layouts ]
+then
+#tricky we want to remove Layouts/xxxx/Template - without using project name here genrically
+echo -n "Removing template directory used by studio..."
+#ATTENTION ATTENTION
+#finds anything below Layout that is named Template and is a directory
+for i in `find $OUTPUTDIR/www/Layouts -name Template -type d`
+do
+	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done	
+echo "Done"
+fi
+
+if [ -d $OUTPUTDIR/www/Applications ]
+then
+#tricky we want to remove Applications/xxxx/RPC/offline - without using project name here generically
+echo -n "Removing offline RPC files used during debugging..."
+#ATTENTION ATTENTION
+#finds anything below Applications that is named RPC/offline and is a directory
+for i in `find $OUTPUTDIR/www/Applications | grep "RPC\/offline"`
+do
+	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done	
+echo "Done"
+fi
+
+echo -n "Removing Thumbs.db files..."
+for i in `find $OUTPUTDIR/www -name "Thumbs.db"`
+do
+	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done	
+echo "Done"
+echo -n "Removing GUISE/GUILIB unused files..."
+for i in `find $OUTPUTDIR/www  | grep "GUISE\/GUILIB"`
+do
+	rm -r -f $i
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+done	
+echo "Done"
+
+if [ "$COMPRESS_WEB" == "YES" ]
+then
+	echo "gzipping some files in www for faster serving.."
+	echo "js files..."
+	find $OUTPUTDIR/www -name "*.js" -exec gzip {} \;
+	echo "htm files..."
+	find $OUTPUTDIR/www -name "*.htm" -exec gzip {} \;
+	echo "html files..."
+	find $OUTPUTDIR/www -name "*.html" -exec gzip {} \;
+	echo "jsnc files..."
+	find $OUTPUTDIR/www -name "*.jsnc" -exec gzip {} \;
+	# Don't compress Image files as IE has serious issues when they are
+	# preloaded. Switching between pages freezes our framework
+ 	# FireFox does not have this problem - Suabash
+	#echo "gif filesi..."
+	#find $OUTPUTDIR/www -name "*.gif" -exec gzip {} \;
+	echo "css files..."
+	find $OUTPUTDIR/www -name "*.css" -exec gzip {} \;
+fi
+
+
+#Create www  filesystem as cramfs
+echo -n "Building WWW File system as CRAMFS ..."
+mkcramfs -r$E_OPTION $OUTPUTDIR/www $WWWFILE > /dev/null 2>&1
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+
+# Create Conf filesystem as jffs2
+echo -n "Building Conf File system as JFFS2 ..."
+PADSIZE=`findsize -C$GENIMAGE_FILE -SPARAMS`
+if [ $? != 0 ]
+then
+	mkfs.jffs2 -$E_OPTION --root=$PARAMSDIR --output=$PARAMSFILE --eraseblock=$ERASE_BLOCK_SIZE
+else
+	mkfs.jffs2 -$E_OPTION --root=$PARAMSDIR --output=$PARAMSFILE --eraseblock=$ERASE_BLOCK_SIZE --pad=$PADSIZE
+fi
+
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+# Copy Build No file to Outputdir
+if [ -e $TOPDIR/$BUILD_DIR/Output/BUILDNO ]
+then
+	echo -n "Removing Old BUILDNO ..."
+	rm -f $TOPDIR/$BUILD_DIR/Output/BUILDNO
+	if [ $? != 0 ]
+	then
+		echo "Failed"
+		exit 1
+	fi
+	echo "Done"
+fi
+echo -n "Copying BUILDNO File ..."
+cp -f $TOPDIR/development/BUILDNO $TOPDIR/$BUILD_DIR/Output/BUILDNO
+if [ $? != 0 ]
+then
+	echo "Failed"
+	exit 1
+fi
+echo "Done"
+
+# Create the flash image using genimage
+echo "Creating final image using genimage ..."
+genimage -C$GENIMAGE_FILE -I$TOPDIR/$BUILD_DIR/Output -O$TOPDIR/$BUILD_DIR/Output
+if [ $? != 0 ]
+then
+	echo "Creation of final image using genimage failed"
+	exit 1
+fi
+
+if ! [ -e $TOPDIR/$BUILD_DIR/Output/rom.ima ]
+then
+	echo "Creation of final image using genimage failed"
+	exit 1
+fi
+echo "*************************************************"
+echo "$TOPDIR/$BUILD_DIR/Output/rom.ima created"
+echo "*************************************************"
+
+
+
+
+cd $TOPDIR/$BUILD_DIR/Output
+md5sum -b rom.ima > MD5SUM	
+
+exit 0
+
+

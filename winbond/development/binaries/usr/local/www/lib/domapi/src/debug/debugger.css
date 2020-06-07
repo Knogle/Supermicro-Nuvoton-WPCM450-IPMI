@@ -1,0 +1,67 @@
+body{
+  margin:2px 1px;
+  background: #414141;
+  color:white;
+  overflow:hidden;
+}
+body,td{
+  font:10pt Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+.tab, .tabDown{
+  border:2px outset;
+  margin-right:5px;
+  padding:0px 5px;
+  cursor:default;
+}
+.tabDown{
+  border-style:inset;
+  background: #797979;
+  font-weight:bold;
+}
+.sep{
+  height:2px;
+  overflow:hidden;
+}
+#tabSet{
+  padding-bottom:5px;
+}
+#consoleOuter, #explorerOuter{
+  background: #AAAAAA;
+  position:relative;
+  padding:5px 5px;
+  color:black;
+}
+#consoleOuter .tab, #explorerOuter .tab{
+  background: silver
+}
+#consoleToolbar, #explorerToolbar{
+  padding:0px 0px 5px;
+}
+#consoleInner{
+  overflow:auto;
+  font:8pt "Courier New", Courier, monospace;
+  position:relative;
+  border:1px solid black;
+  color:black;
+  white-space: normal;
+}
+#explorerInner{
+  overflow:auto; 
+  position:relative;
+  border:1px solid black;
+  color:black;
+  white-space: normal;
+}
+#explorerInner td,th{
+  font:8pt monospace;
+  color:black;
+  background-color:#DDDDDD;
+  vertical-align:top;
+  border:1px solid gray;
+  border-bottom-width:1px;
+  padding-left:5px;
+}
+#explorerInner th{font-weight:bold;text-align:left}
+.isDiv, .isDiv th{background:#F4A460;}
+.isElm, .isElm th{background:#9ACD32;}
+.isComp, .isComp th{background:#708090;}

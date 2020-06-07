@@ -1,0 +1,7 @@
+#host                 155.229.82.179
+#base                 dc=riverdale,dc=com 
+#binddn               cn=Weatherbee,ou=admins,dc=riverdale,dc=com
+#bindpw               SuperSecret         
+#pam_password         crypt               
+#nss_reconnect_tries  0                   
+#port                 389                 

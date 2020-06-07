@@ -1,0 +1,145 @@
+#!/bin/sh
+# Gets one Argument  
+#0 = don't cleanup binaries 
+#1 = cleanup binaries
+
+CLEANUP_BIN=$1
+if [ "$CLEANUP_BIN" == "" ]
+then 
+	CLEANUP_BIN=1
+fi
+
+
+# Change directory to project directory
+cd $TOPDIR
+
+if ! [ -e $TOPDIR/$DEF_FILE ]
+then
+	echo "$DEF_FILE is missing. Check if SUBPROJECT option is needed"		
+	exit 1
+fi
+. $TOPDIR/$DEF_FILE
+
+# Set Path for Compiler and Misc tools
+export PATH=$TOPDIR/cc/bin:$TOPDIR/tools:$TOPDIR/misctools:$PATH
+
+# Check if Build directory is present
+if ! [ -e $TOPDIR/$BUILD_DIR/projdef.mk ]
+then
+	echo "Nothing to clean in project development !"
+	exit 0
+fi
+
+# Check if Project directory is present
+if ! [ -d $TOPDIR/development/proprietary/firmware ]
+then
+	echo "Nothing to clean in proprietary project development !"
+else
+	cd  $TOPDIR/development/proprietary/firmware
+	echo "Cleaning up Proprietary Project ..."
+	make clean
+	if [ $? == 0 ]
+	then
+		echo "Proprietary Project Cleanup Done"
+	else
+		echo "Proprietary Project Cleanup Failed"
+		exit 1
+	fi
+fi
+
+
+# Check if OpenSource  directory is present
+if ! [ -d $TOPDIR/development/opensource/firmware ]
+then
+	echo "Nothing to clean in opensource project development !"
+else
+	cd  $TOPDIR/development/opensource/firmware
+	echo "Cleaning up opensource Project ..."
+	make clean
+	if [ $? == 0 ]
+	then
+		echo "OpenSource Project Cleanup Done"
+	else
+		echo "OpenSource Project Cleanup Failed"
+		exit 1
+	fi
+fi
+
+# Check if Oem directory is present
+if ! [ -d $TOPDIR/development/oem/firmware ]
+then
+	echo "Nothing to clean in oem project development !"
+else
+	cd  $TOPDIR/development/oem/firmware
+	echo "Cleaning up Oem Project ..."
+	make clean
+	if [ $? == 0 ]
+	then
+		echo "Oem Project Cleanup Done"
+	else
+		echo "Oem Project Cleanup Failed"
+		exit 1
+	fi
+fi
+
+
+# Check if Makefile exists in oemprop directory 
+if ! [ -e $TOPDIR/development/oemprop/firmware/Makefile ]
+then
+	echo "Nothing to clean in oemprop project development !"
+else
+	cd  $TOPDIR/development/oemprop/firmware
+	echo "Cleaning up oemprop Project ..."
+	make clean
+	if [ $? == 0 ]
+	then
+		echo "oemprop Project Cleanup Done"
+	else
+		echo "oemprop Project Cleanup Failed"
+		exit 1
+	fi
+fi
+
+#if [ -e $TOPDIR/$BUILD_DIR/projdef.h ]
+#then
+#	echo -n "Removing projdef.h file ..."
+#	rm -f $TOPDIR/$BUILD_DIR/projdef.h
+#	if [ $? == 0 ]
+#	then
+#		echo "Done"
+#	else
+#		echo "Failed"
+#		exit 1
+#	fi
+#fi
+
+# Cleanup Tools
+echo "Cleaning tools ..."
+cd $TOPDIR/tools/genimage
+make -s clean 
+cd $TOPDIR/tools/findsize
+make -s clean
+
+# Dont clean the binaries if sources are not present
+# This means we are having  PDK or OPEN tree
+if ! [ -d $TOPDIR/development/proprietary/firmware ]
+then
+	exit 0
+fi
+
+if [ $CLEANUP_BIN == 1 ]
+then
+	cd  $TOPDIR/development/binaries
+	echo -n "Cleaning Project Outputs ..."
+	rm -r -f *
+	if [ $? == 0 ]
+	then
+		echo "Done"
+	else
+		echo "Failed"
+		exit 1
+	fi
+fi
+
+exit 0
+

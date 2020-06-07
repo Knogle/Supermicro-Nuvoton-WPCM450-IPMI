@@ -1,0 +1,52 @@
+<profile name="PlatformWatchdogProfile" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+      <class name="CIM_LogicalElement" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+      </class>
+      <class name="CIM_PlatformWatchdogServiceCapabilities" profile="PlatformWatchdogProfile">
+      </class>
+      <class name="CIM_LogicalDevice" profile="PlatformWatchdogProfile">
+      </class>
+      <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+      </class>
+      <class name="CIM_RegisteredProfile" profile="ReferencingProfile">
+      </class>
+      <association classname="CIM_HostedService" profile="PlatformWatchdogProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementCapabilities" profile="PlatformWatchdogProfile">
+            <class name="CIM_PlatformWatchdogServiceCapabilities" profile="PlatformWatchdogProfile">
+            </class>
+            <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+            </class>
+      </association>
+      <association classname="CIM_ElementConformsToProfile" profile="PlatformWatchdogProfile">
+            <class name="CIM_RegisteredProfile" profile="ProfileRegistrationProfile">
+            </class>
+            <class name="IBM_ComputerSystem" profile="PlatformWatchdogProfile">
+            </class>
+      </association>
+      <association classname="CIM_ServiceAffectsElement" profile="PlatformWatchdogProfile">
+            <class name="CIM_ComputerSystem" profile="ReferencingProfile">
+            </class>
+            <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+            </class>
+            <class name="CIM_LogicalElement" profile="ReferencingProfile">
+            </class>         
+      </association>
+      <association classname="CIM_ServiceAvailableToElement" profile="PlatformWatchdogProfile">
+            <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+            </class>
+            <class name="CIM_LogicalElement" profile="ReferencingProfile">
+            </class>         
+      </association>
+      <association classname="CIM_DeviceServiceImplementation" profile="PlatformWatchdogProfile">
+            <class name="CIM_PlatformWatchdogService" profile="PlatformWatchdogProfile">
+            </class>
+            <class name="CIM_LogicalDevice" profile="ReferencingProfile">
+            </class>         
+      </association>
+</profile>

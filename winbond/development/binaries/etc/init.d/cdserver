@@ -1,0 +1,59 @@
+#!/bin/sh
+# /etc/init.d/cdserver: start CD Server
+#
+# chkconfig: 2345 10 90
+#
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+PATHFUL_CDSERVER=/usr/local/bin/cdserver
+USB_DRIVERNAME=usbe
+
+
+test -f /usr/local/bin/cdserver || exit 0
+
+
+# Options for start/restart the daemons
+#
+
+
+#
+
+
+case "$1" in
+  start)
+	lsmod | grep $USB_DRIVERNAME >/dev/null
+	if [ $? == 1 ]
+    then
+  	  echo -n "Loading USB driver... "
+	  insmod $USB_DRIVERNAME
+	  echo "Done"
+	fi
+    echo -n "Starting CD Redirection Server: cdserver"
+    start-stop-daemon --start --quiet --exec $PATHFUL_CDSERVER
+    echo "."
+    ;;
+  stop)
+    echo -n "Stopping CD Redirection Server: cdserver"
+    start-stop-daemon --stop --quiet --exec $PATHFUL_CDSERVER
+    echo "."
+    ;;
+    reload)
+	echo -n "Reloading CD Redirection Server: cdserver"
+	start-stop-daemon --stop --quiet --exec $PATHFUL_CDSERVER --signal 1
+	echo "."
+	;;
+    force-reload)
+	$0 reload
+	;;
+    restart)
+	echo -n "Restarting CD Redirection Server: cdserver"
+	start-stop-daemon --stop --quiet --retry 5 --oknodo --exec $PATHFUL_CDSERVER
+	start-stop-daemon --start --quiet --exec $PATHFUL_CDSERVER
+	echo "."
+	;;
+   *)
+    echo "Usage: /etc/init.d/cdserver {start|stop|reload|restart|force-reload}"
+    exit 1
+esac
+
+exit 0

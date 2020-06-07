@@ -1,0 +1,52 @@
+#!/bin/sh
+# /etc/init.d/telnetd: start telnetd
+#
+# chkconfig: 2345 10 90
+#
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+PATHFUL_TELNETD=/usr/sbin/telnetd
+TELNETD_NAME=telnetd
+
+
+test -f $PATHFUL_TELNETD || exit 0
+
+
+# Options for start/restart the daemons
+#
+
+
+#
+
+
+case "$1" in
+  start)
+    echo -n "Starting telnetd :telnetd"
+    start-stop-daemon --start --quiet --exec $PATHFUL_TELNETD -n TELNETD_NAME
+    echo "."
+    ;;
+  stop)
+    echo -n "Stopping telnetd: telnetd"
+    start-stop-daemon --stop --quiet --exec $PATHFUL_TELNETD -n TELNETD_NAME
+    echo "."
+    ;;
+    reload)
+	echo -n "Reloading telnetd: telnetd"
+	start-stop-daemon --stop --quiet --exec $PATHFUL_TELNETD -n TELNETD_NAME --signal 1
+	echo "."
+	;;
+    force-reload)
+	$0 reload
+	;;
+    restart)
+	echo -n "Restarting telnetd: telnetd"
+	start-stop-daemon --stop --quiet --oknodo --exec $PATHFUL_TELNETD -n TELNETD_NAME
+	start-stop-daemon --start --quiet --exec $PATHFUL_TELNETD -n TELNETD_NAME
+	echo "."
+	;;
+   *)
+    echo "Usage: /etc/init.d/telnetd {start|stop|reload|restart|force-reload}"
+    exit 1
+esac
+
+exit 0

@@ -1,0 +1,68 @@
+<html>
+<head>
+  <link href="../style/app_style.css" rel="stylesheet" type="text/css" />
+  <script src="../lib/bitset.js"></script>
+  <title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<script src="../lib/ui.js"></script>
+	<script src="../lib/eLang.js"></script>
+	<script>
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/global_str.js\"><\/script>");
+		document.write("<script language = \"Javascript\", src = \"../str/" + top.gLangSetting + "/SOLapplet_str.js\"><\/script>");
+	</script>
+
+	<script>
+	var uname;
+	var pswd;
+	
+	onload = function() {
+		if (top.gLangSettingSet == true) {
+			document.title = eLang.getString("SOLapplet", "STR_SOL_APPLET_TITLE");
+		}
+		
+		xmit.get({url:"/rpc/getusrpswd.asp",onrcv:ProcessGetUsrPswd, status:''});
+	}
+	
+	function ProcessGetUsrPswd() {
+		CmdStatus = WEBVAR_JSONVAR_USRPSWD.HAPI_STATUS;	
+		
+		if(CmdStatus == 0)
+		{
+			uname = WEBVAR_JSONVAR_USRPSWD.WEBVAR_STRUCTNAME_USRPSWD[0]['UserID'];
+			pswd = WEBVAR_JSONVAR_USRPSWD.WEBVAR_STRUCTNAME_USRPSWD[0]['Passwd'];
+			
+			setApplet();
+			
+		}else
+		{
+			errStr = eLang.getString('common','STR_APP_STR_413');
+			alert(errStr);
+		}
+	}
+	
+	function setApplet() {
+		var str = "<applet archive  = \"SignedSOLApplet.jar\" " 
+				+ "codebase = \"../Java\" "
+				+ "code     = \"com.supermicro.ipmi.sol.SOLApplet.class\" "
+				+ "name     = \"SOLApplet\" "
+				+ "width    = \"600\" "
+				+ "height   = \"500\" "
+				+ "hspace   = \"0\" "
+				+ "vspace   = \"0\" "
+				+ "align    = \"middle\"> "
+				//+ "<param name=\"ip\" value=\"192.168.100.177\"> "
+				+ "<param name=\"id\" value=\"" + uname + "\"> "
+				+ "<param name=\"Password\" value=\"" + pswd + "\"> "
+				+ "<param name=\"enc\" value=\"0\"> "
+				+ "<param name=\"power\" value=\"0\"> "
+				+ "</applet>"
+		_myAP.innerHTML = str;		
+	}
+	
+	</script>
+</head>
+<body>
+<div id=_myAP>
+</div>
+</body>
+</html>

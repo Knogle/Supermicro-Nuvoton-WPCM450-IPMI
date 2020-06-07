@@ -1,0 +1,179 @@
+#!/bin/sh
+#
+# manage network interfaces and configure some networking options
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+if ! [ -x /sbin/ifup ]; then
+    exit 0
+fi
+
+if ! [ -f /conf/vlanid ]; then
+    cp -f /etc/defconfig/vlanid /conf/vlanid
+fi
+VLANINTERFACES_FILE=/conf/vlaninterfaces
+VLAN_ID=`awk '{print $2}'  /conf/vlanid | sed -n '1p'`
+VLAN_ID1=`awk '{print $2}' /conf/vlanid | sed -n '2p'`
+
+VLAN_STR=`awk '{print $1}' /proc/net/vlan/config | sed -n '3p'`
+VLAN_STR1=`awk '{print $1}' /proc/net/vlan/config | sed -n '4p'`
+
+
+case "$1" in
+    start)
+	if [ x"$VLAN_ID" != x ]; then
+		if [ $VLAN_ID != 0 ]; then
+	        	echo -n "Configuring vlan interfaces.."
+			#ifconfig eth0 0.0.0.0
+			vconfig add eth0 $VLAN_ID 
+		        ifup eth0.$VLAN_ID -i $VLANINTERFACES_FILE
+			if [ -f /var/run/udhcpc.eth0.pid ]; then 
+				kill -9 `cat /var/run/udhcpc.eth0.pid`
+			fi
+			ifconfig eth0 0.0.0.0
+			echo "done."
+		else
+		    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+		fi
+
+	fi
+	if [ x"$VLAN_ID1" != x ]; then
+		if [ $VLAN_ID1 != 0 ]; then
+	        	echo -n "Configuring vlan interfaces.."
+			#ifconfig eth1 0.0.0.0
+			vconfig add eth1 $VLAN_ID1
+		        ifup eth1.$VLAN_ID1 -i $VLANINTERFACES_FILE
+			if [ -f /var/run/udhcpc.eth1.pid ]; then 
+				kill -9 `cat /var/run/udhcpc.eth1.pid`
+			fi
+			ifconfig eth1 0.0.0.0
+			echo "done."
+		else
+		    echo -n "VLANID1 is not enabled...So Exit VLAN network interface start up....."
+		fi
+	fi
+	;;
+    stop)
+	if [ $VLAN_ID != 0 ]; then
+        	echo -n "Deconfiguring vlan interfaces..."
+	        ifdown eth0.$VLAN_ID -i  $VLANINTERFACES_FILE
+        	vconfig rem eth0.$VLAN_ID 
+		echo "done."
+	else
+	    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+	fi
+
+	if [ $VLAN_ID1 != 0 ]; then
+        	echo -n "Deconfiguring vlan interfaces..."
+	        ifdown eth1.$VLAN_ID1 -i  $VLANINTERFACES_FILE
+        	vconfig rem eth1.$VLAN_ID1 
+		echo "done."
+	else
+	    echo -n "VLANID1 is not enabled...So Exit VLAN network interface start up....."
+	fi
+	;;
+    start0)
+	if [ $VLAN_ID == 0 ]; then
+	    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+	    exit 0
+	fi
+        echo -n "Configuring vlan interfaces.."
+	#ifconfig eth0 0.0.0.0
+	
+	VLAN="eth0."
+        VLAN=$VLAN$VLAN_ID
+        if [ x"$VLAN_STR" == x ];
+        then
+		vconfig add eth0 $VLAN_ID
+        else if [ $VLAN != $VLAN_STR ];
+                then
+                        if [ x"$VLAN_STR1" == x ];
+                        then
+				vconfig add eth0 $VLAN_ID
+                        else if [ $VLAN != $VLAN_STR1 ];
+                        then
+				vconfig add eth0 $VLAN_ID
+                              fi
+                        fi
+                fi
+        fi
+        ifup eth0.$VLAN_ID -i $VLANINTERFACES_FILE
+
+	if [ -f /var/run/udhcpc.eth0.pid ]; then 
+		kill -9 `cat /var/run/udhcpc.eth0.pid`
+	fi	
+	ifconfig eth0 0.0.0.0
+	echo "done."
+	;;
+    stop0)
+	if [ $VLAN_ID == 0 ]; then
+	    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+	    exit 0
+	fi
+        echo -n "Deconfiguring vlan interfaces..."
+        ifdown eth0.$VLAN_ID -i  $VLANINTERFACES_FILE
+        vconfig rem eth0.$VLAN_ID 
+	echo "done."
+	;;
+    start1)
+	if [ $VLAN_ID1 == 0 ]; then
+	    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+	    exit 0
+	fi
+        echo -n "Configuring vlan interfaces.."
+	#ifconfig eth1 0.0.0.0
+
+	VLAN="eth1."
+        VLAN=$VLAN$VLAN_ID
+        if [ x"$VLAN_STR" == x ];
+        then
+		vconfig add eth1 $VLAN_ID1
+        else if [ $VLAN != $VLAN_STR ];
+                then
+                        if [ x"$VLAN_STR1" == x ];
+                        then
+				vconfig add eth1 $VLAN_ID1
+                        else if [ $VLAN != $VLAN_STR1 ];
+                        then
+				vconfig add eth1 $VLAN_ID1
+                              fi
+                        fi
+                fi
+        fi
+	ifup eth1.$VLAN_ID1 -i $VLANINTERFACES_FILE
+	if [ -f /var/run/udhcpc.eth1.pid ]; then 
+		kill -9 `cat /var/run/udhcpc.eth1.pid`
+	fi
+	ifconfig eth1 0.0.0.0
+	echo "done."
+	;;
+    stop1)
+	if [ $VLAN_ID1 == 0 ]; then
+	    echo -n "VLANID is not enabled...So Exit VLAN network interface start up....."
+	    exit 0
+	fi
+        echo -n "Deconfiguring vlan interfaces..."
+        ifdown eth1.$VLAN_ID1 -i  $VLANINTERFACES_FILE
+        vconfig rem eth1.$VLAN_ID1 
+	echo "done."
+	;;
+    force-reload|restart)
+        echo -n "Reconfiguring network interfaces..."
+        ifdown eth0.$VLAN_ID -i  $VLANINTERFACES_FILE
+        vconfig rem eth0.$VLAN_ID 
+	vconfig add eth0 $VLAN_ID 
+        ifup eth0.$VLAN_ID -i $VLANINTERFACES_FILE
+	echo "done."
+	;;
+#   enableip)
+#        echo -n "Configuring IP addr and netmask for vlan interfaces.."
+#        ifup eth0.$VLAN_ID -i $VLANINTERFACES_FILE
+#	;;
+    *)
+	echo "Usage: /etc/init.d/vlannetworking {start|stop|restart|force-reload}"
+	exit 1
+	;;
+esac
+
+exit 0
+

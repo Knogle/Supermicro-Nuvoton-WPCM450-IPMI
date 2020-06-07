@@ -1,0 +1,35 @@
+#----------------------------------------------------------------------
+# 			Rules.make for Applications 
+# 		   Copyright (c) 2003 American Megatrends Inc 
+#-----------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------
+#				TOPDIR
+#----------------------------------------------------------------------
+ifndef TOPDIR
+TOPDIR:= $(shell cd ../../.. ;pwd)
+endif
+
+#----------------------------------------------------------------------
+#			Include Global Rules 
+#----------------------------------------------------------------------
+include $(TOPDIR)/development/rules/Rules.global
+IPMI_OEM_ROOT := $(TOPDIR)/development/oem/firmware/IPMI
+include $(IPMI_OEM_ROOT)/Configs.make.IPMI
+
+INCLUDEDIR = .
+
+LIBS += -Wl,-rpath /usr/local/lib -Wl,-rpath /usr/lib
+LIBS += -Wl,-R/usr/local/lib:/usr/local/cim/usr/local/lib
+LIBS += $(TARGETDIR)/usr/lib/libcrypto.so
+LIBS += $(IPMI_OEM_ROOT)/oem/$(PDK_DIR)/Hooks/libPDKFlash.so
+
+install: all extrainstall
+	install -d $(target_bindir)
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(TARGET) $(target_bindir)
+	install -d $(BINARYDIR)/usr/local/bin
+	$(INSTALL) $(ONLY_IF_NEW) $(PRESERVE_SOURCE_TIMESTAMP) $(TARGET) $(BINARYDIR)/usr/local/bin
+
+#------------------------- End of Rules.Make ---------------------------
+

@@ -1,0 +1,170 @@
+BODY {
+	BACKGROUND-COLOR: #e8e8da; FONT-FAMILY: Verdana, Arial, Helvetica, "SunSans-Regular", sans-serif; FONT-SIZE: 11px; LINE-HEIGHT: 16px
+}
+
+A:link
+{
+    COLOR: #033147;
+    FONT-FAMILY: Tahoma,Arial,Helvetica;
+    FONT-SIZE: 11px;
+    TEXT-DECORATION: none
+}
+A:visited
+{
+    COLOR: #033147;
+    FONT-FAMILY: Tahoma,Arial,Helvetica;
+    FONT-SIZE: 11px;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    COLOR: #3D7996;
+    FONT-FAMILY: Tahoma,Arial,Helvetica;
+    FONT-SIZE: 11px
+}
+
+
+P {
+	FONT-FAMILY: Verdana, Arial, Helvetica, "SunSans-Regular", sans-serif; FONT-SIZE: 11px; LINE-HEIGHT: 16px
+}
+TD {
+	
+	font-family: Arial;
+	font-size: 12px;
+	text-align: left;
+	color:black	
+}
+
+.bgimage
+{
+    BACKGROUND-IMAGE: url(../images/table_bg.gif);
+    FONT-FAMILY: Tahoma,Arial,Helvetica;
+    FONT-SIZE: 11px;
+    FONT-WEIGHT: bold;
+    background-repeat: no-repeat;
+    HEIGHT: 25px
+}
+.uiHeaderTextLabel
+	{
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	color:black;
+	}
+.uiHeader
+	{
+	font-family: Arial;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	color:black;
+	}	
+.uiHeader1
+	{
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: left;
+	color:black;
+	}		
+.pagetitle
+	{
+	font-family: Arial Black;
+	font-size: 18px;
+	text-align: center;
+	color:black
+        LINE-HEIGHT: 20px	
+	}
+.pagedescription
+	{
+	font-family: Arial;
+	font-size: 12px;
+	text-align: left;
+	color:black;
+	}
+.timedesc
+	{
+	font-family: Arial;
+	font-size: 12px;
+	text-align: rigth;
+	color:black;
+	}	
+ .tddatadark
+{
+    BACKGROUND-COLOR: #b8b89d;
+    FONT-FAMILY: Arial;
+    COLOR: #000000;
+    font-weight: bold;
+    TEXT-DECORATION: none;
+    FONT-SIZE: 12px;
+    LINE-HEIGHT: 20px
+}
+ .tddatalight
+{
+    BACKGROUND-COLOR: #e8e8da;
+    FONT-FAMILY: Arial;
+    COLOR: #000000;
+    font-weight: bold;
+    TEXT-DECORATION: none;
+    FONT-SIZE: 12px;
+    LINE-HEIGHT: 20px
+}
+.ListBox
+{
+    BORDER-BOTTOM: #b8b89d 1px solid;
+    BORDER-LEFT: #b8b89d 1px solid;
+    BORDER-RIGHT: #b8b89d 1px solid;
+    BORDER-TOP: #b8b89d 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 12px;
+    WIDHT:300px
+    TEXT-ALIGN: left
+}
+.InputBoxSmall
+{
+    BORDER-BOTTOM: #E1E1E1 1px solid;
+    BORDER-LEFT: #E1E1E1 1px solid;
+    BORDER-RIGHT: #E1E1E1 1px solid;
+    BORDER-TOP: #E1E1E1 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 12px
+}
+.noborder
+{
+    BACKGROUND-COLOR: #fcfcfc;
+    BORDER-BOTTOM: #ffffff 1px solid;
+    BORDER-LEFT: #ffffff 1px solid;
+    BORDER-RIGHT: #ffffff 1px solid;
+    BORDER-TOP: #ffffff 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 12px
+}
+.tableborder
+{
+    BACKGROUND-COLOR: #ffffff;
+    BORDER-BOTTOM: #b8b89d 1px solid;
+    BORDER-LEFT: #b8b89d 1px solid;
+    BORDER-RIGHT: #b8b89d 1px solid;
+    BORDER-TOP: #b8b89d 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Arial;
+    FONT-SIZE: 11px
+}
+.ListBoxSmall
+{
+    BORDER-BOTTOM: #E1E1E1 1px solid;
+    BORDER-LEFT: #E1E1E1 1px solid;
+    BORDER-RIGHT: #E1E1E1 1px solid;
+    BORDER-TOP: #E1E1E1 1px solid;
+    COLOR: #000000;
+    FONT-FAMILY: Tahoma,Arial,Helvetica;
+    FONT-SIZE: 11px
+}
+A IMG {
+	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BORDER-RIGHT: 0px; BORDER-TOP: 0px
+}
+

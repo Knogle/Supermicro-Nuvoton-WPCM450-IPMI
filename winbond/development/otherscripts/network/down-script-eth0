@@ -1,0 +1,63 @@
+#!/bin/sh
+
+echo "INTERFACE is $IFACE"
+
+if [ $IFACE != "eth0" ]; then
+    exit 0;
+fi
+
+echo "Interface eth0 is down"
+
+#we have to include the dhcpc-conf file in order to know if we have to register on DNS or not
+. /conf/dhcpc-config
+
+INTERFACE=$IFACE
+#call getdns vars to get stuff
+getdnsvars
+
+if [ -z "$DO_DDNS" ]; then
+    echo "skipping DDNS Update. Option is not present"
+    exit 0
+else
+#check if variable is set to yes
+    if [ "$DO_DDNS" == 'yes' ]; then
+    	echo "Will perform DDNS registration"
+    else
+    	echo "DO_DDNS is off. Will skip DDNS update"
+	exit 0
+    fi
+fi
+
+#on down we have to deregister ddns
+#down is called before the interface actually goes dwon?
+#we dont need an IP In down we just need the name
+
+
+NSUPDATE_SCRIPT=/etc/nsupdate_basic.sh
+
+
+HOST_NAME=`hostname`
+echo $HOST_NAME
+DOMAIN_NAME=`cat /etc/resolv.conf | grep "search" | awk '{ print $2}'`
+echo $DOMAIN_NAME
+REGISTER_NAME=$HOST_NAME.$DOMAIN_NAME
+
+echo -n "name to deregister is "
+echo -n $REGISTER_NAME
+
+echo -n "IP to deregister is"
+IPADDR=`ifconfig $IFACE | grep "inet addr" | awk '{print $2}' | awk -F : '{print $2}'`
+echo $IPADDR
+
+$NSUPDATE_SCRIPT deregister $REGISTER_NAME $IPADDR 
+#we want to exit 0 no matter what so that the other things in down will take place happily
+
+
+
+
+exit 0
+
+
+
+
+

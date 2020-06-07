@@ -1,0 +1,4 @@
+#%PAM-1.0
+auth       sufficient   /lib/security/pam_unix_auth.so nullok try_first_pass
+auth       required	/lib/security/pam_ldap.so try_first_pass
+account    required	/lib/security/pam_ldap.so
